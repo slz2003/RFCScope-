@@ -1,0 +1,127 @@
+# Expert-Issues Summary (Excluding Router) — rfc8447bis-15 §4 (TLS ExtensionType Values Registry)
+
+RFC: Unknown  
+Section: 4 (IANA instructions for the **TLS ExtensionType Values** registry, interacting with §3 global “Recommended” semantics)
+
+This summarizes **all potential bugs raised by the experts** (not the router), deduplicated.  
+Some issues originate in §3 but are **material to §4**, because §4 repeats and applies the same policy text.
+
+---
+
+## 1) Ambiguous / non-standard registration policy phrase for setting “Recommended” = Y/D
+
+**Concise explanation:**  
+The draft repeatedly states (in §3 and again in §4 and later sections):
+
+> “Setting a value to ‘Y’ or ‘D’ or transitioning the value from ‘Y’ or ‘D’ in the ‘Recommended’ column requires **IETF Standards Action with Expert Review or IESG Approval** [RFC8126].”
+
+This phrase combines multiple RFC 8126 policy names into a single, undefined hybrid.
+
+**Justification:** ✅ Real underspecification + inconsistency with BCP 26  
+Experts agree this wording is **not a valid RFC 8126 policy** and is grammatically ambiguous:
+- RFC 8126 defines **Standards Action**, **Expert Review**, and **IESG Approval** as *distinct* policies.
+- It explicitly warns against hybrids like “Expert Review with Specification Required”.
+- The phrase is unclear about whether changes require:
+  - (a) *Standards Action + Expert Review*, **or**
+  - (b) *Expert Review alone*, **or**
+  - (c) *IESG Approval alone*, **or**
+  - (d) some other combination.
+- Compared to RFC 8447 (which clearly said “Y requires Standards Action” and “Y→N requires IESG Approval”), the new text also obscures whether the approval bar has changed.
+
+Because this sentence governs **all future Y/D changes across many TLS registries**, the ambiguity has real procedural impact for IANA and designated experts.
+
+**Experts mentioning this issue:**  
+- Scope  
+- Deontic  
+- CrossRFC  
+- Terminology  
+
+**Typical fix direction (expert consensus):**  
+Rewrite using **only canonical RFC 8126 terms**, explicitly stating how they combine.  
+For example (one possible clarification):
+> “Setting a value to ‘Y’ or ‘D’, or changing an existing ‘Y’ or ‘D’ value, requires either **Standards Action** or **IESG Approval**, as defined in [RFC8126]. In all cases, the designated expert(s) MUST review the request.”
+
+---
+
+## 2) Wrong registry named in §5 (Cipher Suites section references ExtensionType registry)
+
+**Concise explanation:**  
+Section 5 is clearly about the **TLS Cipher Suites registry** (cipher suite tables, DTLS-OK column, NULL/EXPORT/RC4 suites), but the IANA instruction text mistakenly says:
+
+> “IANA is requested to update the **TLS ExtensionType Values registry** as follows:”
+
+**Justification:** ✅ Real inconsistency (registry mis-targeting)  
+This is a classic copy-and-paste error:
+- §4 already correctly updates the TLS ExtensionType Values registry.
+- §5’s heading, narrative, and tables are all about cipher suites.
+- Taken literally, the document instructs IANA to apply cipher-suite changes to the *extension* registry, which is nonsensical.
+
+**Experts mentioning this issue:**  
+- Scope  
+- Deontic  
+- Structural  
+- CrossRFC  
+- Terminology  
+
+**Fix direction:**  
+Change the §5 instruction to:
+> “IANA is requested to update the **TLS Cipher Suites registry** as follows:”
+
+---
+
+## 3) Extension name polluted with status annotation (“connection_id (deprecated)”)
+
+**Concise explanation:**  
+In §4 Table 1 (TLS ExtensionType Values registry), the “Extension” column lists:
+- `connection_id (deprecated)` for value 53.
+
+The registry convention uses **canonical extension identifiers only**; status is conveyed via columns or comments, not by renaming the identifier.
+
+**Justification:** ⚠️ Real structural inconsistency (identifier vs metadata)  
+Experts note this would:
+- Silently rename the extension identifier in the registry.
+- Conflate the identifier with its status.
+- Diverge from RFC 8447 practice and other registry entries.
+
+**Experts mentioning this issue:**  
+- Structural
+
+**Fix direction:**  
+Keep the identifier as `connection_id` and convey “deprecated” via:
+- the **Recommended = D** value, and/or
+- a **Comment** column entry.
+
+---
+
+## 4) Minor registry-name inconsistencies (Hash/Signature registries)
+
+**Concise explanation:**  
+Earlier sections consistently use registry names like:
+- “TLS HashAlgorithm Registry”
+- “TLS SignatureAlgorithm Registry”
+
+But §14 later refers to:
+- “TLS Hash Algorithm”
+- “TLS Signature Algorithm” (with spaces)
+
+**Justification:** ⚠️ Minor editorial inconsistency  
+This is unlikely to break anything, but IANA instructions should use **exact registry names** consistently.
+
+**Experts mentioning this issue:**  
+- Structural  
+- CrossRFC  
+- Terminology  
+
+**Fix direction:**  
+Normalize names everywhere to the canonical IANA registry titles (no-space forms, matching RFC 8447).
+
+---
+
+# Recap
+**Expert-raised issues relevant to §4 (deduplicated):**
+1. **Non-standard, ambiguous registration policy phrase** for Y/D changes (real BCP 26 problem).
+2. **Wrong registry name in §5** (Cipher Suites vs ExtensionType) (real IANA instruction error).
+3. **Extension identifier polluted with “(deprecated)”** (structural registry bug).
+4. **Minor registry-name spelling drift** (editorial).
+
+These are **process / registry-clarity bugs**, not wire-protocol issues, but several are strong **errata candidates** because they directly affect IANA actions and future registry maintenance.
