@@ -1,0 +1,42 @@
+# Expert-Issues Summary (Excluding Router) — Section 1 (SSLKEYLOGFILE Intro + Applicability)
+
+RFC: Unknown  
+Section: 1 / 1.1 (intro + applicability statement)
+
+This summarizes **all potential bugs raised by the experts** (not the router), deduplicated.
+
+---
+
+## 1) Ambiguous scope of “this mechanism MUST NOT be used in a production system”
+
+**Concise explanation:**  
+Section 1.1 says the format is intended for “systems where TLS only protects test data” and that “this mechanism MUST NOT be used in a production system,” but **neither** “production system” nor “test data” is defined, and it’s unclear what exactly “this mechanism” refers to (capability vs enablement vs format/tooling).
+
+### Why it’s a potential bug
+Experts note multiple, materially different readings that all seem plausible:
+- Does “MUST NOT” forbid **having the capability compiled into** production binaries, or only **enabling** it?
+- Does it apply only to **endpoints that log secrets**, or also to **offline tools** that ingest/parse the logs?
+- Is short-lived emergency debugging of live incidents “production” and therefore prohibited, even if tightly controlled?
+
+The document also contains signals that appear broader than “test systems only”:
+- Section 1.1 recommends **conditional compilation** “to ensure deployed binaries cannot be configured to enable key logging,” which suggests the prohibition might target **deploying logging capability**, not just use.
+- Section 3 (Security Considerations) gives detailed mitigation guidance for implementations that support/enable logging (authorization, access control, selective omission of secrets), which reads like it anticipates real-world risk contexts rather than a strict “test-only” world.
+- The media type registration lists **“Intended usage: COMMON”** without an environment qualifier, which can be read as endorsing broad usage of the format by diagnostic tooling.
+
+### My justification (real bug vs false positive)
+**Likely a real underspecification / deontic+scope clarity issue.**  
+This is not about whether key logging is dangerous (it is), but about the spec using a strong BCP14 prohibition tied to **undefined operational categories**. That creates inconsistent compliance interpretations (over-strict: “cannot ship binaries with the feature”; over-permissive: “almost nothing counts as production”) and makes the MUST NOT hard to apply consistently.
+
+### Suggested clarification (minimal fix shape)
+Experts propose tightening the scope in one of these ways:
+- Define precisely what is prohibited, e.g., “MUST NOT be enabled for connections carrying non-test/user data,” and/or
+- Clarify that the prohibition applies to **endpoint key logging**, not the file format or offline tooling, and/or
+- Replace the absolute MUST NOT with advisory language if the document can’t define “production system” operationally.
+
+---
+
+## Experts mentioning this issue
+- **Scope** (underspecification; highlights ambiguity of “mechanism” and tensions with Section 3 + media type “COMMON”)  
+- **Deontic** (underspecification; notes normative strength vs undefined “production system” and compliance ambiguity)
+
+---
