@@ -1,0 +1,24 @@
+
+---
+
+## Issue 1 — OID arc name mismatch: `nistAlgorithm(4)` vs `nistAlgorithms(4)`
+
+**Errata title:** OID arc label typo in Section 2: `nistAlgorithm` should be `nistAlgorithms`
+
+**Concise explanation:**  
+Section 2 spells the ML-DSA OIDs using the arc label `nistAlgorithm(4)` (singular) in the “NIST-registered OIDs [CSOR]” expansions. But the **normative ASN.1 module** in Appendix A (and the cited CSOR hierarchy as summarized) defines the arc as `nistAlgorithms(4)` (plural), with `sigAlgs ::= { nistAlgorithms 3 }` and `id-ml-dsa-* ::= { sigAlgs 17/18/19 }`.
+
+**Justification:** 
+- **Numeric OIDs are unchanged/correct** (2.16.840.1.101.3.4.3.17/18/19), so wire interoperability is unaffected.  
+- Still, Section 2’s symbolic arc name conflicts with Appendix A + CSOR naming, which is a genuine internal/registry naming inconsistency and can confuse careful readers.
+
+**Minimal fix (erratum-style):**  
+In Section 2, for all three OID definitions, replace:
+- `csor(3) nistAlgorithm(4) sigAlgs(3) ...`
+with:
+- `csor(3) nistAlgorithms(4) sigAlgs(3) ...`
+
+
+**Experts flagging:** Structural, CrossRFC, Terminology
+
+---
