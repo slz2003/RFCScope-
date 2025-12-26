@@ -1,6 +1,6 @@
 # Errata Reports
 
-Total reports: 2
+Total reports: 1
 
 ---
 
