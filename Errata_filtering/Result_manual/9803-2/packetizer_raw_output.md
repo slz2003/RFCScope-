@@ -41,17 +41,6 @@ The XML Schema’s uniqueness constraint on the @for attribute restricts the inc
 
 Modify the uniqueness constraint to include the @custom attribute for elements where for="custom", or revise the data model so that the @for attribute directly represents the DNS RR type, eliminating the need for a separate custom attribute.
 
-**Severity:** High
-  *Basis:* This inconsistency forces a choice between schema validity and fulfilling the protocol’s normative requirements, potentially breaking interoperability.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
-- Causal Expert: Issue-1
-- Deontic Expert: Issue-1
-- Structural Expert: Issue-1
 
 ---
 
@@ -92,17 +81,6 @@ The normative sections do not explicitly define how a server should behave when 
 
 Insert an explicit normative statement that an omitted policy attribute must be treated as if its value were 'false' (i.e., Default Mode applies).
 
-**Severity:** Medium
-  *Basis:* While the gap does not render the extension unimplementable, it may cause inconsistent server behavior and interoperability issues among implementations that do or do not apply XML Schema defaulting.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-2
-- Causal Expert: Issue-2
-- Deontic Expert: Issue-2
-- Structural Expert: Issue-2
 
 ---
 
@@ -135,13 +113,5 @@ The specification does not clearly define whether a server must support the TTL 
 
 Clarify in the specification whether the TTL extension must be supported for both domains and hosts, and define the required behavior when an <info> command is received for an object type that is not supported.
 
-**Severity:** Medium
-  *Basis:* The ambiguity may lead to varying interpretations and implementation strategies, potentially causing interoperability issues, though it does not directly break the protocol.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: ResidualUncertainties
 
 ---

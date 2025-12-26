@@ -43,17 +43,6 @@ The specification mandates that if Segment sub-TLVs 46–48 appear in TLVs 1 or 
 
 Clarify the exact error handling by specifying the precise Return Code/Subcode and diagnostic behavior (e.g., inclusion of an Errored TLVs TLV) for cases where sub-TLVs 46–48 appear in TLVs 1 or 16.
 
-**Severity:** Medium
-  *Basis:* Ambiguity in error handling can result in inconsistent diagnostics and interoperability issues between different implementations.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope: Issue-1
-- Deontic: Issue-1
-- Structural: Issue-1
-- CrossRFC: Issue-2
 
 ---
 
@@ -96,17 +85,6 @@ When both the A-Flag (which enables SR Algorithm label derivation) and an option
 
 Specify explicit precedence rules—for example, state that when an optional SID is present, it unequivocally overrides any algorithm-derived label, or alternatively mandate a specific error response if a mismatch occurs.
 
-**Severity:** High
-  *Basis:* Divergent interpretations of label selection can lead to inconsistent MPLS label stacks and misrouted echo replies, which undermines the reliability of the OAM mechanism.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Causal: Issue 2.1
-- Deontic: Issue-2
-- Structural: Issue-2
-- Boundary: Finding-1
 
 ---
 
@@ -149,15 +127,6 @@ The specification’s guidance for the TC/TTL fields in Type-A is ambiguous, as 
 
 Clarify the override policy by indicating that receiver overrides should occur only for default values (TC=0 and TTL=255), or mandate that non-default values provided by the originator must be honored.
 
-**Severity:** Low
-  *Basis:* This ambiguity affects only the cosmetic QoS/TTL behavior in the echo reply and does not undermine the core OAM functionality.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Causal: Issue 2.2
-- Boundary: Finding-2
 
 ---
 
@@ -195,13 +164,5 @@ RFC 9716 allocates Segment sub-TLV types 46–48 from a common registry used for
 
 Either adjust the registry allocation so that sub-TLVs 46–48 are exclusive to TLV 21, or revise the prohibition in RFC 9716 to allow their use in TLVs 1 and 16 consistently with RFC 7110 and RFC 8287.
 
-**Severity:** Medium
-  *Basis:* This inconsistency between registry use and prohibitive text can lead to divergent interpretations and non-interoperable implementations.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- CrossRFC: Issue-1
 
 ---

@@ -43,17 +43,6 @@ The document does not clearly define the criteria for distinguishing a 'future v
 
 Clarify in Section 4 the criteria that determine when a protocol revision is considered a 'future version' of an existing protocol versus when it qualifies as a 'new protocol', for example by linking the classification to protocol identity or continuity markers.
 
-**Severity:** Medium
-  *Basis:* The lack of clear criteria creates a normative ambiguity that may lead to inconsistent decisions in future standardization efforts, impacting security policy enforcement.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
-- Deontic Expert: Issue-1
-- Terminology Expert: Issue-1
-- Boundary Expert: Finding-1
 
 ---
 
@@ -96,14 +85,6 @@ The MPLS Ping entry in Appendix A includes a note that its use of the IPv6 Route
 
 Revise either the global statement in Section 4 or the MPLS Ping entry in Appendix A to consistently reflect the intended status regarding RAO use.
 
-**Severity:** Low
-  *Basis:* Although the inconsistency is textual and may not affect current implementation, it can cause confusion among protocol designers regarding the intended deprecation status.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Terminology Expert: Issue-2
 
 ---
 
@@ -142,13 +123,5 @@ There is a perceived discrepancy between RFC 9673's non-normative discussion sug
 - (E2) States the strict prohibition for new protocols in RFC 9805.
 - (E3) Indicates the administrative change in the RAO registry per RFC 9805.
 
-**Severity:** Low
-  *Basis:* The issue reflects an evolution in policy rather than a technical inconsistency; the non-normative nature of RFC 9673’s discussion mitigates potential conflicts.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Deontic Expert: Issue-2
 
 ---

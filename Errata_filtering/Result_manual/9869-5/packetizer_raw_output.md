@@ -46,19 +46,6 @@ The RFC ambiguously defines 'this validation' in the PTB processing section, mak
 
 Clarify and align the validation requirements by explicitly stating whether the token check is mandatory or optional, and consistently refer to the same scope of 'this validation' in both Section 5.2 and Section 8.
 
-**Severity:** Medium
-  *Basis:* The ambiguity may lead to divergent interpretations and implementations, potentially reducing security robustness against spoofed PTB messages.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- ActorDirectionality: Issue-1
-- Scope: Issue-1
-- Scope: Issue-2
-- Deontic: Issue-1
-- CrossRFC: Issue-1
-- Boundary: Finding-1
 
 ---
 
@@ -91,13 +78,5 @@ The RFC inconsistently assigns the responsibility for PTB message validation bet
 
 Clearly define and consistently assign the PTB validation responsibility to the UDP Options sender across all sections of the RFC to eliminate any role/direction inversion.
 
-**Severity:** Medium
-  *Basis:* Misassignment of roles can confuse implementers and may lead to insecure behavior if the wrong endpoint processes critical PTB validations.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- ActorDirectionality: NewIssue-1
 
 ---

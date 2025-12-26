@@ -38,14 +38,6 @@ The specification states that AUTH and UENC MUST NOT be used concurrently but fa
 
 Clarify the normative text by specifying separate requirements for senders (prohibiting construction of packets with both options) and receivers (defining the precise response when both options are encountered).
 
-**Severity:** Low
-  *Basis:* The ambiguity is limited to error handling for malformed packets and is unlikely to affect well‐formed traffic.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- ActorDirectionality:NewIssue-1
 
 ---
 
@@ -83,18 +75,6 @@ The specification mandates two contradictory behaviors for options whose declare
 
 Revise the text to resolve the conflict by explicitly defining a single consistent behavior for handling options with length overruns, for example by having Section 14 defer to the stricter rule in Section 10.
 
-**Severity:** High
-  *Basis:* Divergent implementations based on this conflict could lead to significant interoperability and security issues during error handling.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope:Issue-1
-- Quantitative:Issue-1
-- Deontic:Issue-1
-- Structural:Issue-1
-- Boundary:Finding-1
 
 ---
 
@@ -137,17 +117,6 @@ The specification presents overlapping rules for handling safe options with inva
 
 Clarify and separate the error-handling criteria by defining distinct, non-overlapping categories for safe option length errors and by explicitly stating the precedence among global and per-option error treatments.
 
-**Severity:** High
-  *Basis:* The overlapping rules can lead to unpredictable behavior and interoperability failures, particularly affecting processing of safe options such as APC in malformed packets.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope:Issue-2
-- Causal:2.2
-- Structural:Issue-2
-- Boundary:Finding-2
 
 ---
 
@@ -185,13 +154,5 @@ The caption of Figure 11 incorrectly labels the diagram as 'UDP Non-Terminal FRA
 
 Correct the caption for Figure 11 to read 'UDP Terminal FRAG Option Format' so that it aligns with the descriptive text and intended packet layout.
 
-**Severity:** Low
-  *Basis:* This is a documentation error that may cause confusion but does not affect the actual protocol processing.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Structural:Issue-3
 
 ---

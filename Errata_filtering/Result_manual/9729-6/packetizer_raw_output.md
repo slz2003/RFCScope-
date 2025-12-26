@@ -43,14 +43,6 @@ Section 7 unconditionally applies TLS version requirements to any connection usi
 
 Clarify Section 7 so that its TLS requirements apply only to the client‐facing connection (the TLS terminator/frontend) rather than to every connection carrying Concealed credentials.
 
-**Severity:** High
-  *Basis:* The conflict forces split deployments into non-conformance, potentially undermining the intended security properties.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
 
 ---
 
@@ -93,14 +85,6 @@ The specification mandates that the frontend forward the original, unmodified Pr
 
 Clarify the intended use and forwarding rules for the Proxy-Authorization header, possibly by limiting mandatory forwarding to Authorization or by explicitly defining allowed scenarios for Proxy-Authorization in split deployments.
 
-**Severity:** Medium
-  *Basis:* Ambiguity in how headers are forwarded can lead to inconsistent implementations and unintended exposure of hop-by-hop credentials.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-2
 
 ---
 
@@ -143,14 +127,6 @@ The specification does not explicitly require the backend to treat the request a
 
 Require explicitly that if a valid and trusted key exporter output is not present, the backend MUST treat the request as if the Authorization header were missing.
 
-**Severity:** High
-  *Basis:* Undefined handling in the absence of a proper exporter output may lead to inconsistent or insecure authentication processing.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Deontic Expert: Issue-1
 
 ---
 
@@ -188,13 +164,5 @@ The ABNF definition for the integer parameter 's' only permits 2-5 digit numbers
 
 Revise the ABNF to allow single-digit non-zero integers and restrict accepted values through either the grammar or an additional numeric check enforcing the 0–65535 range.
 
-**Severity:** High
-  *Basis:* This inconsistency can lead to interoperability issues where valid authentication credentials might be rejected or out-of-range values accepted.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Structural Expert: Issue-1
 
 ---

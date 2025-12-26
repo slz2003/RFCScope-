@@ -44,18 +44,5 @@ Sections 9.3 and 9.4 assert that the NACM extension 'default-deny-write' is appl
 
 Either update the YANG modules to import ietf-netconf-acm and annotate the relevant data definitions with nacm:default-deny-write, or modify the security text in Sections 9.3 and 9.4 to accurately reflect the implemented behavior.
 
-**Severity:** High
-  *Basis:* The mismatch could lead operators to assume stronger, node-specific write protections than are actually enforced, risking unintended access control failures.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
-- Causal Expert: Issue-1
-- Deontic Expert: Issue-1
-- Structural Expert: Issue-1
-- Structural Expert: Issue-2
-- CrossRFC Expert: Issue-1
 
 ---

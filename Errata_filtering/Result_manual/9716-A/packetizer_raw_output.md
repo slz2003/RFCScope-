@@ -48,18 +48,6 @@ Some worked examples in Appendix A list the Reply Path TLV segments in reverse o
 
 Correct the segment order in the Appendix A examples so that the first segment in the Reply Path TLV is used to construct the top MPLS label, in accordance with Sections 5.1 and 5.3.
 
-**Severity:** Medium
-  *Basis:* Incorrect label ordering can lead to improper MPLS label stack construction and misrouted echo replies, potentially causing interoperability problems.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Temporal: T1
-- ActorDirectionality: NewIssue-1
-- Quantitative: Issue-1
-- Structural: Issue-1
-- Boundary: Finding-1
 
 ---
 
@@ -102,19 +90,6 @@ The examples imply that implementations may omit the Reply Path TLV for early ho
 
 Clarify in the text that if Reply Mode 5 is used, a Reply Path TLV MUST always be included. If TLV omission is desired, the Reply Mode must be adjusted accordingly (e.g. to Reply Modes 2 or 3).
 
-**Severity:** High
-  *Basis:* Omitting the TLV while using Reply Mode 5 can result in echo requests being treated as malformed, causing traceroute or ping operations to fail.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Temporal: T2
-- Scope: Issue-1
-- Causal: Issue 2
-- Deontic: Issue-1
-- CrossRFC: Issue-1
-- Structural: Issue-2
 
 ---
 
@@ -157,15 +132,6 @@ There is a discrepancy between the normative mandate that dynamic return-path ec
 
 Clarify the dynamic return-path procedure by explicitly specifying which nodes must include the Reply Path TLV and under what conditions omission is acceptable.
 
-**Severity:** High
-  *Basis:* The lack of clear guidance can lead to different implementations treating echo replies differently, resulting in interoperability issues.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope: Issue-2
-- Structural: Issue-2
 
 ---
 
@@ -197,14 +163,6 @@ The text ambiguously attributes the responsibility for selecting the outgoing in
 
 Revise the text to clearly state that the local ASBR is solely responsible for selecting the outgoing interface based on the incoming OAM packet.
 
-**Severity:** Low
-  *Basis:* Although the intended behavior may be inferred, the ambiguity can lead to implementation confusion.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- ActorDirectionality: NewIssue-2
 
 ---
 
@@ -242,14 +200,6 @@ The hybrid MPLS+IP return path examples imply that, after MPLS label removal, th
 
 Revise the hybrid MPLS+IP examples to either fully conform to MPLS-only Reply Mode 5 semantics or clearly define the conditions under which IP forwarding is permitted.
 
-**Severity:** Medium
-  *Basis:* If implemented as shown, echo replies may be misrouted or dropped because the IP header conditions required for MPLS forwarding would be violated.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- Boundary: Finding-2
 
 ---
 
@@ -281,13 +231,5 @@ The specification does not clarify which mechanism should be used when both the 
 
 Define clear precedence rules to specify whether the explicit SID should override the algorithm‐derived label or vice versa.
 
-**Severity:** Medium
-  *Basis:* This ambiguity may lead to inconsistent label derivation across implementations, particularly in multi‐algorithm environments.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Boundary: Finding-3
 
 ---

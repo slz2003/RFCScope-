@@ -43,15 +43,5 @@ Example 5.2 in Section 5 unconditionally states that the EXP bit in udpSafeOptio
 
 Revise Example 5.2 to explicitly state that the EXP bit is set only when udpSafeExIDList is not present, thereby aligning the example with the normative rule in Section 4.1.
 
-**Severity:** Low
-  *Basis:* While the issue may lead to implementer confusion regarding the correct handling of the EXP bit, it does not cause wire-format or interoperability failures.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
-- Deontic Expert: Issue-1
-- Structural Expert: Issue-1
 
 ---

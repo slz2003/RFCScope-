@@ -38,15 +38,6 @@ The specification does not clearly state whether more than one Administrative Ta
 
 Specify explicit duplicate handling behavior in RFC 9825, either by mandating at most one Administrative Tag Sub‑TLV per parent TLV (with subsequent instances ignored) or by defining how multiple instances should be merged.
 
-**Severity:** Medium
-  *Basis:* Divergent behavior in handling multiple instances could lead to inconsistent administrative tag sets and interoperability issues across implementations.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
-- CrossRFC Expert: Issue-1
 
 ---
 
@@ -79,14 +70,6 @@ RFC 9825 does not clearly define how the new Administrative Tag Sub‑TLV intera
 
 Include explicit clarification in RFC 9825 on how the Route-Tag sub‑TLV relates to the Administrative Tag Sub‑TLV on External-Prefix TLVs, and whether their values must match or how they should interact.
 
-**Severity:** Medium
-  *Basis:* The ambiguity may result in inconsistent tag interpretation and non-interoperable behavior in systems that rely on a consistent notion of primary administrative tags.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- CrossRFC Expert: Issue-2
 
 ---
 
@@ -119,13 +102,5 @@ The specification does not state what should occur if an Administrative Tag Sub�
 
 Add explicit guidance in RFC 9825 for handling cases where an Administrative Tag Sub‑TLV is attached to an unexpected parent TLV, such as by mandating it be ignored.
 
-**Severity:** Low
-  *Basis:* While unlikely to affect normal operation since such cases might be ignored, the omission may cause minor implementation inconsistencies.
-
-**Confidence:** Inferred
-
-**Experts mentioning this issue:**
-
-- Scope Expert: NotedAmbiguities
 
 ---

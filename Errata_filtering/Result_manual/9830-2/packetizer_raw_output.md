@@ -38,17 +38,6 @@ The Distinguisher field is defined as uniquely identifying the SR Policy in the 
 
 Revise the Distinguisher definition to clarify that it distinguishes SR Policy Candidate Paths (including the Protocol‑Origin dimension) rather than serving as a global identifier of the SR Policy.
 
-**Severity:** Low
-  *Basis:* The issue primarily affects clarity and specification hygiene without causing interoperability failures if implementations follow RFC 9256 for candidate path identification.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- ScopeExpert: Issue-1
-- DeonticExpert: Issue-2
-- TerminologyExpert: Issue-2
-- CrossRFCExpert: Issue-3
 
 ---
 
@@ -86,17 +75,6 @@ The definition of the Segment List sub-TLV Length field in RFC 9830 excludes the
 
 Amend the specification to either include the RESERVED octet in the Length field calculation or explicitly state that it is excluded—and adjust the parser accordingly—to align with the generic RFC 9012 sub‑TLV encoding.
 
-**Severity:** Medium
-  *Basis:* The off‐by‐one discrepancy can lead to misinterpretation of TLV boundaries, causing divergent parsing behavior and potential treat‑as‑withdraw of valid attributes.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- ScopeExpert: CandidateIssues Issue-1
-- QuantitativeExpert: Issue-1
-- StructuralExpert: Issue-1
-- CrossRFCExpert: Issue-1
 
 ---
 
@@ -134,17 +112,6 @@ The specification includes a normative clause that the SRv6 Endpoint Behavior an
 
 Rephrase or remove the contradictory clause so that the presence of the SRv6 Endpoint Behavior and SID Structure is determined solely by the sub‑TLV Length (i.e., 26 octets versus 18 octets), acknowledging that the 16‑octet SRv6 SID field is always present.
 
-**Severity:** Low
-  *Basis:* This issue is mainly editorial and does not affect interoperability, but it poses a risk of confusing implementers regarding the encoding semantics.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- DeonticExpert: Issue-1
-- StructuralExpert: Issue-2
-- TerminologyExpert: Issue-1
-- CrossRFCExpert: Issue-2
 
 ---
 
@@ -182,14 +149,5 @@ The specification does not clearly define how Route Target extended communities 
 
 Clarify the matching algorithm by explicitly stating that only the Global Administrator field of the Route Target should be compared to the receiver's BGP Identifier.
 
-**Severity:** Medium
-  *Basis:* This ambiguity could lead to divergent interpretations among implementations, potentially causing inconsistencies in route usability assessment in multi-vendor environments.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- BoundaryExpert: Finding-1
-- CausalExpert: Issue 1
 
 ---

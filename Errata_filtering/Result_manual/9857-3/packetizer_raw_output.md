@@ -38,18 +38,6 @@ RFC 9857 mandates that TLVs 1028 and 1029 be included as Node Descriptor TLVs in
 
 Clarify in RFC 9857 that, for NLRI Type 5, either new Node Descriptor sub‑TLV types should be defined for IPv4/IPv6 headend identifiers or explicitly state that TLVs 1028 and 1029 are valid as Node Descriptor sub‑TLVs despite their original attribute definition.
 
-**Severity:** Medium
-  *Basis:* The conflicting TLV classifications may lead to interoperability issues as different implementations might treat these TLVs differently when constructing the NLRI key.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
-- Deontic Expert: Issue-1
-- Structural Expert: Issue-1
-- CrossRFC Expert: Issue-1
-- Terminology Expert: Issue-1
 
 ---
 
@@ -87,16 +75,6 @@ The Identifier field for NLRI Type 5 is defined as an 8‑octet BGP‑LS Instanc
 
 Specify in RFC 9857 which domain or entity (e.g., the headend’s IGP instance or a dedicated policy domain) the Identifier must correspond to, especially in PCE or multi‑domain deployments.
 
-**Severity:** Medium
-  *Basis:* Ambiguity in the intended scope of the Instance-ID may lead to inconsistent correlation of SR Policy state with topological information across different implementations.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-2
-- Deontic Expert: Issue-2
-- CrossRFC Expert: Issue-3
 
 ---
 
@@ -129,14 +107,5 @@ RFC 9857 describes TLV 517 as containing the headend node of the SR Policy, yet 
 
 Revise the description for TLV 517 in RFC 9857 to state unambiguously that it carries the Member-AS Number associated with the headend’s confederation membership, not a node identifier.
 
-**Severity:** Low
-  *Basis:* The misdescription is primarily a terminology issue and is unlikely to cause significant interoperability problems, though it may confuse implementers.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- CrossRFC Expert: Issue-2
-- Terminology Expert: Issue-2
 
 ---

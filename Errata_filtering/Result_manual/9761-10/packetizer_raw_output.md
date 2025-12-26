@@ -44,17 +44,6 @@ Section 10 mandates that the MUD URL MUST be encrypted and shared only with auth
 
 Clarify the requirement by explicitly stating which emission methods are subject to encryption and specifying acceptable encryption mechanisms (e.g., TEAP/EAP-TLS, MACsec) and the responsible network component, or limit the mandate to new TEE storage contexts.
 
-**Severity:** High
-  *Basis:* The ambiguity retroactively tightens privacy guarantees and may render existing RFC 8520-compliant deployments non-compliant, potentially leading to security vulnerabilities and interoperability issues. (E1, E2, E3)
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
-- Causal Expert: Underspecification of encryption details
-- Deontic Expert: Issue-1
-- CrossRFC Expert: Issue-1
 
 ---
 
@@ -92,13 +81,5 @@ The statement â€˜The use of (D)TLS proxies is NOT RECOMMENDED whenever possibleâ
 
 Rephrase the sentence to align with standard BCP 14 language, for example: 'The use of (D)TLS proxies SHOULD be avoided whenever possible.'
 
-**Severity:** Low
-  *Basis:* This is a stylistic and editorial issue with no adverse impact on protocol operation or interoperability. (E1, E2)
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Deontic Expert: Issue-2
 
 ---

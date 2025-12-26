@@ -43,16 +43,6 @@ RFC 9761 ambiguously describes the role of the 'is-supported' attribute by sugge
 
 Clarify the phrasing so that the MUD manager only uses the manufacturer-set 'is-supported' flag as an indication of device support status without modifying it.
 
-**Severity:** High
-  *Basis:* The ambiguity in role assignment can lead to inconsistent implementations and operational confusion in network deployments.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- ActorDirectionality: Issue-1
-- Scope: Issue-1
-- CrossRFC: Issue-1
 
 ---
 
@@ -95,15 +85,5 @@ The document overstates the effectiveness of trust-anchor enforcement by implyin
 
 Revise the DDoS examples to state that trust-anchor enforcement only blocks TLS/DTLS sessions with untrusted certificates and does not specifically mitigate the tactics of Slowloris or TLS renegotiation attacks.
 
-**Severity:** Medium
-  *Basis:* The misleading example may cause operators to overestimate the security benefits of the mechanism, although it does not impede protocol interoperability.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- Scope: Issue-2
-- CrossRFC: Issue-2
-- Causal: Misleading DDoS rationale
 
 ---

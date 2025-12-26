@@ -45,18 +45,6 @@ RFC 9774 mandates treat‐as‐withdraw for UPDATE messages containing AS_CONFED
 
 Clarify the intended scope by either explicitly stating in RFC 9774 that it updates RFC 6793 for AS4_PATH error handling (thereby overriding the discard-and-continue behavior) or by narrowing the treat‐as‐withdraw requirement to only apply to AS_PATH.
 
-**Severity:** High
-  *Basis:* The inconsistency forces implementers to choose between two mutually exclusive ERROR handling approaches, potentially leading to divergent route processing and significant interoperability issues.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
-- Causal Expert: Case A
-- Deontic Expert: Issue-1
-- CrossRFC Expert: Issue-1
-- Boundary Expert: Finding-1
 
 ---
 
@@ -93,16 +81,5 @@ RFC 9774 mandates treat‐as‐withdraw for any UPDATE containing AS_SET in AS4_
 
 Either align RFC 9774 with RFC 6793 by allowing AS_SET in AS4_PATH to be processed without withdrawal or explicitly document and justify the tighter error handling for improved clarity.
 
-**Severity:** Medium
-  *Basis:* While the stricter treatment of AS_SET may cause unexpected route withdrawals, it is a normative tightening rather than a direct conflict, leading to potential interoperability concerns without an outright contradiction.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
-- Causal Expert: Case C
-- Boundary Expert: Finding-2
-- CrossRFC Expert: Issue-1
 
 ---

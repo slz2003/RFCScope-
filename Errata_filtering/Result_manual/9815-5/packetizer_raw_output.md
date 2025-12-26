@@ -38,20 +38,6 @@ There is ambiguity in how to handle BGP‐LS‐SPF NLRIs that lack the mandatory
 
 Clarify that the malformed NLRI rule in Section 5.2.4 applies only when a BGP-LS Attribute is present but missing a valid Sequence Number TLV, while NLRIs lacking the BGP-LS Attribute due to attribute discard should be preserved and propagated as specified in Section 7.1.
 
-**Severity:** Medium
-  *Basis:* The ambiguity can lead to divergent LSDB contents and convergence behavior across implementations.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- TemporalExpert: T1
-- ScopeExpert: Issue-2
-- QuantitativeExpert: Issue-1
-- DeonticExpert: Issue-1
-- StructuralExpert: Issue-3
-- CrossRFCExpert: Issue-2
-- BoundaryExpert: Finding-2
 
 ---
 
@@ -89,17 +75,6 @@ The SPF algorithm’s matching rule for unnumbered links erroneously repeats the
 
 Replace the second, duplicated condition with 'the Current-Link's Local Identifier MUST match the Remote-Link's Remote Identifier' to enforce the required symmetric check.
 
-**Severity:** High
-  *Basis:* Incorrect matching can result in erroneous SPF paths and potential routing miscalculations.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- CausalExpert
-- StructuralExpert: Issue-1
-- TerminologyExpert: Issue-1
-- BoundaryExpert: Finding-1
 
 ---
 
@@ -137,14 +112,6 @@ The specification incorrectly mandates that both Local and Remote Node Descripto
 
 Revise the requirement so that only the applicable descriptor types are mandated: require Local Node Descriptors in Node and Prefix NLRIs and both Local and Remote Node Descriptors in Link NLRIs.
 
-**Severity:** Medium
-  *Basis:* The mis-scoping may cause misimplementation of NLRI structures but does not directly affect SPF decision logic.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- ScopeExpert: Issue-1
 
 ---
 
@@ -182,14 +149,6 @@ The specification mandates that Prefix NLRIs must include the Prefix Metric TLV 
 
 Specify that if a Prefix NLRI does not carry TLV 1155, then it should either be treated as malformed (and withdrawn) or be explicitly skipped in SPF computation.
 
-**Severity:** Medium
-  *Basis:* Ambiguity in prefix handling may result in inconsistent route calculations across implementations.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- ScopeExpert: Issue-3
 
 ---
 
@@ -227,16 +186,6 @@ Although the specification notes that the BGP SPF metric length is 4 octets, it 
 
 Explicitly require that in the context of BGP-LS-SPF, TLV 1095 MUST have a Length of 4 octets; any TLV 1095 with a non-4-octet length must be treated as malformed according to Section 7.1.
 
-**Severity:** Medium
-  *Basis:* Unclear TLV encoding could lead to inconsistent metric values and consequently divergent SPF calculations.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- QuantitativeExpert: Issue-2
-- StructuralExpert: Issue-2
-- CrossRFCExpert: Issue-1
 
 ---
 
@@ -274,13 +223,5 @@ While a single, correct 8-octet Sequence Number TLV is mandatory for BGP-LS-SPF,
 
 Specify that exactly one Sequence Number TLV with a Length of 8 octets must be present per BGP-LS-SPF NLRI; if this condition is not met, the NLRI MUST be considered malformed and treated as withdrawn.
 
-**Severity:** Medium
-  *Basis:* Lack of defined error-handling may lead to divergent interpretations of NLRI recency and inconsistent SPF database contents.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- QuantitativeExpert: Issue-3
 
 ---

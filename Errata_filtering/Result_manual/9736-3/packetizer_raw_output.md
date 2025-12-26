@@ -44,16 +44,6 @@ No statement anywhere on whether type 3 or type 4 TLVs may, must, or must not ap
 
 Explicitly state the allowed cardinality for TLV types 3 and 4, such as specifying whether only one instance is permitted or if multiple instances are allowed with defined semantics.
 
-**Severity:** Low
-  *Basis:* The lack of explicit cardinality guidelines may lead to inconsistencies between implementations, but typical deployments are unlikely to experience interoperability failures.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
-- Deontic Expert: Issue-1
-- Boundary Expert: Finding-1
 
 ---
 
@@ -86,15 +76,6 @@ The Admin Label TLV description contains a typographical error with an extraneou
 
 Remove the extraneous 'a' so that the phrase reads 'There is no requirement to terminate the string with null or any other character.'
 
-**Severity:** Low
-  *Basis:* The error is strictly editorial and has no impact on protocol operation or interoperability.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Terminology Expert: Issue-1
-- Structural Expert: Issue-1
 
 ---
 
@@ -128,13 +109,5 @@ The specification’s wording for the usage of the Peer Up Information TLV is as
 
 Revise the text to explicitly restrict the Peer Up Information TLV to the Peer Up message, mirroring the unambiguous language used for the Initiation Information TLV.
 
-**Severity:** Low
-  *Basis:* Although contextual cues mitigate major confusion, the ambiguous wording may still lead to misinterpretation in isolation.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: ResidualUncertainties
 
 ---

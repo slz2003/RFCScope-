@@ -38,18 +38,6 @@ The specification does not state what an implementation must do when the configu
 
 Add explicit normative text in the affected section(s) to define the required behavior when the desired origin AS is absent from the brief AS_PATH (for example, by specifying a fallback such as truncating to an empty AS_PATH or treating the configuration as invalid).
 
-**Severity:** High
-  *Basis:* The ambiguity can lead to inconsistent origin AS attribution and unpredictable RPKI validation outcomes, potentially causing routing disruptions or security issues.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- ScopeExpert: Issue-1
-- CausalExpert: Undefined Behavior
-- DeonticExpert: Issue-1
-- CrossRFCExpert: Issue-1
-- BoundaryExpert: Finding-1
 
 ---
 
@@ -87,14 +75,6 @@ The RFC uses language that ambiguously assigns responsibility for ensuring consi
 
 Clarify the text to explicitly delineate the responsibilities between implementers (e.g., by providing a configuration mechanism) and network operators (who must correctly deploy and use that mechanism).
 
-**Severity:** Medium
-  *Basis:* The lack of clarity in role assignment may result in inconsistent behavior, but it is less likely to cause immediate routing failures compared to undefined algorithm outcomes.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- ActorDirectionalityExpert: NewIssue-1
 
 ---
 
@@ -127,13 +107,5 @@ The specification does not clearly indicate whether the AS_PATH truncation for c
 
 Specify the exact point in the BGP processing pipeline (e.g., before or after local AS prepending) at which the truncation must be performed to ensure consistent on‐the‐wire AS_PATHs.
 
-**Severity:** Medium
-  *Basis:* Inconsistent truncation timing can lead to different origin AS outputs and affect ROA validation, although it is a more technical ambiguity rather than a complete operational failure.
-
-**Confidence:** Low
-
-**Experts mentioning this issue:**
-
-- CrossRFCExpert: Issue-2
 
 ---

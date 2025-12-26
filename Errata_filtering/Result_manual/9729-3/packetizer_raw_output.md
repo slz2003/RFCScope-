@@ -48,15 +48,5 @@ The specification normatively defines the context string as 'HTTP Concealed Auth
 
 Clarify in the specification that the normative context string is 'HTTP Concealed Authentication' and update Figure 3’s hex example so its ASCII portion encodes that exact string.
 
-**Severity:** Medium
-  *Basis:* Although the underlying cryptographic mechanism remains sound, the discrepancy may cause interoperability failures if implementers mistakenly use the hex example, leading to mismatched signature inputs.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Causal Expert: Issue-1
-- Structural Expert: Issue-1
-- Terminology Expert: Issue-1
 
 ---

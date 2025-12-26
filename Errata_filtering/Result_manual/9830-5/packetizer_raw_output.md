@@ -43,17 +43,6 @@ RFC 9830 mandates that any error in the Tunnel Encapsulation Attribute or its TL
 
 Clarify explicitly in RFC 9830 that for Tunnel Type 15 with SR Policy SAFI, any syntactic error in TLVs/sub‑TLVs is fatal and overrides RFC 9012’s recoverable treatment, or update the text to clearly distinguish between errors that mandate treat‑as‑withdraw and those that do not.
 
-**Severity:** Medium
-  *Basis:* This ambiguity may lead to divergent implementations and interoperability issues by causing unintended withdrawals of SR Policy updates.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- ScopeExpert: Issue-1
-- StructuralExpert: Issue-1
-- CrossRFCExpert: Issue-1
-- BoundaryExpert: Finding-2
 
 ---
 
@@ -91,16 +80,6 @@ The document does not clearly define whether unrecognized or unsupported SR Poli
 
 Clarify in the specification which conditions for unrecognized or unsupported sub‑TLVs fall under treat‑as‑withdraw and which only affect local usability without triggering withdrawal.
 
-**Severity:** Medium
-  *Basis:* Ambiguities in error terminology may lead to divergent interpretations and inconsistent handling of SR Policy routes across different implementations.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- ScopeExpert: Issue-2
-- CrossRFCExpert: Issue-2
-- TerminologyExpert: Issue-1
 
 ---
 
@@ -144,14 +123,6 @@ The Segment List sub-TLV length field in RFC 9830 appears to exclude the RESERVE
 
 Update the definition of the Segment List sub-TLV length field to include the RESERVED octet in the count or adjust the encoding to align with RFC 9012 semantics.
 
-**Severity:** High
-  *Basis:* This off-by-one error can lead to misalignment in sub-TLV parsing and subsequent interpretation errors, resulting in route withdrawal and interoperability failures.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- QuantitativeExpert: Issue-1
 
 ---
 
@@ -188,14 +159,6 @@ There is a conflict between RFC 9830, which permits processing of valid SR Polic
 
 Harmonize the treatment of partially malformed NLRI within multi-NLRI updates by explicitly stating whether only the malformed NLRIs should trigger treat‑as‑withdraw or if the entire attribute must be rejected.
 
-**Severity:** High
-  *Basis:* Divergent interpretations can lead to inconsistent route processing across different BGP implementations, potentially affecting SR Policy propagation.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- BoundaryExpert: Finding-1
 
 ---
 
@@ -232,14 +195,6 @@ The specification uses overlapping terms such as 'valid', 'malformed', 'invalid'
 
 Clarify and consistently define the terms 'valid', 'malformed', 'invalid', and 'unsupported' within the document to clearly distinguish between syntactic errors that trigger withdrawal and conditions that affect only local usability.
 
-**Severity:** Medium
-  *Basis:* Ambiguous definitions may lead to divergent implementations and interoperability issues by causing different interpretations of error conditions.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- TerminologyExpert: Issue-1
 
 ---
 
@@ -272,13 +227,5 @@ The term 'malformed' is also applied to SR Policy updates that are semantically 
 
 - (E1) and (E2) illustrate the use of 'malformed' to cover cases of missing essential communities, potentially mixing semantic and syntactic error classifications.
 
-**Severity:** Low
-  *Basis:* This is primarily a clarity issue that, while potentially confusing, is unlikely to lead to significant interoperability problems.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- TerminologyExpert: Issue-2
 
 ---

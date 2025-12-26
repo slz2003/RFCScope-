@@ -43,17 +43,6 @@ The specification does not clearly define how an IPv4-address‑specific Route T
 
 Specify that the 4‑octet Global Administrator field of the IPv4‑address‑specific Route Target MUST equal the receiver’s BGP Identifier, and explicitly state that the 2‑octet Local Administrator field shall be ignored in the matching process.
 
-**Severity:** Medium
-  *Basis:* This ambiguity can lead to divergent implementations where some routers deem an SR Policy usable while others do not, undermining interoperable headend selection.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- ScopeExpert: Issue-1
-- DeonticExpert: Issue-1
-- CrossRFCExpert: Issue-1
-- TerminologyExpert: Issue-1
 
 ---
 
@@ -97,18 +86,6 @@ The document provides conflicting instructions on handling unsupported or unreco
 
 Clarify the specification by explicitly separating the treatment of sub‑TLVs: sub‑TLVs with no defined applicability to the SR Policy SAFI MUST be ignored (without affecting usability), while only sub‑TLVs defined as applicable but unsupported should trigger the non-usability of the update unless an override is configured.
 
-**Severity:** Medium
-  *Basis:* The conflicting instructions may lead to inconsistent behavior across vendors, with some implementations ignoring such sub‑TLVs and others rejecting the update for SR Policy instantiation.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- ActorDirectionalityExpert: NewIssue-1
-- ScopeExpert: Issue-2
-- DeonticExpert: Issue-2
-- StructuralExpert: Issue-1
-- BoundaryExpert: Finding-1
 
 ---
 
@@ -146,13 +123,5 @@ The current text in Section 4.2.1 may lead to a misinterpretation that the Tunne
 
 Amend Section 4.2.1 to explicitly state that the TEA requirement applies only to announcements (MP_REACH_NLRI) and not to withdrawal messages (MP_UNREACH_NLRI).
 
-**Severity:** Low
-  *Basis:* This issue is largely editorial and does not lead to protocol‐breaking behavior, but clarifying the intent will prevent misimplementation.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- CausalExpert: TEA Requirement Ambiguity
 
 ---

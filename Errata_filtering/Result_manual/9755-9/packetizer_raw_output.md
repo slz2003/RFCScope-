@@ -38,14 +38,6 @@ The specification does not explicitly enumerate which IMAP data items count as h
 - (E1) The Scope Expert’s NotedAmbiguities points out that the term 'all header information transmitted over the wire' lacks a precise definition in terms of specific IMAP fields.
 - (E2) The ResidualUncertainties section clarifies that a complete enumeration of header items is missing, requiring implementers to cross-reference other RFCs.
 
-**Severity:** Low
-  *Basis:* The ambiguity is unlikely to break protocol compliance since implementers can derive the intended set using RFC 3501/5322, but it may lead to inconsistent implementations.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
 
 ---
 
@@ -87,15 +79,5 @@ The document leaves the method for ensuring 7‑bit header output for legacy cli
 - (E2) Boundary Expert evidence underscores that Section 8 lays out several options, emphasizing local discretion in choosing a downgrade method.
 - (E3) Causal Expert remarks that the resulting divergent user experience is an anticipated outcome of this design choice.
 
-**Severity:** Low
-  *Basis:* The open-ended downgrade/hiding strategy is a deliberate design trade-off that does not impair protocol interoperability, though it may result in variable client experiences.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Deontic Expert: Issue-1
-- Causal Expert
-- Boundary Expert: Finding-1
 
 ---

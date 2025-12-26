@@ -41,18 +41,6 @@ The specification does not clearly define how to update the per‐interface P-fl
 
 Clarify that when a new PIO for a prefix is received with the P flag cleared, the prefix MUST be removed from the list (unless another concurrent PIO with the P flag set applies).
 
-**Severity:** Medium
-  *Basis:* This ambiguity affects when DHCPv6-PD is started or stopped and when REBINDs are triggered, potentially leading to divergent behavior and security concerns.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- TemporalExpert: T1
-- DeonticExpert: Issue-1
-- ScopeExpert: Issue-1
-- BoundaryExpert: Finding-1
-- CausalExpert: Issue 1
 
 ---
 
@@ -89,14 +77,6 @@ The specification does not specify when or if a disabled P flag processing shoul
 
 Provide normative guidance (e.g., timers or event conditions) for re-enabling P flag processing after it has been disabled.
 
-**Severity:** Low
-  *Basis:* While the ambiguity may lead to divergent retry behaviors, it does not break interoperability or core protocol functionality.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- TemporalExpert: T2
 
 ---
 
@@ -129,14 +109,6 @@ It is unclear whether the REBIND should be triggered on a P-list change if the c
 
 Clarify that REBIND triggering should depend on the presence of currently valid delegated prefixes rather than solely on their historical receipt.
 
-**Severity:** Low
-  *Basis:* The potential for triggering unnecessary REBIND exchanges can lead to inefficient exchanges but does not prevent protocol operation.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- TemporalExpert: T3
 
 ---
 
@@ -173,16 +145,6 @@ The document uses qualitative terms such as 'short enough for SLAAC' and 'suitab
 
 Define explicit numerical guidelines for SLAAC suitability, for example by referencing RFC 4862’s requirement that the sum of the prefix length and the interface identifier length equals 128 bits.
 
-**Severity:** Medium
-  *Basis:* The lack of explicit thresholds can result in inconsistent PD prefix processing across different implementations.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- QuantitativeExpert: Issue-1
-- CrossRFCExpert: Issue-1
-- BoundaryExpert: Finding-3
 
 ---
 
@@ -219,14 +181,6 @@ The rule to suppress IA_NA requests when all processed PIOs have the P bit set i
 
 Clarify the condition to require that the rule applies only when at least one PIO is present.
 
-**Severity:** Medium
-  *Basis:* This ambiguity can lead to observable differences in address assignment behavior across implementations.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- QuantitativeExpert: Issue-2
 
 ---
 
@@ -263,17 +217,6 @@ The specification mandates that delegated-prefix addresses be treated as if assi
 
 Revise the language to clearly differentiate between the physical address assignment used for ND/DAD and the candidate-set association used for source address selection, ensuring these do not conflict.
 
-**Severity:** Medium
-  *Basis:* The conflicting instructions violate the typical one-interface-per-address model and can result in inconsistent source address selection behavior.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- ActorDirectionalityExpert: Issue-1
-- QuantitativeExpert: Issue-3
-- TerminologyExpert: Issue-1
-- BoundaryExpert: Finding-2
 
 ---
 
@@ -310,14 +253,6 @@ The document mandates that any change in the P-list triggers a REBIND, which con
 
 Clarify whether the P-list change should always trigger a REBIND as specified or if the appropriate RFC 8415 mechanism (Renew) should be used under certain conditions.
 
-**Severity:** Medium
-  *Basis:* This inconsistency may lead to different DHCPv6 message behaviors, affecting interoperability and server load.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- CrossRFCExpert: Issue-2
 
 ---
 
@@ -349,14 +284,6 @@ The specification refers to RFC 8415 Section 18.2.4 for the prefix length hint, 
 
 Amend the reference to encompass the sections of RFC 8415 that govern both initial prefix requests and renewal, ensuring clarity on how the prefix length hint is to be used.
 
-**Severity:** Low
-  *Basis:* This is primarily a documentation clarity issue and does not affect the core protocol operation.
-
-**Confidence:** Low
-
-**Experts mentioning this issue:**
-
-- CrossRFCExpert: Issue-3
 
 ---
 
@@ -397,13 +324,5 @@ The document inconsistently uses the terms 'client' and 'host', creating ambigui
 
 Clarify and consistently define the roles of 'client' and 'host', specifying explicitly which requirements apply to router-based PD clients and which apply to non-router hosts.
 
-**Severity:** Medium
-  *Basis:* Ambiguity in terminology can lead to inconsistent implementations and misinterpretation of which behaviors are mandatory.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- ActorDirectionalityExpert: NewIssue-1
 
 ---

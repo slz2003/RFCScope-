@@ -53,14 +53,6 @@ when "derived-from-or-self(../../../../../../../.."
 
 Increase the '../' depth in the when expressions so that the path inside derived-from-or-self() correctly reaches the rt:control-plane-protocol ancestor.
 
-**Severity:** High
-  *Basis:* Since the mis-scoped expression always evaluates to false, the intended admin-tag sub-TLV nodes will never be instantiated, rendering parts of the YANG module non‐functional.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
 
 ---
 
@@ -122,15 +114,6 @@ augment "/rt:routing/.../ospfv3-e-lsa:e-nssa
 
 Replace the absolute XPath check with a relative, instance-scoped derived-from-or-self() expression that specifically validates the current protocol instance's rt:type.
 
-**Severity:** Medium
-  *Basis:* The overly broad when condition does not currently prevent the nodes from being instantiated, but it undermines the intended instance-specific semantics and may lead to future mis-attachments if the subtree is reused.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-2
-- Boundary Expert: Finding-1
 
 ---
 
@@ -163,14 +146,6 @@ The protocol text mentions that NSSA ranges and redistributed route summaries sh
 
 Clarify in the design whether these tag configurations were intentionally omitted or add the missing augmentations in a future revision.
 
-**Severity:** Low
-  *Basis:* This omission does not currently affect operational behavior but creates ambiguity regarding the full intended scope of administrative tag support.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- Scope Expert: ResidualUncertainties
 
 ---
 
@@ -216,14 +191,6 @@ The YANG grouping for the administrative tag sub-TLV allows an empty leaf-list, 
 
 Either enforce a min-elements constraint in the YANG model or add documentation that clarifies that an absent container versus an empty list correctly represents the intended semantics.
 
-**Severity:** Low
-  *Basis:* This is largely an editorial or representational concern without significant functional impact, but it could lead to misinterpretation by implementers.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- Boundary Expert: Finding-2
 
 ---
 
@@ -266,14 +233,6 @@ The YANG module augments administrative tags on per-next-hop entries in the OSPF
 
 Clarify in the specification whether administrative tags should also be applied to global RIB routes or if the design intentionally isolates tag exposure to next-hop entries.
 
-**Severity:** Low
-  *Basis:* While the current model behavior is consistent with protocol ECMP semantics, the difference in augmentation might confuse operators regarding global versus local tag visibility.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- Boundary Expert: Finding-3
 
 ---
 
@@ -305,13 +264,5 @@ The YANG module does not include an augmentation for the SRv6 Locator TLV contex
 
 Either add the missing augmentation for the SRv6 Locator TLV context or document the deliberate exclusion of SRv6 support as part of the module's design scope.
 
-**Severity:** Low
-  *Basis:* The design gap does not affect current operation but leaves an open area for future extension or clarification, which may confuse implementers.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- Boundary Expert: Note
 
 ---

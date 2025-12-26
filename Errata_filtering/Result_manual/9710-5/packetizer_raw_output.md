@@ -28,14 +28,6 @@ The mapping table in Section 5 accurately associates IE IDs and names with their
 
 - (E1) Structural Expert confirms that the Section 5 table correctly maps IE IDs and names to the appropriate IANA registry entries with full consistency.
 
-**Severity:** Low
-  *Basis:* No technical or structural errors were found; the mappings are fully consistent with established IPFIX and IANA specifications.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Structural Expert: Issue-1
 
 ---
 
@@ -73,14 +65,5 @@ The table caption: Table 1: Cite an IANA Registry Under Additional Information
 - (E2) CrossRFC Expert highlights the imprecision in using the label 'ICMP Type Numbers' for icmpCodeIPv4, which focuses on types rather than codes.
 - (E3) Terminology Expert provides evidence of the abbreviated registry names used in the table, showing that they differ slightly from the full, official IANA registry titles.
 
-**Severity:** Low
-  *Basis:* The issue is purely editorial, affecting only stylistic presentation without impacting interoperability or data encoding.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- CrossRFC Expert: Candidate Editorial Note
-- Terminology Expert: Issue-1
 
 ---

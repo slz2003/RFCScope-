@@ -38,16 +38,6 @@ The specification offers conflicting guidance regarding resource behavior after 
 
 Clarify that Section 5’s statement applies only at the point of signaling deprecation and explicitly define the transition to the guidance in Section 7 regarding client assumptions post-deprecation.
 
-**Severity:** Medium
-  *Basis:* Multiple expert analyses highlight that this conflicting temporal guidance could lead to divergent client interpretations and implementation strategies, affecting interoperability.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Temporal: T1
-- Scope: Issue-1
-- Deontic: Issue-1
 
 ---
 
@@ -85,14 +75,5 @@ The specification uses the term 'behavior' ambiguously by conflating functional 
 
 Revise the document to clearly differentiate functional resource semantics from non-functional attributes or explicitly define the intended scope of 'behavior' in the context of deprecation.
 
-**Severity:** Medium
-  *Basis:* The lack of clarity regarding which aspects of behavior are preserved can lead to divergent client assumptions about the reliability and performance of deprecated resources.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope: Issue-2
-- Terminology: Issue-1
 
 ---

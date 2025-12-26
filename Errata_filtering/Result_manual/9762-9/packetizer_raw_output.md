@@ -43,19 +43,6 @@ The updated RA note in RFC 9762 ambiguously aggregates the RA header flags (M an
 
 Replace the note with explicit language that states: 'If both the M and O flags in the Router Advertisement header are zero and no Prefix Information Option has the P flag set, then the advertisement carries no DHCPv6 information.'
 
-**Severity:** High
-  *Basis:* The ambiguity could lead to misinterpretation whereby valid DHCPv6 advertisements (with either M or a properly set P flag) may be incorrectly treated as carrying no information, potentially disabling DHCPv6 functionality.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
-- Deontic Expert: Issue-1
-- Structural Expert: Issue-1
-- CrossRFC Expert: Issue-1
-- Terminology Expert: Issue-1
-- Boundary Expert: Finding-1
 
 ---
 
@@ -93,17 +80,6 @@ The RA note in RFC 9762 treats the absence of the P flag as indicating no DHCPv6
 
 Clarify that the RA note describes only the content of the advertisement and that the absence of the P flag does not imply the absence of DHCPv6-PD, thereby aligning with the normative guidance in Section 7.3.
 
-**Severity:** High
-  *Basis:* If misinterpreted, the conflict may lead to implementations disabling DHCPv6-PD, adversely affecting network behavior in environments that rely on DHCPv6 prefix delegation.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-2
-- Deontic Expert: Issue-2
-- CrossRFC Expert: Issue-2
-- Boundary Expert: Finding-2
 
 ---
 
@@ -141,13 +117,5 @@ There exists a naming discrepancy between 'Prefix-Information option' and 'Prefi
 
 Standardize the naming throughout the document to 'Prefix Information Option' to ensure textual consistency with the IANA registry and RFC 9762.
 
-**Severity:** Low
-  *Basis:* This issue is purely editorial with no impact on interoperability or protocol semantics.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Terminology Expert: Issue-2
 
 ---

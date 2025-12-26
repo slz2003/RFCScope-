@@ -49,16 +49,6 @@ Section 13 ambiguously prohibits modifying UDP packet content outside an option�
 
 Revise Section 13 to explicitly differentiate between SAFE and UNSAFE options—for example, restrict the unmodifiable areas clause to SAFE options and clearly state that UNSAFE options may modify UDP user data and later options.
 
-**Severity:** Medium
-  *Basis:* The ambiguity may lead to misinterpretation by future option designers and could result in inconsistent implementations if UNSAFE options are improperly constrained.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
-- Structural Expert: Issue-1
-- Deontic Expert: Issue-1
 
 ---
 
@@ -108,14 +98,6 @@ Immediately after Figure 11: “The terminal FRAG Option format adds a Reassembl
 
 Change the caption under Figure 11 to 'UDP Terminal FRAG Option Format'.
 
-**Severity:** Low
-  *Basis:* The mislabel is an editorial error that may cause momentary confusion but is unlikely to impact interoperability owing to other disambiguating details (such as option length).
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Terminology Expert: Issue-1
 
 ---
 
@@ -155,13 +137,5 @@ The document consistently differentiates between the prohibition on having optio
 - (E2) Section 13 enforces that option fields must remain independent of other options.
 - (E3) Section 13 allows UNSAFE options to modify UDP user data, maintaining consistency with the intended UCMP behavior.
 
-**Severity:** Low
-  *Basis:* This observation is editorial in nature and has no operational impact, as the specification already maintains a clear terminological distinction.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Terminology Expert: Issue-2
 
 ---

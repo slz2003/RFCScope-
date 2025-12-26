@@ -49,16 +49,6 @@ The JSON example incorrectly nests the ACL container within the MUD container in
 
 Re-arrange the JSON so that 'ietf-access-control-list:acls' is placed as a top-level sibling of 'ietf-mud:mud'.
 
-**Severity:** High
-  *Basis:* This violation breaks the fundamental JSON-YANG binding expected by RFC 8520 and will lead to schema validation errors.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
-- Structural Expert: Issue-1
-- CrossRFC Expert: Issue-1
 
 ---
 
@@ -120,16 +110,6 @@ The JSON example incorrectly nests the 'actions' container within the 'matches' 
 
 Restructure each ACE so that 'actions' is placed as a sibling to 'matches', not within it.
 
-**Severity:** High
-  *Basis:* Incorrect nesting of 'actions' leads to validation errors and potentially missing ACL action instructions.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-2
-- Structural Expert: Issue-3
-- CrossRFC Expert: Issue-3
 
 ---
 
@@ -181,17 +161,6 @@ container client-profiles { ... list tls-dtls-profile { key "name"; ... leaf-lis
 
 Rename the JSON members to exactly match the YANG identifiers (e.g., use 'ietf-acl-tls:client-profiles' with a 'tls-dtls-profile' list and correct leaf names).
 
-**Severity:** High
-  *Basis:* Misnaming leads to nonconformance with the YANG model and causes TLS profile information to be dropped or ignored.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-2
-- Structural Expert: Issue-4
-- CrossRFC Expert: Issue-2
-- Terminology Expert: Issue-1
 
 ---
 
@@ -236,16 +205,6 @@ leaf is-tls-dtls-profile-supported {
 
 Encode the boolean value without quotes (e.g., "ietf-mud-tls:is-tls-dtls-profile-supported": true).
 
-**Severity:** High
-  *Basis:* This error violates the JSON encoding rules for booleans and may lead to misinterpretation of device capabilities.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Causal Expert: Issue-2.3
-- Structural Expert: Issue-2
-- CrossRFC Expert: Issue-4
 
 ---
 
@@ -280,14 +239,6 @@ The IANA documentation mistakenly refers to a 'client-profile' node, while the c
 
 Update the IANA documentation to refer to the correct node name ('client-profiles').
 
-**Severity:** Low
-  *Basis:* This is primarily an editorial issue that may cause minor confusion, but does not affect the structural conformance of implementations.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Terminology Expert: Issue-2
 
 ---
 
@@ -320,13 +271,5 @@ The documentation erroneously attributes the spki-pin-set and certificate-author
 
 Revise the documentation to correctly state that spki-pin-set and certificate-authority are defined in the ietf-acl-tls module.
 
-**Severity:** Low
-  *Basis:* This is a documentation error that may confuse implementers or IANA, but does not affect actual protocol operation.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Terminology Expert: Issue-3
 
 ---

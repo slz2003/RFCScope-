@@ -38,14 +38,6 @@ The specification conditions IMAP4rev2 servers to follow RFC 9051’s message/gl
 
 Clarify the text to state that for IMAP4rev2, RFC 9051’s requirements for message/global BODYSTRUCTURE apply in all cases, regardless of UTF8=ACCEPT.
 
-**Severity:** Medium
-  *Basis:* The conditional language may cause inconsistent implementations and interoperability issues by implying a narrower scope than intended.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- ScopeExpert: Issue-1
 
 ---
 
@@ -88,15 +80,5 @@ RFC 9755 mistakenly references the non-existent media type 'message/rfc' rather 
 
 Replace 'message/rfc' with 'message/rfc822' throughout RFC 9755, particularly in Section 6, to ensure consistency with MIME standards and related RFCs.
 
-**Severity:** Medium
-  *Basis:* The misnaming introduces ambiguity that can lead to misinterpretation and potential incompatibilities in implementations.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- StructuralExpert: Issue-1
-- CrossRFCExpert: Issue-1
-- TerminologyExpert: Issue-1
 
 ---

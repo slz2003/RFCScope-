@@ -39,18 +39,6 @@ Section 5.1 describes the CO flag as occupying the second most significant bit o
 
 Update Section 9 Table 2 to list the CO flag as Bit 14, aligning it with the description in Section 5.1 and the established IANA EDNS header flags numbering (DO = bit 15, CO = bit 14).
 
-**Severity:** High
-  *Basis:* This misnumbering can lead to differing wire encodings between implementations, potentially causing the CO signaling feature to be silently ignored and breaking interoperability.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Causal Expert: Issue 1
-- Quantitative Expert: Issue-1
-- Structural Expert: Issue-1
-- CrossRFC Expert: Issue-1
-- Terminology Expert: Issue-1
 
 ---
 
@@ -94,18 +82,5 @@ RFC 9824 requires the NXNAME Meta-TYPE (value 128) to be used in NSEC3 Type Bit 
 
 Explicitly update RFC 5155 (or add a clarifying exception in RFC 9824) to exempt NXNAME from the 'MUST be 0' rule in NSEC3 Type Bit Maps, ensuring that NXNAME is honored as intended in responses for nonexistent names.
 
-**Severity:** High
-  *Basis:* The conflicting normative requirements may lead to inconsistent handling of NXNAME in NSEC3 records, which can undermine the mechanism designed to distinguish between NXDOMAIN and NODATA responses.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Causal Expert: Issue 2
-- Quantitative Expert: Issue-2
-- Deontic Expert: Issue-1
-- Structural Expert: Issue-2
-- CrossRFC Expert: Issue-2
-- CrossRFC Expert: Issue-3
 
 ---

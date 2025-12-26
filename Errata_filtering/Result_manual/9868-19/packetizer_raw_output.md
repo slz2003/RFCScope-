@@ -38,15 +38,6 @@ Section 19 mandates that all non‑UNSAFE UDP Options be ignored on failure with
 
 Revise Section 19 to explicitly state that its rules apply by default and are subject to configuration overrides, aligning its scope with Sections 6, 11, 14, and 15.
 
-**Severity:** Medium
-  *Basis:* The conflict may lead to implementations that either disregard necessary security checks or misapply the default behavior, affecting interoperability and security.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
-- Deontic Expert: Issue-1
 
 ---
 
@@ -89,14 +80,5 @@ Section 19 states that all UDP Options that fail must still result in the UDP da
 
 Modify Section 19 to limit its failure clause to SAFE UDP Options and explicitly refer to Section 12 for the behavior required with UNSAFE options.
 
-**Severity:** Medium
-  *Basis:* Ambiguity in the exclusion of UNSAFE options may lead to erroneous implementations that compromise the intended security and reliability of the protocol.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-2
-- Deontic Expert: Issue-2
 
 ---

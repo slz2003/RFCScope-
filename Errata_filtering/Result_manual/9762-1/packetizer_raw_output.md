@@ -29,14 +29,6 @@ The RFC text uses a /60 example that implies only 15 available /64 prefixes with
 
 - (E1) The excerpt indicates that the /60 example implies only 15 usable /64 prefixes, although standard arithmetic would allow 16, leaving ambiguity regarding an unstated reserved prefix.
 
-**Severity:** Low
-  *Basis:* The issue represents a non‑normative background text ambiguity that does not cause interoperability failure but may confuse a careful reader.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- CrossRFCExpert: Issue-1
 
 ---
 
@@ -80,14 +72,6 @@ The modified RFC 4861 note groups the P flag with the RA header flags (M and O) 
 
 Clarify Section 9.1 by explicitly stating: 'If neither the M nor O flags in the Router Advertisement header are set and no Prefix Information Option in the RA has the P flag set, then no DHCPv6 information is available.'
 
-**Severity:** Medium
-  *Basis:* The conflation of the P flag with RA header flags may lead to misinterpretation of its scope, potentially impacting proper implementation.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- TerminologyExpert: Issue-1
 
 ---
 
@@ -126,13 +110,5 @@ Although the document uses 'client', 'host', and 'node' in various contexts, the
 - (E2) Section 1 references the DHCPv6-PD model in alignment with RFC9663 and RFC8415.
 - (E3) The usage in Sections 7.4/7.5, while mixed, reflects standard practices without functional inconsistencies.
 
-**Severity:** Low
-  *Basis:* The mixed terminology is a minor editorial variation and does not risk misimplementation.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- TerminologyExpert: Issue-2
 
 ---

@@ -43,14 +43,6 @@ Section 8.6 describes the BGP‐LS SR Policy Metric Types registry as applying o
 
 Update the wording in Section 8.6 to reference both the Metric Type fields in Sections 5.6.6 and 5.7.2.
 
-**Severity:** Low
-  *Basis:* The issue is editorial; it affects clarity in IANA considerations without impacting actual protocol interoperability.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
 
 ---
 
@@ -88,15 +80,6 @@ The document claims to create and maintain a new SR Policy Protocol‐Origin reg
 
 Consider adding an editorial note that clarifies alignment with RFC 9256, or adjust the registry description to reflect any pre‐existing assignments if applicable.
 
-**Severity:** Low
-  *Basis:* The issue is mainly procedural and editorial, with no adverse impact on encoding or interoperability.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Deontic Expert: Issue-1
-- Structural Expert: Issue-2
 
 ---
 
@@ -134,14 +117,6 @@ The Segment List Identifier field is defined as carrying a non‑zero integer, y
 
 Revise the field definition to either exclude 0 entirely or clearly permit 0 as a defined sentinel value, ensuring internal consistency.
 
-**Severity:** Low
-  *Basis:* The contradiction is minor and is unlikely to affect interoperability, although it may confuse implementers.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Structural Expert: Issue-1
 
 ---
 
@@ -174,13 +149,5 @@ The registry for the Protocol‐Origin field is described solely in reference to
 
 Clarify the intended scope of the SR Policy Protocol‐Origin registry in Section 8.4 to indicate whether it applies solely to the BGP‑LS Protocol-Origin field or to a broader set of SR Policy encodings.
 
-**Severity:** Low
-  *Basis:* The issue is editorial and affects interpretative clarity rather than protocol functionality.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: ResidualUncertainties
 
 ---

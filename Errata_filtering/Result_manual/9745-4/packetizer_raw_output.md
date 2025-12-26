@@ -43,16 +43,6 @@ The RFC 9745 example for the Sunset header uses 'UTC' as the timezone token, whi
 
 Change the example in RFC 9745 Section 4 to use 'GMT' instead of 'UTC', e.g., 'Sunset: Sun, 30 Jun 2024 23:59:59 GMT'.
 
-**Severity:** High
-  *Basis:* Using an invalid timezone token may lead to non-conformant HTTP-date values, resulting in interoperability issues with strict HTTP parser implementations.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Quantitative Expert: Issue-1
-- Structural Expert: Issue-1
-- CrossRFC Expert: Issue-1
 
 ---
 
@@ -85,13 +75,5 @@ RFC 9745 mandates that the Sunset timestamp must not precede the Deprecation tim
 
 - (E1) Provides the normative statement on the ordering of the Deprecation and Sunset timestamps along with guidance for handling misconfigurations, which may be viewed as ambiguous.
 
-**Severity:** Low
-  *Basis:* The issue is primarily editorial; while the constraint is coherent, its guiding language might benefit from further clarification to avoid misinterpretation.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Deontic Expert: Issue-1
 
 ---

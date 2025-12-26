@@ -59,14 +59,6 @@ Local term definitions in Section 2:
 - (E1) The BCP 14 boilerplate in Section 2 defines key words and capitalization rules, establishing a clear standard.
 - (E2) The document explicitly imports IPFIX terminology and defines local terms so that their usage is consistent throughout the text.
 
-**Severity:** Low
-  *Basis:* Expert analysis confirms that the terminology usage is coherent with base specifications, posing no interoperability or conceptual issues.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Terminology Expert: Issue-1
 
 ---
 
@@ -98,13 +90,5 @@ There is a minor stylistic inconsistency where one Information Element name incl
 
 Consider aligning the naming convention to remove the extra 's' for clarity, though the current naming does not impact functionality.
 
-**Severity:** Low
-  *Basis:* The inconsistency is purely stylistic and does not affect interoperability; it is an editorial issue that could be improved for clarity.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Terminology Expert: Issue-1
 
 ---

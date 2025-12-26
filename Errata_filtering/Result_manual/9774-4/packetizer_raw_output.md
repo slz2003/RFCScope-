@@ -43,14 +43,5 @@ RFC 9774 states that in ASPA-based AS_PATH verification, routes with AS_SET are 
 
 Revise the RFC 9774 wording to clarify that while ASPA-based verification mandates classification of AS_SET routes as Invalid, the decision to treat these Invalid routes as ineligible for route selection is a recommended policy subject to operator configuration.
 
-**Severity:** Medium
-  *Basis:* The misrepresentation may mislead implementers and operators by implying a hard requirement rather than a recommendation, potentially constraining deployment choices.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Deontic Expert: Issue-1
-- CrossRFC Expert: Issue-1
 
 ---

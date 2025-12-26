@@ -38,14 +38,6 @@ The SR Policy Name TLV is encoded per candidate path even though it is conceptua
 
 Either require that all candidate paths for the same SR Policy carry identical SR Policy Name TLVs or redefine the TLV to be explicitly scoped per candidate path.
 
-**Severity:** Medium
-  *Basis:* Mismatch between encoding and conceptual scope can lead to inconsistent policy views across controllers.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
 
 ---
 
@@ -88,14 +80,6 @@ Dataplane selection flags and algorithm/topology parameters are encoded in the c
 
 Specify that all flags representing dataplane and algorithm/topology information must agree, or provide a clear rule for resolving differences between candidate path, segment list, and BSID TLVs.
 
-**Severity:** Medium
-  *Basis:* Inconsistent flag values can lead to diverging interpretations by BGP‑LS consumers and undermine interoperability.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-2
 
 ---
 
@@ -138,14 +122,6 @@ The document deprecates using SR Binding SID TLV 1201 for SRv6 BSIDs but does no
 
 Clearly state that new BGP‑LS Producers MUST NOT originate SR Binding SID TLV 1201 with the D-flag set for SRv6 and should use the SRv6 Binding SID TLV (1212) instead.
 
-**Severity:** Medium
-  *Basis:* Ambiguity in the deprecation policy may lead to inconsistent encoding of SRv6 BSIDs across implementations.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-3
 
 ---
 
@@ -183,15 +159,6 @@ Although the specification states that the P-Flag and U-Flag for protection pref
 
 Include explicit normative language (e.g., a MUST NOT clause) forbidding simultaneous setting of P-Flag and U-Flag, and specify the consumer interpretation if both are encountered.
 
-**Severity:** Medium
-  *Basis:* Without clear guidance, differing interpretations of contradictory flag settings could lead to inconsistent policy computations across networks.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Deontic Expert: Issue-1
-- Boundary Expert: Finding-1
 
 ---
 
@@ -229,14 +196,6 @@ The mapping of the I-Flag and U-Flag to the Drop-Upon-Invalid behavior does not 
 
 Define a clear set of rules for how I-Flag and U-Flag relate (e.g., that U=1 implies I=1 and requires the candidate path to be active), and specify allowed combinations.
 
-**Severity:** Medium
-  *Basis:* Ambiguities in these flag combinations can lead to divergent interpretations of candidate path state across different consumers.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Deontic Expert: Issue-2
 
 ---
 
@@ -279,14 +238,6 @@ The SR Binding SID (code point 1201) is inconsistently described as both a top-l
 
 Revise Section 5.1 to consistently refer to code point 1201 as a top-level TLV and remove or clearly distinguish any legacy sub‑TLV terminology.
 
-**Severity:** Low
-  *Basis:* Although the inconsistency may cause confusion, it does not affect on‐wire encoding.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Structural Expert: Issue-1
 
 ---
 
@@ -324,13 +275,5 @@ The status flags F, I, and X within the SR Disjoint Group Constraint sub‑TLV a
 
 Add normative language to specify that F, I, and X are mutually exclusive and define the precedence order if more than one flag is set.
 
-**Severity:** Medium
-  *Basis:* Ambiguous flag combinations can lead to inconsistent disjointness state interpretations among consumers.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Boundary Expert: Finding-2
 
 ---

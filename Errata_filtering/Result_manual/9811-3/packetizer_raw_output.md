@@ -33,14 +33,6 @@ The specification does not clearly define key timing parameters for announcement
 
 Clarify the announcement retry semantics by explicitly defining the start event for timing, setting any upper bounds on retries, and detailing the behavior when 202 responses continue to be received.
 
-**Severity:** Low
-  *Basis:* Ambiguities in timing may lead to divergent retry implementations but are not catastrophic for interoperability.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Temporal: T1
 
 ---
 
@@ -78,16 +70,6 @@ The normative requirement to 'MUST forward CMP messages when an HTTP error statu
 
 Either scope the forwarding requirement to exclude announcement acknowledgments or add an explicit note clarifying that the empty-content rule in Section 3.5 overrides the general forwarding rule.
 
-**Severity:** Low
-  *Basis:* While the ambiguity may lead to divergent interpretations, it does not cause catastrophic interoperability issues.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- ActorDirectionality: NewIssue-1
-- Scope: Issue-1
-- Deontic: Issue-1
 
 ---
 
@@ -125,13 +107,5 @@ The specification intentionally repurposes HTTP 201 and 202 status codes with em
 
 Clarify that the use of 201/202 with empty bodies is an intentional design choice for CMP announcement pushes, even though it diverges from common HTTP practices.
 
-**Severity:** Low
-  *Basis:* The deviation is stylistic and intentional, posing little risk to interoperability despite being unconventional.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Deontic: Issue-2
 
 ---

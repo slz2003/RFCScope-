@@ -43,15 +43,6 @@ RFC9762 incorrectly points to RFC4862 for the definition of the Prefix Informati
 
 In Section 3 of RFC9762, update the PIO entry to reference RFC4861 (or both RFC4861 and RFC4862) to clearly delineate the definition of the on‐wire format.
 
-**Severity:** Low
-  *Basis:* The misreference is unlikely to cause severe issues but can lead to minor confusion regarding the proper normative source for the option format.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- CrossRFC: Issue-1
-- Terminology: Issue-1
 
 ---
 
@@ -90,13 +81,5 @@ The document uses shortened definitions for on-link and off-link addresses that 
 - (E1) Presents the abbreviated on-link and off-link definitions as given in RFC9762.
 - (E2) Provides contextual full definitions from RFC4861, confirming consistency.
 
-**Severity:** Low
-  *Basis:* The abbreviated definitions are fully consistent with RFC4861 and do not introduce ambiguity affecting implementation.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Terminology: Issue-2
 
 ---

@@ -28,14 +28,6 @@ The analysis explains that the IANA instructions in Section 6 of RFC 9811 proper
 
 - (E1) Section 6 instructs IANA to update registry references without altering structural specifications, and no contradictions or underspecifications were identified.
 
-**Severity:** Low
-  *Basis:* The analysis explicitly finds no structural or syntactic problems affecting interoperability.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Structural Expert: Issue-1
 
 ---
 
@@ -64,14 +56,6 @@ The CoAP Content-Formats registry entry for application/pkixcmp is updated to re
 
 - (E2) RFC 9811 directs the CoAP registry to reference itself despite RFC 9482 defining CoAP transfer, creating a cross-document mismatch.
 
-**Severity:** High
-  *Basis:* Directing CoAP implementers to an HTTP-specific document can mislead implementation by obscuring the normative source for CoAP behavior.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- CrossRFC Expert: Issue-1
 
 ---
 
@@ -100,14 +84,6 @@ RFC 9811 directs IANA to update the well-known cmp URI entry by replacing a refe
 
 - (E3) RFC 9811 replaces a non-existent RFC 4210 reference for the well-known cmp URI, where the actual definition lies in RFC 9480 and RFC 9482, leading to potential confusion.
 
-**Severity:** Medium
-  *Basis:* While the misidentification does not directly break functionality, it can lead to confusion regarding the correct historical references of the registry entry.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- CrossRFC Expert: Issue-2
 
 ---
 
@@ -136,13 +112,5 @@ The media type registry entry for application/pkixcmp is updated to reference RF
 
 - (E4) The media type registry now points solely to RFC 9811, an HTTP binding, potentially obscuring the core CMP semantics found in RFC 9810 for non-HTTP transports.
 
-**Severity:** Low
-  *Basis:* The issue is principally one of clarity and layering rather than an interoperability error, affecting non-HTTP implementations less directly.
-
-**Confidence:** Low
-
-**Experts mentioning this issue:**
-
-- CrossRFC Expert: Issue-3
 
 ---

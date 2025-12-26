@@ -48,20 +48,6 @@ The specification permits a server to deliver different on‐the‐wire represen
 
 Clarify the allowed server behavior: either mandate that different message representations use distinct UIDs/UIDVALIDITY (or mailboxes) to preserve immutability per RFC 3501, or explicitly allow per‐client presentation differences with a clear exception.
 
-**Severity:** High
-  *Basis:* Multiple expert analyses highlight that the potential for different on‐the‐wire representations under a stable UID/UIDVALIDITY conflicts with RFC 3501’s immutability guarantee, risking severe interoperability and synchronization issues.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Temporal Expert: T1
-- ActorDirectionality Expert: Issue-1
-- Scope Expert: Issue-2
-- Causal Expert: causal underspecification
-- Deontic Expert: Issue-1
-- CrossRFC Expert: Issue-1
-- Boundary Expert: Finding-1
 
 ---
 
@@ -99,13 +85,5 @@ The specification mandates that a client upgraded to UTF8=ACCEPT discard its cac
 
 Clearly define the cache invalidation boundary by specifying which caches (e.g., per-mailbox IMAP caches, POP caches, or other local archives) must be discarded upon client upgrade.
 
-**Severity:** Medium
-  *Basis:* Ambiguity in the cache invalidation requirement can lead to inconsistent client behavior and potential message synchronization issues across different access methods.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
 
 ---

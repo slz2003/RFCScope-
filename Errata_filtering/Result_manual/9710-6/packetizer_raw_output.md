@@ -32,14 +32,6 @@ A stray closing parenthesis appears after the NAT Threshold Event registry URL i
 
 Remove the stray closing parenthesis from the affected registry URL in Section 6.24.2.
 
-**Severity:** Low
-  *Basis:* This is a minor editorial issue affecting only punctuation, with no impact on technical functionality or interpretation.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Structural Expert: Issue-1
 
 ---
 
@@ -71,13 +63,5 @@ The text notes that RFC6144 is used as the reference for NAT46 in a high-level m
 
 Consider clarifying the rationale for using RFC6144 for NAT46 and, if appropriate, include additional or more specific references to provide clearer guidance.
 
-**Severity:** Low
-  *Basis:* This is an editorial observation that might lead to slight ambiguity, but it does not result in conflicting interpretations or technical errors.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- CrossRFC Expert: NAT46 reference observation
 
 ---

@@ -43,15 +43,6 @@ The document’s definition of (D)TLS in Section 2 exclusively ties DTLS to RFC6
 
 Revise the (D)TLS definition in Section 2 to include both RFC6347 and RFC9147 (or otherwise clarify that both DTLS 1.2 and 1.3 are in scope).
 
-**Severity:** Medium
-  *Basis:* Expert analyses indicate that using two different normative references for DTLS creates ambiguity that may mislead implementers.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- CrossRFC Expert: Issue-1
-- Terminology Expert: Issue-1
 
 ---
 
@@ -89,14 +80,6 @@ The document’s definition of 'Middlebox' in Section 2 restricts its scope to T
 
 Modify the Section 2 Middlebox definition to reference (D)TLS traffic instead of TLS only, for example by stating 'interacts with (D)TLS traffic.'
 
-**Severity:** Low
-  *Basis:* The issue is minor and terminological, unlikely to lead to interoperability problems but may cause temporary confusion.
-
-**Confidence:** Inferred
-
-**Experts mentioning this issue:**
-
-- Terminology Expert: Issue-2
 
 ---
 
@@ -135,13 +118,5 @@ The definitions for DoH/DoT, Endpoint Security Agent, and Network Security Servi
 - (E7) Confirms the definition for Endpoint Security Agent.
 - (E8) Confirms the definition for Network Security Service.
 
-**Severity:** Low
-  *Basis:* The consistent and clear definitions across sections indicate no risk of misinterpretation.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Terminology Expert: Issue-3
 
 ---

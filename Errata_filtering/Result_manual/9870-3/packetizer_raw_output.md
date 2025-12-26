@@ -40,14 +40,6 @@ RFC 9870 states that only 16‑bit ExIDs are supported in [RFC9868], which may m
 
 In Section 3 of RFC 9870, rephrase the statement to clarify that only UDP Options use 16‑bit ExIDs. For example: 'For UDP Options, [RFC9868] defines the use of only 16‑bit ExIDs (even though the shared TCP/UDP ExID registry also supports 32‑bit ExIDs for TCP options).'
 
-**Severity:** Low
-  *Basis:* The issue is editorial; it may cause misinterpretation of ExID scope but does not affect the correct encoding or interoperability of UDP Options.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Terminology Expert: Issue-1
 
 ---
 
@@ -86,14 +78,5 @@ The document’s assignment of numeric ranges 0–191 for SAFE Options and 192�
 - (E2) The basicList encoding example correctly totals 9 bytes, confirming proper field sizing.
 - (E3) The textual definitions for SAFE and UNSAFE Options align with the numeric ranges described.
 
-**Severity:** Low
-  *Basis:* The numerical assignments mirror the authoritative definitions in RFC 9868, presenting no risk to interoperability or implementation.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Quantitative Expert: Issue-1
-- Terminology Expert: Issue-2
 
 ---

@@ -42,15 +42,6 @@ The document mixes the ordering of handshake interception, decryption of handsha
 
 Clarify in Section 8 whether ACL matching is to be enforced in a pre-decryption stage versus a post-decryption stage and specify the exact point at which ACL decisions must be rendered.
 
-**Severity:** Medium
-  *Basis:* Different interpretations of the ordering may lead to inconsistent behavior between implementations, affecting security enforcement timing.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Temporal Expert: T1
-- Causal Expert: T1
 
 ---
 
@@ -87,14 +78,5 @@ The document fails to specify when the second-stage ACL checks must be completed
 
 Add a clarifying sentence in Section 8 that explicitly requires all ACL checks—including those based on decrypted handshake messages—to be completed before any application data (including 0‑RTT) is forwarded.
 
-**Severity:** Medium
-  *Basis:* Without a defined point for ACL completion, implementations may vary in when they enforce policy, potentially allowing data flow before full validation and creating inconsistent security postures.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Temporal Expert: T2
-- Causal Expert: T2
 
 ---

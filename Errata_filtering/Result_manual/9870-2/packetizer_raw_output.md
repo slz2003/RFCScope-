@@ -43,15 +43,6 @@ RFC9870 inaccurately claims that a standalone 'datagram' term is defined in RFC9
 
 Revise RFC9870 Section 2 to reference the precise terms 'IP datagram' and/or 'User datagram' as defined in RFC9868.
 
-**Severity:** Low
-  *Basis:* The inconsistency is minor and mostly editorial in nature, with little risk of causing implementation issues.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- CrossRFC Expert: Issue-1
-- Terminology Expert: Issue-1
 
 ---
 
@@ -90,13 +81,5 @@ While RFC9870 claims adherence to RFC7012 naming conventions, the IE name 'udpEx
 - (E2) The IANA table in RFC9870 includes 'udpExID', which does not conform to the expected lowercase style.
 - (E3) RFC7012 mandates that all letters after the first of each component should be lowercase, highlighting the deviation.
 
-**Severity:** Low
-  *Basis:* The stylistic deviation is minor, does not impact functionality, and is primarily an editorial issue.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Terminology Expert: Issue-2
 
 ---

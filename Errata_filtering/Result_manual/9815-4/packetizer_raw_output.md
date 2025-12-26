@@ -38,14 +38,5 @@ Section 4.3 uses inconsistent terminology by mixing clear references to BGP-LS-S
 
 In Section 4.3, revise the text to explicitly refer to BGP-LS-SPF peers and the BGP-LS-SPF Link NLRI, ensuring consistency and clear differentiation from the legacy BGP-LS SAFI.
 
-**Severity:** Medium
-  *Basis:* The ambiguity can result in divergent interpretations and implementation choices, potentially affecting convergence, controller behavior, and interoperability.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- CrossRFC Expert: Issue-1
-- Terminology Expert: Issue-1
 
 ---

@@ -43,15 +43,5 @@ RFC 9870 incorrectly directs readers to RFC 9868 Section 24 for UDP Options secu
 
 Change the reference in RFC 9870 Section 6 to point to Section 25 of RFC9868 (or to Sections 24 and 25 if both network management and security aspects are intended).
 
-**Severity:** Low
-  *Basis:* The issue is editorial; it may mislead readers but does not affect protocol operation or implementation.
-
-**Confidence:** High
-
-**Experts mentioning this issue:**
-
-- Scope Expert: Issue-1
-- Causal Expert: Issue-1
-- CrossRFC Expert: Issue-1
 
 ---
