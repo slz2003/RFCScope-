@@ -51,7 +51,7 @@ Explicitly state the allowed cardinality for TLV types 3 and 4, such as specifyi
 
 **Label:** Editorial Typographical Error in Admin Label TLV Description
 
-**Bug Type:** Editorial
+**Bug Type:** Inconsistency
 
 **Explanation:**
 
