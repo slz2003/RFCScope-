@@ -1,6 +1,6 @@
 # Errata Reports
 
-Total reports: 3
+Total reports: 2
 
 ---
 
@@ -77,37 +77,4 @@ The Admin Label TLV description contains a typographical error with an extraneou
 Remove the extraneous 'a' so that the phrase reads 'There is no requirement to terminate the string with null or any other character.'
 
 
----
 
-## Report 3: 9736-3-3
-
-**Label:** Ambiguous Scope Wording for Peer Up Information TLV Usage
-
-**Bug Type:** Ambiguity
-
-**Explanation:**
-
-The specification’s wording for the usage of the Peer Up Information TLV is asymmetric when compared to the Initiation Information TLV, potentially leading to misinterpretation of its allowed message contexts.
-
-**Justification:**
-
-- The Initiation Information TLV is explicitly defined as being used only in the Initiation message, while the Peer Up Information TLV is only described as being 'used by the Peer Up message' without an exclusive restriction.
-- This asymmetry might be read to imply that Peer Up Information TLVs could appear in other message types, even though the registry name suggests a Peer‑Up‑only scope.
-
-**Evidence Snippets:**
-
-- **E1:**
-
-  ResidualUncertainties:
-- The asymmetry between “used only by the Initiation message, not by the Peer Up message” (for the Initiation Information TLV) and “used by the Peer Up message” (for the Peer Up Information TLV) might be read as allowing use of Peer Up Information TLVs in other message types, even though the registry name (“BMP Peer Up Message TLVs”) and overall intent suggest Peer‑Up‑only scope. This is arguably self‑evident from context but could have been made symmetric to avoid any doubt.
-
-**Evidence Summary:**
-
-- (E1) Highlights that the asymmetric phrasing between the two TLV types could lead to ambiguity about whether Peer Up Information TLVs are restricted exclusively to the Peer Up message.
-
-**Fix Direction:**
-
-Revise the text to explicitly restrict the Peer Up Information TLV to the Peer Up message, mirroring the unambiguous language used for the Initiation Information TLV.
-
-
----
