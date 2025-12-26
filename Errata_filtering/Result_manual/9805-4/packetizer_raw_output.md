@@ -1,6 +1,6 @@
 # Errata Reports
 
-Total reports: 3
+Total reports: 2
 
 ---
 
@@ -88,40 +88,3 @@ Revise either the global statement in Section 4 or the MPLS Ping entry in Append
 
 ---
 
-## Report 3: 9805-4-3
-
-**Label:** Apparent policy shift between RFC 9805 and RFC 9673 deprecation discussions
-
-**Bug Type:** None
-
-**Explanation:**
-
-There is a perceived discrepancy between RFC 9673's non-normative discussion suggesting future flexibility in RAO use and RFC 9805's explicit prohibition for new protocols, though this is viewed as an evolution in policy rather than a normative error.
-
-**Justification:**
-
-- RFC 9673 includes a DISCUSSION section that considers the possibility of using RAO with new functions under controlled conditions.
-- RFC 9805, meanwhile, clearly states that new protocols MUST NOT use the RAO and closes the value registry, reflecting a stricter policy which is a later design decision.
-
-**Evidence Snippets:**
-
-- **E1:**
-
-  [DISCUSSION] … One approach would be to deprecate this, because current usage beyond the local network appears to be limited, and packets containing Hop-by-Hop options are frequently dropped. Deprecation would allow current implementations to continue, and its use could be phased out over time. … Keeping this as the single exception for processing in the Control Plane with the restrictions that follow is a reasonable compromise to allow future flexibility. (RFC 9673, 5.2.1)
-
-- **E2:**
-
-  However, new protocols that are standardized in the future MUST NOT use the IPv6 Router Alert option. (RFC 9805, Section 4)
-
-- **E3:**
-
-  IANA has also made a note in the ‘IPv6 Router Alert Option Values’ registry stating that the registry is closed for allocations. (RFC 9805, Section 7)
-
-**Evidence Summary:**
-
-- (E1) Presents the non-normative flexibility discussed in RFC 9673.
-- (E2) States the strict prohibition for new protocols in RFC 9805.
-- (E3) Indicates the administrative change in the RAO registry per RFC 9805.
-
-
----
