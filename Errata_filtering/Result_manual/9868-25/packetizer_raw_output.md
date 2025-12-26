@@ -8,7 +8,7 @@ Total reports: 1
 
 **Label:** Ambiguous Wording in Section 25.3: Conflation of 'Required Options' with Must-Support Options and Inconsistent TLV Terminology
 
-**Bug Type:** Inconsistency / Ambiguity
+**Bug Type:** Inconsistency
 
 **Explanation:**
 
