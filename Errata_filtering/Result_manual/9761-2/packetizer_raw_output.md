@@ -1,6 +1,6 @@
 # Errata Reports
 
-Total reports: 3
+Total reports: 2
 
 ---
 
@@ -81,42 +81,4 @@ The document’s definition of 'Middlebox' in Section 2 restricts its scope to T
 Modify the Section 2 Middlebox definition to reference (D)TLS traffic instead of TLS only, for example by stating 'interacts with (D)TLS traffic.'
 
 
----
 
-## Report 3: 9761-2-3
-
-**Label:** Consistent Terminology for DoH/DoT, Endpoint Security Agent, and Network Security Service
-
-**Bug Type:** None
-
-**Explanation:**
-
-The definitions for DoH/DoT, Endpoint Security Agent, and Network Security Service are applied consistently throughout the document.
-
-**Justification:**
-
-- Section 2 definitions for these terms match their usage in later sections, ensuring clarity.
-- There is no evidence of conflicting references or terminological discrepancies for these terms.
-
-**Evidence Snippets:**
-
-- **E6:**
-
-  DoH/DoT:  Refers to DNS-over-HTTPS [RFC8484] and/or DNS-over-TLS [RFC7858].
-
-- **E7:**
-
-  Endpoint Security Agent:  An Endpoint Security Agent is a software installed on endpoint devices that protects them from security threats.
-
-- **E8:**
-
-  Network Security Service:  A Network Security Service refers to a set of mechanisms designed to protect network communications and resources from attacks.
-
-**Evidence Summary:**
-
-- (E6) Provides the definition for DoH/DoT.
-- (E7) Confirms the definition for Endpoint Security Agent.
-- (E8) Confirms the definition for Network Security Service.
-
-
----
