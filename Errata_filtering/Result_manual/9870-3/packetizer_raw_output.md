@@ -41,42 +41,4 @@ RFC 9870 states that only 16‑bit ExIDs are supported in [RFC9868], which may m
 In Section 3 of RFC 9870, rephrase the statement to clarify that only UDP Options use 16‑bit ExIDs. For example: 'For UDP Options, [RFC9868] defines the use of only 16‑bit ExIDs (even though the shared TCP/UDP ExID registry also supports 32‑bit ExIDs for TCP options).'
 
 
----
 
-## Report 2: 9870-3-2
-
-**Label:** UDP Option Numeric Encoding and SAFE/UNSAFE Ranges Consistent with RFC 9868
-
-**Bug Type:** None
-
-**Explanation:**
-
-The document’s assignment of numeric ranges 0–191 for SAFE Options and 192–255 for UNSAFE Options, along with the use of a 16‑bit field for UDP ExIDs, is fully consistent with the normative definitions in RFC 9868.
-
-**Justification:**
-
-- RFC 9870 restates the numeric partitioning by mapping 192 distinct values to SAFE options and 64 values to UNSAFE options, which mirrors the IANA definitions in RFC 9868 (E1, E3).
-- The basicList encoding example is arithmetically verified to sum to 9 bytes, confirming internal consistency (E2).
-
-**Evidence Snippets:**
-
-- **E1:**
-
-  RFC 9868’s IANA section defines the “UDP Option Kind Numbers” table with SAFE options 0–191 and UNSAFE options 192–255; it then states explicitly: “Options indicated by Kind values in the range 0..191 are known as SAFE Options … Options indicated by Kind values in the range 192..255 are known as UNSAFE Options” . This matches RFC 9870’s Section 3 text.
-
-- **E2:**
-
-  In the example basicList encoding (Figure 5), the advertised “List Length = 9” matches the sum of the semantic (1 byte) + IE ID (2 bytes) + Field Length (2 bytes) + two ExID values at 2 bytes each = 1 + 2 + 2 + 4 = 9.
-
-- **E3:**
-
-  Options indicated by Kind values in the range 0-191 are called SAFE Options. … (Section 11 of [RFC9868]). Options indicated by Kind values in the range 192-255 are called UNSAFE Options. … (Section 12 of [RFC9868]).
-
-**Evidence Summary:**
-
-- (E1) The IANA table in RFC 9868 defines the SAFE/UNSAFE partition that RFC 9870 restates.
-- (E2) The basicList encoding example correctly totals 9 bytes, confirming proper field sizing.
-- (E3) The textual definitions for SAFE and UNSAFE Options align with the numeric ranges described.
-
-
----
