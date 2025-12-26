@@ -50,7 +50,7 @@ In Section 12 (or in related sections such as 14/19), add a clear, BCP‑14–st
 
 **Label:** Contradictory rules on failed UNSAFE options: drop user data vs. deliver UDP data
 
-**Bug Type:** Contradiction
+**Bug Type:** Inconsistency
 
 **Explanation:**
 
