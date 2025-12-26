@@ -1,6 +1,6 @@
 # Errata Reports
 
-Total reports: 6
+Total reports: 4
 
 ---
 
@@ -160,72 +160,5 @@ There is a conflict between RFC 9830, which permits processing of valid SR Polic
 Harmonize the treatment of partially malformed NLRI within multi-NLRI updates by explicitly stating whether only the malformed NLRIs should trigger treat‑as‑withdraw or if the entire attribute must be rejected.
 
 
----
-
-## Report 5: 9830-5-5
-
-**Label:** Ambiguous terminology for 'valid', 'malformed', 'invalid', and 'unsupported' SR Policy attributes
-
-**Bug Type:** Underspecification
-
-**Explanation:**
-
-The specification uses overlapping terms such as 'valid', 'malformed', 'invalid', and 'unsupported' without clear definitions, making it ambiguous which conditions trigger a treat‑as‑withdraw action versus those that only affect the usability of an SR Policy update.
-
-**Justification:**
-
-- Section 4.2.2 defines unrecognized or unsupported sub‑TLVs as affecting usability without explicitly triggering withdrawal, while Section 5 groups errors under a blanket rule that mandates treat‑as‑withdraw.
-- This inconsistency in terminology can lead to different interpretations and behaviors among implementations.
-
-**Evidence Snippets:**
-
-- **E1:**
-
-  Section 4.2.2: “When the SR Policy tunnel type includes any sub-TLV that is unrecognized or unsupported, the update SHOULD NOT be considered usable. An implementation MAY provide an option for ignoring unsupported sub-TLVs.”
-
-- **E2:**
-
-  Section 5: “In case of any error detected, either at the attribute or its TLV/sub-TLV level, the ‘treat‑as‑withdraw’ strategy MUST be applied. This is because an SR Policy update without a valid Tunnel Encapsulation Attribute (comprised of all valid TLVs/sub‑TLVs) is not usable.”
-
-**Evidence Summary:**
-
-- (E1) sets a guideline for usability based on unsupported sub‑TLVs, while (E2) mandates withdrawal for any error, creating ambiguous terminology.
-
-**Fix Direction:**
-
-Clarify and consistently define the terms 'valid', 'malformed', 'invalid', and 'unsupported' within the document to clearly distinguish between syntactic errors that trigger withdrawal and conditions that affect only local usability.
 
 
----
-
-## Report 6: 9830-5-6
-
-**Label:** Overbroad use of 'malformed' for semantically invalid SR Policy updates
-
-**Bug Type:** None
-
-**Explanation:**
-
-The term 'malformed' is also applied to SR Policy updates that are semantically invalid (for example, missing required communities), potentially conflating distinct error types even though the prescribed handling remains the same.
-
-**Justification:**
-
-- Section 4.2.1 states that an SR Policy update lacking required Route Target extended communities and NO_ADVERTISE must be considered malformed.
-- Section 5 mandates treat‑as‑withdraw for such cases, which may conflate syntactic and semantic invalidity without affecting interoperability.
-
-**Evidence Snippets:**
-
-- **E1:**
-
-  Section 4.2.1: “If a router supporting this specification receives an SR Policy update with no Route Target extended communities and no NO_ADVERTISE community, the update MUST be considered to be malformed.”
-
-- **E2:**
-
-  Section 5: “An SR Policy update that is determined not to be valid (and, therefore, malformed) based on the rules described in Section 4.2.1 MUST be handled by the ‘treat‑as‑withdraw’ strategy.”
-
-**Evidence Summary:**
-
-- (E1) and (E2) illustrate the use of 'malformed' to cover cases of missing essential communities, potentially mixing semantic and syntactic error classifications.
-
-
----
