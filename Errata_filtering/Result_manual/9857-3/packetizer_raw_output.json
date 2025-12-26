@@ -1,0 +1,105 @@
+{
+  "reports": [
+    {
+      "label": "Misuse of TLVs 1028/1029 as Node Descriptor TLVs in Local Node Descriptors TLV",
+      "bug_type": "Both",
+      "explanation": "RFC 9857 mandates that TLVs 1028 and 1029 be included as Node Descriptor TLVs in the Local Node Descriptors TLV, yet these TLVs are defined in RFC 9552 as Node/Link Attribute TLVs, creating a classification conflict.",
+      "justification": [
+        "RFC 9857 Section 3 requires the Local Node Descriptors TLV to include TLVs 1028 and 1029 as Node Descriptor TLVs.",
+        "RFC 9552 defines TLVs 1028/1029 solely as Node/Link Attribute TLVs (with valid Node Descriptor sub‐TLVs limited to types 512–515), leading to potential misinterpretation of the NLRI key."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "The Local Node Descriptors TLV MUST include at least one of the following Node Descriptor TLVs: * IPv4 Router-ID of Local Node (TLV 1028) [RFC9552] … * IPv6 Router-ID of Local Node (TLV 1029) [RFC9552]"
+          },
+          {
+            "id": "E2",
+            "text": "In RFC 9552, the only Node Descriptor sub‑TLV types are 512–515 (Table “Node Descriptor Sub-TLVs”), and TLVs 1028/1029 are defined as Node/Link *Attribute* TLVs, not descriptor sub‑TLVs, e.g. “IPv4 Router-ID of Local Node (1028)” and “IPv6 Router-ID of Local Node (1029)” under Link/Node Attribute TLVs."
+          }
+        ],
+        "summary": [
+          "(E1) RFC 9857 mandates the inclusion of TLVs 1028/1029 as Node Descriptor TLVs in the Local Node Descriptors TLV.",
+          "(E2) RFC 9552 defines these TLVs as Node/Link Attribute TLVs rather than as part of the Node Descriptor sub‑TLV set."
+        ]
+      },
+      "fix_direction": "Clarify in RFC 9857 that, for NLRI Type 5, either new Node Descriptor sub‑TLV types should be defined for IPv4/IPv6 headend identifiers or explicitly state that TLVs 1028 and 1029 are valid as Node Descriptor sub‑TLVs despite their original attribute definition.",
+      "severity": "Medium",
+      "severity_basis": "The conflicting TLV classifications may lead to interoperability issues as different implementations might treat these TLVs differently when constructing the NLRI key.",
+      "confidence": "High",
+      "experts": [
+        "Scope Expert: Issue-1",
+        "Deontic Expert: Issue-1",
+        "Structural Expert: Issue-1",
+        "CrossRFC Expert: Issue-1",
+        "Terminology Expert: Issue-1"
+      ],
+      "report_id": "9857-3-1"
+    },
+    {
+      "label": "Ambiguous Scope of the Identifier (BGP-LS Instance-ID) for SR Policy Candidate Path NLRI",
+      "bug_type": "Underspecification",
+      "explanation": "The Identifier field for NLRI Type 5 is defined as an 8‑octet BGP‑LS Instance-ID per RFC 9552, but RFC 9857 does not clarify which IGP or policy domain this identifier should represent when SR Policies span multiple domains.",
+      "justification": [
+        "RFC 9857 Section 3 states: Identifier: An 8‑octet value as defined in Section 5.2 of [RFC9552].",
+        "RFC 9552 ties the Identifier field to the IGP routing domain, yet SR Policy candidate paths can be generated in multi‑domain or PCE scenarios without clear guidance on which domain’s Instance-ID to use."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Identifier: An 8-octet value as defined in Section 5.2 of [RFC9552]."
+          },
+          {
+            "id": "E2",
+            "text": "In RFC 9552 Section 5.2: “The Identifier field carries an 8‑octet BGP‑LS Instance Identifier (Instance-ID) number that is used to identify the IGP routing domain where the NLRI belongs. …”"
+          }
+        ],
+        "summary": [
+          "(E1) RFC 9857 defines the Identifier field simply as an 8‑octet value per RFC 9552.",
+          "(E2) RFC 9552 associates the Identifier with an IGP routing domain, which does not clearly map to SR Policy candidate paths in multi‑domain scenarios."
+        ]
+      },
+      "fix_direction": "Specify in RFC 9857 which domain or entity (e.g., the headend’s IGP instance or a dedicated policy domain) the Identifier must correspond to, especially in PCE or multi‑domain deployments.",
+      "severity": "Medium",
+      "severity_basis": "Ambiguity in the intended scope of the Instance-ID may lead to inconsistent correlation of SR Policy state with topological information across different implementations.",
+      "confidence": "Medium",
+      "experts": [
+        "Scope Expert: Issue-2",
+        "Deontic Expert: Issue-2",
+        "CrossRFC Expert: Issue-3"
+      ],
+      "report_id": "9857-3-2"
+    },
+    {
+      "label": "Confusing Description of BGP Confederation Member TLV 517 Contents",
+      "bug_type": "Inconsistency",
+      "explanation": "RFC 9857 describes TLV 517 as containing the headend node of the SR Policy, yet it actually carries the Member-AS Number, leading to misleading terminology that may confuse implementers.",
+      "justification": [
+        "The document states that TLV 517 'contains the ASN of the confederation member (i.e., Member-AS Number); if BGP confederations are used, it contains the headend node of the SR Policy,' conflating an ASN with a node identifier.",
+        "This description is at odds with the standard definitions in RFC 5065 and RFC 9086, where TLV 517 is intended solely to carry the Member-AS Number."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "BGP Confederation Member (TLV 517) [RFC9086], which contains the ASN of the confederation member (i.e., Member-AS Number); if BGP confederations are used, it contains the headend node of the SR Policy."
+          }
+        ],
+        "summary": [
+          "(E1) The text specifies that TLV 517 both carries the Member-AS Number and, if BGP confederations are used, 'contains the headend node,' which creates ambiguity."
+        ]
+      },
+      "fix_direction": "Revise the description for TLV 517 in RFC 9857 to state unambiguously that it carries the Member-AS Number associated with the headend’s confederation membership, not a node identifier.",
+      "severity": "Low",
+      "severity_basis": "The misdescription is primarily a terminology issue and is unlikely to cause significant interoperability problems, though it may confuse implementers.",
+      "confidence": "Medium",
+      "experts": [
+        "CrossRFC Expert: Issue-2",
+        "Terminology Expert: Issue-2"
+      ],
+      "report_id": "9857-3-3"
+    }
+  ]
+}

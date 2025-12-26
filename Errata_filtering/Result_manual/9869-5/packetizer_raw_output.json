@@ -1,0 +1,75 @@
+{
+  "reports": [
+    {
+      "label": "Ambiguous PTB Token Validation Requirements (Section 5.2 vs Section 8)",
+      "bug_type": "Both",
+      "explanation": "The RFC ambiguously defines 'this validation' in the PTB processing section, making it unclear whether the token check is optional (a SHOULD) or mandatory (a MUST), which conflicts with the later security requirements stated in Section 8.",
+      "justification": [
+        "Section 5.2 describes two checks—a mandatory protocol/port validation and a token check labeled as SHOULD—then uses the phrase 'this validation' ambiguously.",
+        "Section 8 unambiguously requires that the token be used in combination with port validation, effectively upgrading the token check to a MUST requirement."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Before processing an ICMP PTB message, the DPLPMTUD method needs to perform two checks…\n* The receiver MUST validate the protocol information in the quoted packet carried in an ICMP PTB message payload…\n* Specifically, a UDP Options receiver SHOULD confirm that the token contained in the UDP REQ Option of the quoted packet has a value that corresponds to a probe packet that was recently sent by the current endpoint.\n… An implementation unable to support this validation MUST ignore received ICMP PTB messages."
+          },
+          {
+            "id": "E2",
+            "text": "A UDP Options sender that utilizes ICMP PTB messages received to a probe packet MUST use the quoted packet to validate the UDP port information in combination with the token contained in the UDP Option before processing the packet using the DPLPMTUD method."
+          },
+          {
+            "id": "E3",
+            "text": "Support for receiving ICMP PTB messages is OPTIONAL for DPLPMTUD. A UDP Options sender can therefore ignore received ICMP PTB messages."
+          }
+        ],
+        "summary": [
+          "(E1) Lists the two validation checks and shows the ambiguous use of ‘this validation’.",
+          "(E2) Provides the clear MUST requirement from Section 8 that ties token usage to PTB processing.",
+          "(E3) Emphasizes that PTB reception is optional, highlighting the inconsistency in how token validation is treated."
+        ]
+      },
+      "fix_direction": "Clarify and align the validation requirements by explicitly stating whether the token check is mandatory or optional, and consistently refer to the same scope of 'this validation' in both Section 5.2 and Section 8.",
+      "severity": "Medium",
+      "severity_basis": "The ambiguity may lead to divergent interpretations and implementations, potentially reducing security robustness against spoofed PTB messages.",
+      "confidence": "High",
+      "experts": [
+        "ActorDirectionality: Issue-1",
+        "Scope: Issue-1",
+        "Scope: Issue-2",
+        "Deontic: Issue-1",
+        "CrossRFC: Issue-1",
+        "Boundary: Finding-1"
+      ],
+      "report_id": "9869-5-1"
+    },
+    {
+      "label": "Inconsistent Actor Role Assignment for PTB Validation",
+      "bug_type": "Inconsistency",
+      "explanation": "The RFC inconsistently assigns the responsibility for PTB message validation between the UDP Options sender and receiver, which can mislead implementers as to which endpoint should perform the token-based validation.",
+      "justification": [
+        "Section 5.2 suggests that the token check is performed by a UDP Options receiver even though ICMP PTB messages are sent to the UDP Options sender.",
+        "Other sections, particularly in the security considerations, correctly assign the validation responsibility to the UDP Options sender."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E4",
+            "text": "Section 5.2 assigns the token-based PTB validation step to a “UDP Options receiver”, even though ICMP PTB messages are sent back to the original UDP sender and must therefore be processed by the UDP Options sender. Elsewhere (notably in the security considerations) the RFC correctly assigns PTB validation responsibilities to the UDP Options sender, so this is a clear role/direction inversion."
+          }
+        ],
+        "summary": [
+          "(E4) Highlights the actor role inconsistency between sections by showing that the token-based PTB validation is incorrectly attributed to the UDP Options receiver in one part of the RFC."
+        ]
+      },
+      "fix_direction": "Clearly define and consistently assign the PTB validation responsibility to the UDP Options sender across all sections of the RFC to eliminate any role/direction inversion.",
+      "severity": "Medium",
+      "severity_basis": "Misassignment of roles can confuse implementers and may lead to insecure behavior if the wrong endpoint processes critical PTB validations.",
+      "confidence": "High",
+      "experts": [
+        "ActorDirectionality: NewIssue-1"
+      ],
+      "report_id": "9869-5-2"
+    }
+  ]
+}

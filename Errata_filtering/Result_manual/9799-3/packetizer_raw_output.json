@@ -1,0 +1,198 @@
+{
+  "reports": [
+    {
+      "label": "Ambiguous actor reference in Tor client authentication (Section 4)",
+      "bug_type": "Underspecification",
+      "explanation": "Section 4 ambiguously uses the term 'client', causing confusion over whether it refers to the ACME client or the Tor client and thereby obscuring which actor must republish the Hidden Service Descriptor and wait for its propagation.",
+      "justification": [
+        "The language 'novel to the client' is used without clarifying that only the Hidden Service operator (via the ACME client) should perform descriptor republishing.",
+        "The excerpts indicate an indeterminate waiting period that does not clearly assign responsibility to a specific actor."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Some Hidden Services do not wish to be accessible to the entire Tor network, and so they encrypt their Hidden Service Descriptor with the keys of clients authorized to connect."
+          },
+          {
+            "id": "E2",
+            "text": "In the case in which the Ed25519 public key is novel to the client, it will have to resign and republish its Hidden Service Descriptor. It MUST wait some (indeterminate) amount of time for the new descriptor to propagate the Tor Hidden Service directory servers before proceeding with responding to the challenge."
+          }
+        ],
+        "summary": [
+          "(E1) Indicates ambiguous use of 'client' in the context of Hidden Service descriptor encryption.",
+          "(E2) Shows unclear responsibilities regarding republishing and waiting periods."
+        ]
+      },
+      "fix_direction": "Clarify in Section 4 that only the Hidden Service operator (acting via the ACME client) is responsible for republishing the Hidden Service Descriptor and waiting for its propagation.",
+      "severity": "Medium",
+      "severity_basis": "Ambiguity in specifying actor roles can lead to incorrect implementations and operational issues.",
+      "confidence": "High",
+      "experts": [
+        "ActorDirectionality Expert: NewIssue-1"
+      ],
+      "report_id": "9799-3-1"
+    },
+    {
+      "label": "Unspecified algorithm for verifying CSR public key corresponds to .onion identifier",
+      "bug_type": "Underspecification",
+      "explanation": "The specification requires that the CSR public key corresponds to the .onion identifier but fails to provide explicit normative guidance on how to derive and compare the public key from the .onion hostname.",
+      "justification": [
+        "The text mandates that the CSR public key 'MUST be the public key corresponding to the '.onion' Special-Use Domain Name' without detailing the derivation process.",
+        "This lack of specificity may lead to divergent implementations and affect interoperability."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "The public key presented in this CSR MUST be the public key corresponding to the '.onion' Special-Use Domain Name being validated. It MUST NOT be the same public key presented in the CSR to finalize the order."
+          },
+          {
+            "id": "E2",
+            "text": "The public key in the CSR corresponds to the '.onion' Special-Use Domain Name being validated."
+          }
+        ],
+        "summary": [
+          "(E1) Provides the client-side requirement without an accompanying algorithm.",
+          "(E2) Highlights the absence of an explicit derivation and matching method for the public key."
+        ]
+      },
+      "fix_direction": "Add explicit normative text referencing the Tor specification that describes how to derive the expected Ed25519 public key from the .onion identifier and perform a byte-for-byte comparison with the CSR's subjectPublicKeyInfo.",
+      "severity": "Medium",
+      "severity_basis": "The lack of an explicit algorithm may lead to inconsistent implementations and compromise interoperability.",
+      "confidence": "High",
+      "experts": [
+        "Scope Expert: Issue-1",
+        "Structural Expert: Issue-1",
+        "CrossRFC Expert: Issue-2"
+      ],
+      "report_id": "9799-3-2"
+    },
+    {
+      "label": "Unimplementable 64-bit entropy verification for applicantSigningNonce",
+      "bug_type": "Underspecification",
+      "explanation": "The RFC mandates that the applicantSigningNonce attribute contain at least 64 bits of entropy and requires the server to verify this, yet entropy is a statistical property that cannot be conclusively measured from a single observed value.",
+      "justification": [
+        "The specification requires the nonce to 'contain at least 64 bits of entropy' without defining an objective, deterministic method for verification.",
+        "This ambiguity may lead implementers to adopt different, incompatible checks, causing unpredictable validation outcomes."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "applicantSigningNonce attribute containing a nonce generated by the client. This MUST have at least 64 bits of entropy. This MUST be raw bytes."
+          },
+          {
+            "id": "E2",
+            "text": "5. The applicantSigningNonce attribute is present and contains at least 64 bits of entropy."
+          }
+        ],
+        "summary": [
+          "(E1) Specifies the generation requirement for nonce entropy without offering a method for its verification.",
+          "(E2) Imposes a server-side check that is not deterministically implementable."
+        ]
+      },
+      "fix_direction": "Revise the specification to require a minimum length (e.g., at least 8 bytes) for the applicantSigningNonce, using byte-length as a proxy for entropy rather than attempting to measure statistical entropy.",
+      "severity": "Medium",
+      "severity_basis": "Ambiguity in the entropy verification requirement can lead to inconsistent implementations and interoperability issues.",
+      "confidence": "High",
+      "experts": [
+        "Causal Expert: Issue 1",
+        "Quantitative Expert: Issue-1",
+        "Deontic Expert: Issue-1"
+      ],
+      "report_id": "9799-3-3"
+    },
+    {
+      "label": "Metadata field name mismatch between inBandOnionCAARequired and onionCAARequired",
+      "bug_type": "Inconsistency",
+      "explanation": "The RFC presents a discrepancy by using inBandOnionCAARequired in the normative text and examples while registering the field as onionCAARequired with IANA, which could result in interoperability issues.",
+      "justification": [
+        "Section 6.4.1 and the accompanying JSON example refer to the field as inBandOnionCAARequired.",
+        "Section 7.3, however, registers the field name as onionCAARequired in the IANA registry."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "inBandOnionCAARequired (optional, boolean): If true, the ACME server requires the client to provide the CAA record set in the finalize request."
+          },
+          {
+            "id": "E2",
+            "text": "onionCAARequired | boolean | RFC 9799"
+          }
+        ],
+        "summary": [
+          "(E1) Demonstrates the field name used in the main text and examples.",
+          "(E2) Shows the IANA registry entry with a conflicting field name."
+        ]
+      },
+      "fix_direction": "Harmonize the field name throughout the document and IANA registration by choosing a single canonical name and updating all related textual references and examples.",
+      "severity": "Medium",
+      "severity_basis": "An inconsistent field name can lead to misinterpretation of server policies and cause interoperability failures between clients and servers.",
+      "confidence": "High",
+      "experts": [
+        "Quantitative Expert: Issue-2",
+        "Structural Expert: Issue-2",
+        "CrossRFC Expert: Issue-1"
+      ],
+      "report_id": "9799-3-4"
+    },
+    {
+      "label": "Ambiguous identifier scope for onion-csr-01 challenge",
+      "bug_type": "Underspecification",
+      "explanation": "The specification only prohibits the use of onion-csr-01 for issuing certificates for Special-Use Domain Names that are not '.onion', without explicitly clarifying that the challenge is solely applicable to .onion identifiers.",
+      "justification": [
+        "The text states that onion-csr-01 MUST NOT be used for non-.onion Special-Use Domain Names but does not expressly limit its application to .onion names.",
+        "This omission may lead to differing interpretations about whether ordinary DNS names might be inadvertently processed with onion-csr-01."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "The explicit prohibition is only that onion-csr-01 MUST NOT be used to issue certificates for Special-Use Domain Names that are not '.onion'... but is silent on ordinary DNS names; the broader document context strongly suggests onion-csr-01 is intended only for .onion, but the exact identifier scope for this method is not spelled out as a positive constraint."
+          }
+        ],
+        "summary": [
+          "(E1) Indicates that while non-.onion special-use names are excluded, there is no explicit positive restriction against using onion-csr-01 for ordinary DNS names."
+        ]
+      },
+      "fix_direction": "Explicitly state that the onion-csr-01 challenge is exclusively applicable to .onion identifiers by providing clear validation rules for acceptable identifier formats.",
+      "severity": "Low",
+      "severity_basis": "Although primarily a documentation ambiguity, it may cause minor interoperability confusion without affecting core protocol functionality.",
+      "confidence": "Medium",
+      "experts": [
+        "Scope Expert: ResidualUncertainties"
+      ],
+      "report_id": "9799-3-5"
+    },
+    {
+      "label": "Ambiguous authKey usage in onion-csr-01 challenge",
+      "bug_type": "Underspecification",
+      "explanation": "The specification introduces an authKey field for the onion-csr-01 challenge and defers its definition to Section 4, yet it does not clearly define when or how this field should be used in this context.",
+      "justification": [
+        "The authKey field is defined for onion-csr-01 but Section 4 primarily discusses its use for other challenge types such as http-01 and tls-alpn-01.",
+        "This results in an ambiguity regarding the required presence and specific usage of authKey for onion-csr-01 challenges."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "The authKey field is defined on the onion-csr-01 challenge and 'further defined in Section 4', but Section 4 narrates it primarily in terms of enabling http-01 and tls-alpn-01 against hidden services that require client authentication, leaving somewhat implicit when/how authKey is expected to be present for onion-csr-01."
+          }
+        ],
+        "summary": [
+          "(E1) Highlights that the role and required conditions for authKey in the onion-csr-01 challenge are not clearly specified."
+        ]
+      },
+      "fix_direction": "Clarify the intended conditions, presence, and usage of the authKey field for onion-csr-01 challenges within Section 4 and related sections.",
+      "severity": "Low",
+      "severity_basis": "This ambiguity is unlikely to impact core functionality but may cause minor implementation inconsistencies.",
+      "confidence": "High",
+      "experts": [
+        "Scope Expert: ResidualUncertainties"
+      ],
+      "report_id": "9799-3-6"
+    }
+  ]
+}

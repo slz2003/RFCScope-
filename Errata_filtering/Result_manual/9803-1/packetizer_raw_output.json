@@ -1,0 +1,137 @@
+{
+  "reports": [
+    {
+      "label": "XML Schema uniqueness constraint on '@for' prevents multiple custom RR types in one container",
+      "bug_type": "Inconsistency",
+      "explanation": "The XML Schema’s uniqueness constraint on the '@for' attribute forces all <ttl:ttl> elements to have unique values, which prevents representing multiple custom DNS record types (e.g., CAA and MX) as intended by the prose.",
+      "justification": [
+        "The normative text requires a Policy Mode response to include TTL records for all supported DNS record types – including multiple custom entries – but the schema only allows one element with for='custom' per container.",
+        "This conflict forces implementations to choose between supporting multiple custom RR types and remaining schema‐valid."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "For each <ttl:create>, <ttl:update>, and <ttl:infData>, XML Schema enforces that all child <ttl:ttl> elements have a unique @for value within that container:\n  - <unique name=\"uniqueRRTypeForCreate\"><selector xpath=\"ttl:ttl\"/><field xpath=\"@for\"/></unique>\n  - Same pattern for update and infData."
+          },
+          {
+            "id": "E2",
+            "text": "Since @for is an enumeration that includes 'custom' as a single value, this uniqueness rule allows at most one <ttl:ttl for=\"custom\" ...> element per container, which prevents including multiple custom RR types as required by Policy Mode."
+          }
+        ],
+        "summary": [
+          "(E1) The schema defines a uniqueness constraint on the @for attribute for all <ttl:ttl> elements within a container.",
+          "(E2) Because 'custom' is a single enumerated value, multiple custom RR type entries cannot coexist in a single command or response."
+        ]
+      },
+      "fix_direction": "Change the uniqueness constraint so that for entries with for=\"custom\" the constraint is applied to the pair (@for, @custom) rather than to @for alone, while keeping uniqueness on @for for built‐in types.",
+      "severity": "High",
+      "severity_basis": "It directly prevents encoding the intended support for multiple custom DNS record types, causing serious interoperability issues.",
+      "confidence": "High",
+      "experts": [
+        "ScopeExpert: Issue-1",
+        "CausalExpert: Issue-1",
+        "DeonticExpert: Issue-1",
+        "StructuralExpert: Issue-1"
+      ],
+      "report_id": "9803-1-1"
+    },
+    {
+      "label": "Custom attribute regex mismatch: RFC 6895 versus XML Schema",
+      "bug_type": "Inconsistency",
+      "explanation": "The normative text requires that the 'custom' attribute conform to the RFC 6895 regular expression (which excludes single‐letter mnemonics), while the XML Schema explicitly permits the value 'A', resulting in a mismatch.",
+      "justification": [
+        "The prose states that when for=\"custom\" the value MUST conform to the RFC 6895 regex ([A-Z][A-Z0-9\\-]*[A-Z0-9]), which does not allow single-letter mnemonics.",
+        "In contrast, the XML Schema defines the type ttl:customRRType with the pattern 'A|[A-Z][A-Z0-9\\-]*[A-Z0-9]', thereby allowing 'A' and creating a divergence between textual and schema validation."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "If the value of the 'for' attribute is 'custom', then the <ttl:ttl> element MUST also have a 'custom' attribute containing a DNS record type conforming with the regular expression in Section 3.1 of [RFC6895]."
+          },
+          {
+            "id": "E2",
+            "text": "<simpleType name=\"customRRType\">\n  <restriction base=\"token\">\n    <pattern value=\"A|[A-Z][A-Z0-9\\-]*[A-Z0-9]\"/>\n  </restriction>\n</simpleType>"
+          }
+        ],
+        "summary": [
+          "(E1) Normatively, the custom attribute is required to conform to the RFC 6895 regex, which would disallow a single-letter value like 'A'.",
+          "(E2) The XML Schema, however, explicitly adds an 'A' alternative to the pattern, extending the allowed set."
+        ]
+      },
+      "fix_direction": "Either remove the 'A' special case from the XML Schema to enforce the RFC 6895 regex, or modify the normative text to state that the allowed pattern is that defined by the schema.",
+      "severity": "Medium",
+      "severity_basis": "This divergence might lead to varying validation outcomes between implementations that rely on textual interpretation versus schema validation.",
+      "confidence": "High",
+      "experts": [
+        "DeonticExpert: Issue-2",
+        "StructuralExpert: Issue-2",
+        "CrossRFCExpert: Issue-1",
+        "TerminologyExpert: Issue-1"
+      ],
+      "report_id": "9803-1-2"
+    },
+    {
+      "label": "Underspecified behavior for omitted 'policy' attribute in <ttl:info>",
+      "bug_type": "Underspecification",
+      "explanation": "The specification relies on XML Schema defaulting to treat a missing policy attribute as 'false' but does not explicitly mandate this behavior, leaving ambiguity in how Default Mode should be determined.",
+      "justification": [
+        "The text mentions that <ttl:info> has an optional 'policy' attribute with a default of 'false', yet it does not explicitly require implementations to treat its absence as equivalent to 'false'.",
+        "This reliance on XML Schema defaulting, which many EPP implementations do not apply at runtime, creates a potential for inconsistent behavior."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "The <ttl:info> element … has a single OPTIONAL ‘policy’ attribute, which takes a boolean value with a default value of ‘false’."
+          },
+          {
+            "id": "E2",
+            "text": "If a server receives an <info> command … that includes a <ttl:info> element with a ‘policy’ attribute that is ‘0’ or ‘false’, then … Default Mode…"
+          }
+        ],
+        "summary": [
+          "(E1) Indicates that the policy attribute has a default value of 'false'.",
+          "(E2) Describes behavior for when the policy attribute is explicitly set to 'false', but does not clarify what should happen if it is omitted."
+        ]
+      },
+      "fix_direction": "Add explicit language stating that if the 'policy' attribute is absent, it MUST be interpreted as 'false'.",
+      "severity": "Medium",
+      "severity_basis": "Ambiguity in default behavior can lead to interoperability issues if different implementations handle the absence of the attribute inconsistently.",
+      "confidence": "High",
+      "experts": [
+        "DeonticExpert: Issue-3"
+      ],
+      "report_id": "9803-1-3"
+    },
+    {
+      "label": "Underspecified handling of 'custom' attribute when 'for' is not 'custom'",
+      "bug_type": "Underspecification",
+      "explanation": "The specification does not clarify how to interpret a <ttl:ttl> element that includes a 'custom' attribute when the 'for' attribute does not equal 'custom'.",
+      "justification": [
+        "While the normative rules describe the use of the 'custom' attribute only when for=\"custom\", there is no guidance on behavior if a 'custom' attribute is provided with any other value.",
+        "This lack of clarification might result in inconsistent processing across different implementations."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "the document does not specify how to handle a <ttl:ttl> where for != \"custom\" but a custom attribute is present; the most likely intended behavior is to ignore custom in that case."
+          }
+        ],
+        "summary": [
+          "(E1) Points out the absence of guidance for handling a 'custom' attribute when the 'for' attribute is not set to 'custom'."
+        ]
+      },
+      "fix_direction": "Include a clarifying statement indicating that any 'custom' attribute should be ignored if the 'for' attribute is not 'custom'.",
+      "severity": "Low",
+      "severity_basis": "Although this ambiguity is less likely to cause major issues, it may still lead to minor interoperability differences.",
+      "confidence": "High",
+      "experts": [
+        "ScopeExpert: ResidualUncertainties"
+      ],
+      "report_id": "9803-1-4"
+    }
+  ]
+}

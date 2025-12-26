@@ -1,0 +1,209 @@
+{
+  "reports": [
+    {
+      "label": "Ambiguous override of RFC 9012 sub‑TLV error handling for Tunnel Type 15 (SR Policy)",
+      "bug_type": "Both",
+      "explanation": "RFC 9830 mandates that any error in the Tunnel Encapsulation Attribute or its TLVs/sub‑TLVs must trigger a 'treat‑as‑withdraw' action for SR Policy updates, which conflicts with RFC 9012’s rule that a malformed sub‑TLV should be treated as unrecognized and not cause withdrawal.",
+      "justification": [
+        "RFC 9830 §5 requires that any error at the attribute or TLV/sub‑TLV level causes treat‑as‑withdraw, while RFC 9012 §13 instructs that malformed sub‑TLVs be treated as unrecognized and the attribute remain valid.",
+        "Multiple experts noted that the lack of clarification on whether RFC 9830 deliberately overrides 9012’s behavior leads to inconsistent implementation decisions."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "RFC 9830 §5: “The validation of the TLVs/sub-TLVs introduced in this document and defined in their respective subsections of Section 2.4 MUST be performed to determine if they are malformed or invalid. The validation of the Tunnel Encapsulation Attribute itself and the other TLVs/sub-TLVs specified in Section 13 of [RFC9012] MUST be done as described in that document. In case of any error detected, either at the attribute or its TLV/sub-TLV level, the ‘treat‑as‑withdraw’ strategy MUST be applied. This is because an SR Policy update without a valid Tunnel Encapsulation Attribute (comprised of all valid TLVs/sub‑TLVs) is not usable.”"
+          },
+          {
+            "id": "E2",
+            "text": "RFC 9012 §13: “In general, if a TLV contains a sub‑TLV that is malformed, the sub‑TLV MUST be treated as if it were an unrecognized sub‑TLV. … However, the Tunnel TLV containing them MUST NOT be considered to be malformed, and all the sub‑TLVs MUST be propagated if the route carrying the Tunnel Encapsulation attribute is propagated.”"
+          },
+          {
+            "id": "E3",
+            "text": "RFC 9830 §1: “This document does not modify or supersede the usage of the Tunnel Encapsulation Attribute for existing AFI/SAFIs as defined in [RFC9012]. Details regarding the processing of the Tunnel Encapsulation Attribute for the SR Policy SAFI are provided in Sections 2.2 and 2.3.”"
+          }
+        ],
+        "summary": [
+          "(E1) shows RFC 9830’s mandate for fatal treatment of any TLV/sub‑TLV error.",
+          "(E2) contrasts this with RFC 9012’s requirement to treat malformed sub‑TLVs as unrecognized.",
+          "(E3) reiterates that RFC 9830 does not claim to modify RFC 9012 outside SR Policy specifics."
+        ]
+      },
+      "fix_direction": "Clarify explicitly in RFC 9830 that for Tunnel Type 15 with SR Policy SAFI, any syntactic error in TLVs/sub‑TLVs is fatal and overrides RFC 9012’s recoverable treatment, or update the text to clearly distinguish between errors that mandate treat‑as‑withdraw and those that do not.",
+      "severity": "Medium",
+      "severity_basis": "This ambiguity may lead to divergent implementations and interoperability issues by causing unintended withdrawals of SR Policy updates.",
+      "confidence": "Medium",
+      "experts": [
+        "ScopeExpert: Issue-1",
+        "StructuralExpert: Issue-1",
+        "CrossRFCExpert: Issue-1",
+        "BoundaryExpert: Finding-2"
+      ],
+      "report_id": "9830-5-1"
+    },
+    {
+      "label": "Unclear boundary between errors and unrecognized/unsupported sub‑TLVs affecting usability vs. withdrawal",
+      "bug_type": "Underspecification",
+      "explanation": "The document does not clearly define whether unrecognized or unsupported SR Policy sub‑TLVs should be handled purely as non‐fatal usability issues or treated as errors that force a treat‑as‑withdraw action.",
+      "justification": [
+        "RFC 9830 §4.2.2 indicates that unrecognized or unsupported sub‑TLVs should render the update not usable (with optional override), while Section 5 mandates treat‑as‑withdraw for any error detected.",
+        "This mixed messaging can lead to inconsistent behavior between implementations."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "RFC 9830 §4.2.2: “When the SR Policy tunnel type includes any sub-TLV that is unrecognized or unsupported, the update SHOULD NOT be considered usable. An implementation MAY provide an option for ignoring unsupported sub-TLVs.”"
+          },
+          {
+            "id": "E2",
+            "text": "RFC 9830 §5: “In case of any error detected, either at the attribute or its TLV/sub‑TLV level, the ‘treat‑as‑withdraw’ strategy MUST be applied. This is because an SR Policy update without a valid Tunnel Encapsulation Attribute (comprised of all valid TLVs/sub‑TLVs) is not usable.”"
+          }
+        ],
+        "summary": [
+          "(E1) defines a usability guideline for unsupported sub‑TLVs, while (E2) enforces fatal error handling for any TLV/sub‑TLV error.",
+          "The contrast creates ambiguity about which conditions trigger route withdrawal."
+        ]
+      },
+      "fix_direction": "Clarify in the specification which conditions for unrecognized or unsupported sub‑TLVs fall under treat‑as‑withdraw and which only affect local usability without triggering withdrawal.",
+      "severity": "Medium",
+      "severity_basis": "Ambiguities in error terminology may lead to divergent interpretations and inconsistent handling of SR Policy routes across different implementations.",
+      "confidence": "Medium",
+      "experts": [
+        "ScopeExpert: Issue-2",
+        "CrossRFCExpert: Issue-2",
+        "TerminologyExpert: Issue-1"
+      ],
+      "report_id": "9830-5-2"
+    },
+    {
+      "label": "Segment List sub-TLV length inconsistency with RFC 9012 semantics",
+      "bug_type": "Inconsistency",
+      "explanation": "The Segment List sub-TLV length field in RFC 9830 appears to exclude the RESERVED octet from its length calculation, contradicting RFC 9012, which requires that the length include all octets of the sub-TLV Value field.",
+      "justification": [
+        "RFC 9012 mandates that the Length field represents the total number of octets in the sub-TLV Value field.",
+        "RFC 9830’s description omits the RESERVED field from the length count, resulting in an off-by-one error and potential parsing misalignment."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "RFC 9012 defines sub-TLVs generically: the Sub-TLV Length field is “the total number of octets of the Sub-TLV Value field” and the Value is all bytes after the Length field. For types 128–255, the Length is 2 octets and has the same semantics."
+          },
+          {
+            "id": "E2",
+            "text": "RFC 9830 defines the Segment List sub-TLV as:\n- Format (Figure 9):\n  - Type (1 octet)\n  - Length (2 octets)\n  - RESERVED (1 octet)\n  - “sub-TLVs” (variable)\n- Length description: “The total length (not including the Type and Length fields) of the sub-TLVs encoded within the Segment List sub-TLV in terms of octets.”"
+          }
+        ],
+        "summary": [
+          "(E1) establishes that the Length field should count all value octets per RFC 9012.",
+          "(E2) shows that RFC 9830’s format omits the RESERVED octet from the length count, leading to inconsistencies."
+        ]
+      },
+      "fix_direction": "Update the definition of the Segment List sub-TLV length field to include the RESERVED octet in the count or adjust the encoding to align with RFC 9012 semantics.",
+      "severity": "High",
+      "severity_basis": "This off-by-one error can lead to misalignment in sub-TLV parsing and subsequent interpretation errors, resulting in route withdrawal and interoperability failures.",
+      "confidence": "High",
+      "experts": [
+        "QuantitativeExpert: Issue-1"
+      ],
+      "report_id": "9830-5-3"
+    },
+    {
+      "label": "Inconsistent handling of partially malformed SR Policy NLRIs in multi-NLRI updates",
+      "bug_type": "Inconsistency",
+      "explanation": "There is a conflict between RFC 9830, which permits processing of valid SR Policy NLRIs while skipping malformed ones, and RFC 7606, which mandates that an MP_REACH/MP_UNREACH attribute is considered incorrect if any NLRI has an inconsistent length.",
+      "justification": [
+        "RFC 9830 suggests that if a router can skip a malformed NLRI and continue processing, it should treat only that NLRI as withdrawn.",
+        "RFC 7606 requires the entire MP_REACH/MP_UNREACH attribute to be treated as incorrect when any NLRI's length is inconsistent, leading to potential divergent behaviors."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "RFC 9830 Section 5: “When the error determined allows for the router to skip the malformed NLRI(s) and continue the processing of the rest of the BGP UPDATE message, then it MUST handle such malformed NLRIs as 'treat‑as‑withdraw'.”"
+          },
+          {
+            "id": "E2",
+            "text": "RFC 7606 Section 5.3: “the MP_REACH_NLRI or MP_UNREACH_NLRI attribute of an update SHALL be considered to be incorrect if any of the included NLRI lengths are inconsistent with the given AFI/SAFI…”"
+          }
+        ],
+        "summary": [
+          "(E1) implies selective handling of malformed NLRIs, while (E2) mandates that any inconsistency invalidates the entire attribute."
+        ]
+      },
+      "fix_direction": "Harmonize the treatment of partially malformed NLRI within multi-NLRI updates by explicitly stating whether only the malformed NLRIs should trigger treat‑as‑withdraw or if the entire attribute must be rejected.",
+      "severity": "High",
+      "severity_basis": "Divergent interpretations can lead to inconsistent route processing across different BGP implementations, potentially affecting SR Policy propagation.",
+      "confidence": "High",
+      "experts": [
+        "BoundaryExpert: Finding-1"
+      ],
+      "report_id": "9830-5-4"
+    },
+    {
+      "label": "Ambiguous terminology for 'valid', 'malformed', 'invalid', and 'unsupported' SR Policy attributes",
+      "bug_type": "Underspecification",
+      "explanation": "The specification uses overlapping terms such as 'valid', 'malformed', 'invalid', and 'unsupported' without clear definitions, making it ambiguous which conditions trigger a treat‑as‑withdraw action versus those that only affect the usability of an SR Policy update.",
+      "justification": [
+        "Section 4.2.2 defines unrecognized or unsupported sub‑TLVs as affecting usability without explicitly triggering withdrawal, while Section 5 groups errors under a blanket rule that mandates treat‑as‑withdraw.",
+        "This inconsistency in terminology can lead to different interpretations and behaviors among implementations."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Section 4.2.2: “When the SR Policy tunnel type includes any sub-TLV that is unrecognized or unsupported, the update SHOULD NOT be considered usable. An implementation MAY provide an option for ignoring unsupported sub-TLVs.”"
+          },
+          {
+            "id": "E2",
+            "text": "Section 5: “In case of any error detected, either at the attribute or its TLV/sub-TLV level, the ‘treat‑as‑withdraw’ strategy MUST be applied. This is because an SR Policy update without a valid Tunnel Encapsulation Attribute (comprised of all valid TLVs/sub‑TLVs) is not usable.”"
+          }
+        ],
+        "summary": [
+          "(E1) sets a guideline for usability based on unsupported sub‑TLVs, while (E2) mandates withdrawal for any error, creating ambiguous terminology."
+        ]
+      },
+      "fix_direction": "Clarify and consistently define the terms 'valid', 'malformed', 'invalid', and 'unsupported' within the document to clearly distinguish between syntactic errors that trigger withdrawal and conditions that affect only local usability.",
+      "severity": "Medium",
+      "severity_basis": "Ambiguous definitions may lead to divergent implementations and interoperability issues by causing different interpretations of error conditions.",
+      "confidence": "High",
+      "experts": [
+        "TerminologyExpert: Issue-1"
+      ],
+      "report_id": "9830-5-5"
+    },
+    {
+      "label": "Overbroad use of 'malformed' for semantically invalid SR Policy updates",
+      "bug_type": "None",
+      "explanation": "The term 'malformed' is also applied to SR Policy updates that are semantically invalid (for example, missing required communities), potentially conflating distinct error types even though the prescribed handling remains the same.",
+      "justification": [
+        "Section 4.2.1 states that an SR Policy update lacking required Route Target extended communities and NO_ADVERTISE must be considered malformed.",
+        "Section 5 mandates treat‑as‑withdraw for such cases, which may conflate syntactic and semantic invalidity without affecting interoperability."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Section 4.2.1: “If a router supporting this specification receives an SR Policy update with no Route Target extended communities and no NO_ADVERTISE community, the update MUST be considered to be malformed.”"
+          },
+          {
+            "id": "E2",
+            "text": "Section 5: “An SR Policy update that is determined not to be valid (and, therefore, malformed) based on the rules described in Section 4.2.1 MUST be handled by the ‘treat‑as‑withdraw’ strategy.”"
+          }
+        ],
+        "summary": [
+          "(E1) and (E2) illustrate the use of 'malformed' to cover cases of missing essential communities, potentially mixing semantic and syntactic error classifications."
+        ]
+      },
+      "fix_direction": null,
+      "severity": "Low",
+      "severity_basis": "This is primarily a clarity issue that, while potentially confusing, is unlikely to lead to significant interoperability problems.",
+      "confidence": "High",
+      "experts": [
+        "TerminologyExpert: Issue-2"
+      ],
+      "report_id": "9830-5-6"
+    }
+  ]
+}

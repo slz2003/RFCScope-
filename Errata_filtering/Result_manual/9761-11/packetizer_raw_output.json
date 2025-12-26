@@ -1,0 +1,215 @@
+{
+  "reports": [
+    {
+      "label": "Inconsistent Naming and JSON Encoding of YANG Data Nodes",
+      "bug_type": "Inconsistency",
+      "explanation": "The IANA text and JSON example refer to a non-existent node 'client‐profile' and use inconsistent pluralization (e.g. 'tls‐dtls‐profiles' instead of the defined 'client‐profiles' container and 'tls‐dtls‐profile' list), and a Boolean value is improperly encoded as a string.",
+      "justification": [
+        "Section 11.1 states that new (D)TLS parameters are added to 'client‐profile' even though the YANG module defines a container 'client‐profiles' with a child list 'tls‐dtls‐profile'.",
+        "The JSON example in Section 7 uses 'ietf‐acl‐tls:client‐profile' with 'tls‐dtls‐profiles' and pluralized leaf names, plus encodes a Boolean as \"true\" rather than as a JSON boolean."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Section 11.1: “IANA has created an IANA-maintained YANG module called \"iana-tls-profile\" ... which allows for new (D)TLS parameters and (D)TLS versions to be added to \"client-profile\".”"
+          },
+          {
+            "id": "E2",
+            "text": "YANG tree: augment adds container \"client-profiles\" and list \"tls-dtls-profile\" under \"/acl:matches\"."
+          },
+          {
+            "id": "E3",
+            "text": "Example JSON (Section 7): \"ietf-acl-tls:client-profile\" : { \"tls-dtls-profiles\" : [ { \"name\" : \"profile1\", \"supported-tls-versions\" : [\"tls13\"], \"cipher-suite\" : [4865, 4866], \"extension-types\" : [10,11,13,16,24], \"supported-groups\" : [29] } ] }"
+          },
+          {
+            "id": "E4",
+            "text": "Section 7 JSON: \"ietf-mud-tls:is-tls-dtls-profile-supported\": \"true\""
+          }
+        ],
+        "summary": [
+          "(E1) IANA text incorrectly refers to 'client-profile' rather than the defined 'client-profiles'.",
+          "(E2) The YANG tree defines a container 'client-profiles' with a list 'tls-dtls-profile'.",
+          "(E3) The JSON example uses non-existent node names and pluralizations not found in the YANG model.",
+          "(E4) A Boolean value is encoded as a string, violating the expected RFC 7951 types."
+        ]
+      },
+      "fix_direction": "Update Section 11.1 and the JSON example in Section 7 to reference the correct node names ('client-profiles' and 'tls-dtls-profile') and to encode Boolean values properly as JSON booleans.",
+      "severity": "Medium",
+      "severity_basis": "This inconsistency may lead to confusion for implementers and IANA personnel, as tools relying on the normative YANG model may reject or misinterpret the JSON data.",
+      "confidence": "High",
+      "experts": [
+        "Scope Expert: Issue-1",
+        "Scope Expert: Issue-3",
+        "Structural Expert: Issue-2",
+        "Structural Expert: Issue-3",
+        "Terminology Expert: Issue-2"
+      ],
+      "report_id": "9761-11-1"
+    },
+    {
+      "label": "Misattribution of spki-pin-set and certificate-authority Parameters to IANA-Maintained Module",
+      "bug_type": "Inconsistency",
+      "explanation": "Section 5.3 erroneously claims that the spki-pin-set and certificate-authority parameters belong to the iana-tls-profile module, while in reality they are defined in the ietf-acl-tls module.",
+      "justification": [
+        "The text in Section 5.3 lists spki-pin-set and certificate-authority among parameters in the iana-tls-profile module.",
+        "The actual iana-tls-profile module does not define these parameters; they are defined in the ietf-acl-tls module."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Section 5.3: “The values for all the parameters in the \"iana-tls-profile\" YANG module are defined in the TLS and DTLS IANA registries excluding the tls-version, dtls-version, spki-pin-set, and certificate-authority parameters. The values of spki-pin-set and certificate-authority parameters will be specific to the IoT device.”"
+          },
+          {
+            "id": "E2",
+            "text": "ietf-acl-tls YANG: defines typedef spki-pin-set and typedef certificate-authority; in contrast, the iana-tls-profile module does not include these typedefs."
+          }
+        ],
+        "summary": [
+          "(E1) Section 5.3 misattributes spki-pin-set and certificate-authority as parts of iana-tls-profile.",
+          "(E2) Actual YANG modules show these parameters are defined in ietf-acl-tls."
+        ]
+      },
+      "fix_direction": "Revise Section 5.3 to correctly attribute spki-pin-set and certificate-authority to the ietf-acl-tls module, or update the iana-tls-profile module if that was the intended design.",
+      "severity": "Medium",
+      "severity_basis": "Misattribution may lead to misunderstandings regarding module boundaries and IANA’s role in maintaining parameter definitions.",
+      "confidence": "High",
+      "experts": [
+        "Scope Expert: Issue-2",
+        "Structural Expert: Issue-4",
+        "Terminology Expert: Issue-3"
+      ],
+      "report_id": "9761-11-2"
+    },
+    {
+      "label": "Incorrect YANG Update Rule: 'type' vs 'typedef'",
+      "bug_type": "Inconsistency",
+      "explanation": "Section 11.2 directs IANA to add a new 'type' statement with substatements for new parameters, but the normative YANG module uses 'typedef' to define derived types, causing a mismatch with valid YANG syntax.",
+      "justification": [
+        "The YANG module in Section 5.3 defines derived types using 'typedef' (e.g., typedef extension-type { type uint16; ... }).",
+        "Section 11.2 instructs the addition of a 'type' statement with substatements (derived type, built-in type, description) that are not valid in YANG."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Section 5.3 YANG module: typedef extension-type { type uint16; description \"Extension type in the TLS ExtensionType Values registry as defined in Section 7 of RFC 8447.\"; }"
+          },
+          {
+            "id": "E2",
+            "text": "Section 11.2: “When a (D)TLS parameter is added to the ‘ACL (D)TLS Parameters’ registry, a new ‘type’ statement must be added to the iana-tls-profile YANG module. The following ‘type’ statement, and substatements thereof, should be defined: ‘derived type’: ... ‘built-in type’: ... ‘description’: ...”"
+          }
+        ],
+        "summary": [
+          "(E1) The YANG module defines derived types using the 'typedef' construct.",
+          "(E2) Section 11.2 erroneously mandates a 'type' statement with substatements not supported by YANG."
+        ]
+      },
+      "fix_direction": "Modify Section 11.2 so that it instructs the use of a new 'typedef' statement (with an inner 'type' and description) in order to align with standard YANG syntax.",
+      "severity": "Medium",
+      "severity_basis": "This normative inconsistency may cause confusion during module updates, potentially leading to invalid YANG if interpreted literally.",
+      "confidence": "High",
+      "experts": [
+        "Deontic Expert: Issue-1"
+      ],
+      "report_id": "9761-11-3"
+    },
+    {
+      "label": "Wrong YANG Prefix in IANA Module Names Registry for ietf-acl-tls",
+      "bug_type": "Inconsistency",
+      "explanation": "The ietf-acl-tls YANG module declares its prefix as 'acl-tls', but the IANA registry entry in Section 11.1 incorrectly lists its prefix as 'ietf-acl-tls'.",
+      "justification": [
+        "The YANG module clearly sets its prefix with: prefix acl-tls;",
+        "Section 11.1 of the IANA registration text lists the prefix for ietf-acl-tls as 'ietf-acl-tls', which conflicts with the actual module declaration."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "YANG module definition: module ietf-acl-tls { ... prefix acl-tls; ... }"
+          },
+          {
+            "id": "E2",
+            "text": "IANA registration text (Section 11.1): Name: ietf-acl-tls ... Prefix: ietf-acl-tls"
+          }
+        ],
+        "summary": [
+          "(E1) The module defines its prefix as 'acl-tls'.",
+          "(E2) The IANA registry entry incorrectly records the prefix as 'ietf-acl-tls'."
+        ]
+      },
+      "fix_direction": "Update the IANA registry entry in Section 11.1 to reflect the correct YANG prefix 'acl-tls' for the ietf-acl-tls module.",
+      "severity": "Medium",
+      "severity_basis": "This mismatch can confuse tool developers and implementers who rely on the registry for accurate module metadata.",
+      "confidence": "High",
+      "experts": [
+        "Structural Expert: Issue-1",
+        "CrossRFC Expert: Issue-1",
+        "Terminology Expert: Issue-1"
+      ],
+      "report_id": "9761-11-4"
+    },
+    {
+      "label": "Missing NACM 'default-deny-write' Extension in YANG Modules",
+      "bug_type": "Inconsistency",
+      "explanation": "Although Sections 9.3 and 9.4 claim that the NACM extension 'default-deny-write' is set for all data nodes, the provided YANG modules lack the required import of ietf-netconf-acm and do not include any nacm:default-deny-write extensions.",
+      "justification": [
+        "Section 9.3/9.4 explicitly state that the NACM 'default-deny-write' extension has been set on all data nodes in the modules.",
+        "Review of the YANG modules shows neither an import of ietf-netconf-acm nor any use of the nacm:default-deny-write extension."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Section 9.3: “For this reason, the NACM extension \"default-deny-write\" has been set for all data nodes defined in this module.”"
+          },
+          {
+            "id": "E2",
+            "text": "The shown YANG modules do not import ietf-netconf-acm and contain no nacm:default-deny-write extensions."
+          }
+        ],
+        "summary": [
+          "(E1) The text claims that the NACM 'default-deny-write' extension is applied to all nodes.",
+          "(E2) The actual YANG modules lack the necessary import and extension use for NACM."
+        ]
+      },
+      "fix_direction": "Either update the YANG modules to import ietf-netconf-acm and attach the nacm:default-deny-write extension to all appropriate nodes, or modify the descriptive text to remove the incorrect claim.",
+      "severity": "Medium",
+      "severity_basis": "Operators might assume enhanced security controls are enforced by the schema when they are not, leading to misconfigurations.",
+      "confidence": "High",
+      "experts": [
+        "Structural Expert: Issue-5"
+      ],
+      "report_id": "9761-11-5"
+    },
+    {
+      "label": "Underspecification in TLS/DTLS Version Registry Cross-Reference",
+      "bug_type": "Underspecification",
+      "explanation": "Section 11.5 does not explicitly clarify that the tls-version and dtls-version values are to be sourced from the new ACL TLS/DTLS Version Codes registries rather than from the TLS/DTLS Parameters registry, leading to potential ambiguity.",
+      "justification": [
+        "A ResidualUncertainties note indicates that though the interaction is mostly clear when read together, Section 11.5 omits explicit reference to the registry source for tls-version and dtls-version values.",
+        "This omission may leave room for misinterpretation about where the version values should be drawn from."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "ResidualUncertainties: The interaction between Section 11.5’s description of the “ACL (D)TLS Parameters” registry and Sections 11.3/11.4 (version-code registries) is mostly clear when read together, but 11.5 does not explicitly say that tls-version/dtls-version values come from the new version registries."
+          }
+        ],
+        "summary": [
+          "(E1) Section 11.5 lacks an explicit statement that tls-version and dtls-version values derive from the new ACL TLS/DTLS Version Codes registries."
+        ]
+      },
+      "fix_direction": "Clarify in Section 11.5 that the tls-version and dtls-version values are specifically drawn from the ACL TLS/DTLS Version Codes registries.",
+      "severity": "Low",
+      "severity_basis": "While the ambiguity is minor and likely inferrable by experienced implementers, explicit clarification would help prevent potential misunderstandings.",
+      "confidence": "Medium",
+      "experts": [
+        "Scope Expert: ResidualUncertainties"
+      ],
+      "report_id": "9761-11-6"
+    }
+  ]
+}

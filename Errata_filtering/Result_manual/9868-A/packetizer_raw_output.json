@@ -1,0 +1,38 @@
+{
+  "reports": [
+    {
+      "label": "Inconsistent socket option naming in Appendix A, Table 3 (spaces vs underscores)",
+      "bug_type": "Inconsistency",
+      "explanation": "Some socket option identifiers in Table 3 are rendered with embedded spaces (e.g., UDP OPT MDS) while others use underscores (e.g., UDP_OPT_MDS), which undermines the goal of consistent naming and may mislead implementers.",
+      "justification": [
+        "Structural Expert analysis notes that while most entries follow the UDP_OPT_* pattern, several entries use spaces, creating an inconsistency in the same table (E1).",
+        "Terminology Expert analysis reinforces that the mixed usage between underscore-based and space-containing names contradicts both the intended style and the corresponding sysctl table entries, indicating a typographical error (E2)."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "In Table 3, some entries are given as UDP_OPT, UDP_OPT_OCS, UDP_OPT_APC, UDP_OPT_FRAG, UDP_OPT_TIME, UDP_OPT_UCMP, UDP_OPT_UENC. In the same table, other entries are written with embedded spaces: UDP OPT MDS, UDP OPT MRDS, UDP OPT REQ, UDP OPT RES, UDP OPT AUTH, UDP OPT EXP, UDP OPT UEXP. Earlier in Table 2 all sysctl names consistently use underscores, e.g., net.ipv4.udp_opt_mds, net.ipv4.udp_opt_mrds, etc."
+          },
+          {
+            "id": "E2",
+            "text": "Appendix A, socket options table (Table 3):\n\n          | Name         | Meaning                     |\n          ...\n          | UDP_OPT      | Enable UDP Options (at all) |\n          ...\n          | UDP_OPT_OCS  | Use UDP OCS                 |\n          ...\n          | UDP_OPT_APC  | Enable UDP APC Option       |\n          ...\n          | UDP_OPT_FRAG | Enable UDP fragmentation    |\n          +--------------+-----------------------------+\n          | UDP OPT MDS  | Enable UDP MDS Option       |\n          +--------------+-----------------------------+\n          | UDP OPT MRDS | Enable UDP MRDS Option      |\n          +--------------+-----------------------------+\n          | UDP OPT REQ  | Enable UDP REQ Option       |\n          +--------------+-----------------------------+\n          | UDP OPT RES  | Enable UDP RES Option       |\n          ...\n          | UDP_OPT_TIME | Enable UDP TIME Option      |\n          +--------------+-----------------------------+\n          | UDP OPT AUTH | Enable UDP AUTH Option      |\n          +--------------+-----------------------------+\n          | UDP OPT EXP  | Enable UDP EXP Option       |\n          ...\n          | UDP_OPT_UCMP | Enable UDP UCMP Option      |\n          +--------------+-----------------------------+\n          | UDP_OPT_UENC | Enable UDP UENC Option      |\n          +--------------+-----------------------------+\n          | UDP OPT UEXP | Enable UDP UEXP Option      |"
+          }
+        ],
+        "summary": [
+          "(E1) Structural Expert highlights that Table 3 mixes underscore-based names with space-separated names, contrasting with the consistent sysctl names in Table 2.",
+          "(E2) Terminology Expert provides the full excerpt from Appendix A, Table 3, showing the inconsistency between entries such as UDP_OPT_* and UDP OPT *."
+        ]
+      },
+      "fix_direction": "Clarify and normalize the socket option names in Table 3 so that all entries follow the underscore-based naming. Replace 'UDP OPT MDS' with 'UDP_OPT_MDS', 'UDP OPT MRDS' with 'UDP_OPT_MRDS', 'UDP OPT REQ' with 'UDP_OPT_REQ', 'UDP OPT RES' with 'UDP_OPT_RES', 'UDP OPT AUTH' with 'UDP_OPT_AUTH', 'UDP OPT EXP' with 'UDP_OPT_EXP', and 'UDP OPT UEXP' with 'UDP_OPT_UEXP'.",
+      "severity": "Medium",
+      "severity_basis": "The issue is primarily editorial affecting API clarity; while the inconsistency may mislead implementers, it does not impact on‐the‐wire interoperability. Terminology Expert explicitly rated it as Medium, and Structural Expert’s high likelihood relates to the consistency goal rather than critical operational failure.",
+      "confidence": "High",
+      "experts": [
+        "Structural Expert: Issue-1",
+        "Terminology Expert: Issue-1"
+      ],
+      "report_id": "9868-A-1"
+    }
+  ]
+}

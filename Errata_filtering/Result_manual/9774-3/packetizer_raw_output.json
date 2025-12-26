@@ -1,0 +1,74 @@
+{
+  "reports": [
+    {
+      "label": "Conflicting error handling for AS_CONFED_SET in AS4_PATH between RFC 9774 and RFC 6793",
+      "bug_type": "Inconsistency",
+      "explanation": "RFC 9774 mandates treat‐as‐withdraw for UPDATE messages containing AS_CONFED_SET in AS4_PATH while RFC 6793 requires that such AS_CONFED_SET segments be discarded and the UPDATE processed normally, thus creating a normative conflict.",
+      "justification": [
+        "RFC 9774 Section 3 explicitly requires that any UPDATE containing AS_CONFED_SET (or AS_SET) in the AS_PATH or AS4_PATH triggers a treat‐as‐withdraw handling (see E1).",
+        "RFC 6793 Section 6 specifies that when a NEW BGP speaker receives an UPDATE with AS_CONFED_SET in AS4_PATH from an OLD speaker, the offending segments must be discarded and processing should continue (see E2).",
+        "This discrepancy leaves implementers without a clear, unique behavior, potentially leading to divergent processing of the same UPDATE."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "RFC 9774, Section 3:  \n        “Unless explicitly configured by a network operator to do otherwise (e.g., during a transition phase), BGP speakers:  \n        * MUST NOT advertise BGP UPDATE messages containing AS_SETs or AS_CONFED_SETs and  \n        * MUST use the ‘treat-as-withdraw’ error handling behavior per [RFC7606] upon reception of BGP UPDATE messages containing AS_SETs or AS_CONFED_SETs in the AS_PATH or AS4_PATH [RFC6793].”  \n        Followed by: “Per the above specifications, this document updates [RFC4271] and [RFC5065] by deprecating AS_SET … and AS_CONFED_SET …, respectively.”"
+          },
+          {
+            "id": "E2",
+            "text": "RFC 6793, Section 6 (error handling for AS4_PATH):  \n        “The AS4_PATH attribute and AS4_AGGREGATOR attribute MUST NOT be carried in an UPDATE message between NEW BGP speakers. A NEW BGP speaker that receives the AS4_PATH attribute or the AS4_AGGREGATOR attribute in an UPDATE message from another NEW BGP speaker MUST discard the path attribute and continue processing the UPDATE message.”  \n        “In addition, the path segment types AS_CONFED_SEQUENCE and AS_CONFED_SET [RFC5065] MUST NOT be carried in the AS4_PATH attribute of an UPDATE message. A NEW BGP speaker that receives these path segment types in the AS4_PATH attribute of an UPDATE message from an OLD BGP speaker MUST discard these path segments, adjust the relevant attribute fields accordingly, and continue processing the UPDATE message.”"
+          }
+        ],
+        "summary": [
+          "(E1) RFC 9774 mandates treat‐as‐withdraw for any UPDATE containing AS_CONFED_SET in AS4_PATH.",
+          "(E2) RFC 6793 instructs a NEW BGP speaker to discard AS_CONFED_SET segments from AS4_PATH and continue processing the UPDATE."
+        ]
+      },
+      "fix_direction": "Clarify the intended scope by either explicitly stating in RFC 9774 that it updates RFC 6793 for AS4_PATH error handling (thereby overriding the discard-and-continue behavior) or by narrowing the treat‐as‐withdraw requirement to only apply to AS_PATH.",
+      "severity": "High",
+      "severity_basis": "The inconsistency forces implementers to choose between two mutually exclusive ERROR handling approaches, potentially leading to divergent route processing and significant interoperability issues.",
+      "confidence": "High",
+      "experts": [
+        "Scope Expert: Issue-1",
+        "Causal Expert: Case A",
+        "Deontic Expert: Issue-1",
+        "CrossRFC Expert: Issue-1",
+        "Boundary Expert: Finding-1"
+      ],
+      "report_id": "9774-3-1"
+    },
+    {
+      "label": "Normative tightening for AS_SET in AS4_PATH in RFC 9774",
+      "bug_type": "Normative Change",
+      "explanation": "RFC 9774 mandates treat‐as‐withdraw for any UPDATE containing AS_SET in AS4_PATH, even though RFC 6793 permits AS_SET as a valid segment type, resulting in a stricter behavior than that originally specified.",
+      "justification": [
+        "RFC 9774 Section 3 requires treat‐as‐withdraw for UPDATEs containing AS_SET in the AS_PATH or AS4_PATH, thereby deprecating AS_SET usage (refer to E3).",
+        "RFC 6793, however, treats AS_SET in AS4_PATH as valid without imposing a mandatory withdrawal, so the new rule effectively tightens the error handling.",
+        "This change could lead to unexpected route withdrawals and interoperability differences between implementations that expect the legacy behavior versus the stricter approach."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E3",
+            "text": "Boundary Expert Finding-2:  \n        - ExcerptEvidence:\n          - RFC 6793 allows AS_SET as a valid AS4_PATH segment type and does not define any special error handling for it beyond the generic malformed-AS4_PATH rules.    \n          - RFC 9774 requires “treat-as-withdraw” for any UPDATE containing AS_SET in either AS_PATH or AS4_PATH (unless explicitly configured otherwise)."
+          }
+        ],
+        "summary": [
+          "(E3) RFC 6793 permits AS_SET in AS4_PATH as a valid segment, whereas RFC 9774 unconditionally mandates treat‐as‐withdraw for such cases."
+        ]
+      },
+      "fix_direction": "Either align RFC 9774 with RFC 6793 by allowing AS_SET in AS4_PATH to be processed without withdrawal or explicitly document and justify the tighter error handling for improved clarity.",
+      "severity": "Medium",
+      "severity_basis": "While the stricter treatment of AS_SET may cause unexpected route withdrawals, it is a normative tightening rather than a direct conflict, leading to potential interoperability concerns without an outright contradiction.",
+      "confidence": "High",
+      "experts": [
+        "Scope Expert: Issue-1",
+        "Causal Expert: Case C",
+        "Boundary Expert: Finding-2",
+        "CrossRFC Expert: Issue-1"
+      ],
+      "report_id": "9774-3-2"
+    }
+  ]
+}

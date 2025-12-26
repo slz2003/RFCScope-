@@ -1,0 +1,121 @@
+{
+  "reports": [
+    {
+      "label": "Ambiguous classification between 'future versions' and new protocols for RAO use",
+      "bug_type": "Underspecification",
+      "explanation": "The document does not clearly define the criteria for distinguishing a 'future version' of an existing RAO‐using protocol from an entirely new protocol, which could lead to inconsistent application of RAO usage policies.",
+      "justification": [
+        "The normative text permits continued RAO use for existing protocols in their 'future versions' while prohibiting new protocols, but it fails to specify how to decide which category a protocol belongs to.",
+        "Multiple expert analyses (Scope, Deontic, Terminology, and Boundary) highlight this as an underspecified boundary that may affect future protocol revisions such as MLDv3 or RSVPv3."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Protocols that use the IPv6 Router Alert option MAY continue to do so, even in future versions. However, new protocols that are standardized in the future MUST NOT use the IPv6 Router Alert option. Appendix A contains an exhaustive list of protocols that MAY continue to use the IPv6 Router Alert option. (RFC 9805, Section 4)"
+          },
+          {
+            "id": "E2",
+            "text": "Table 1 contains an exhaustive list of protocols that use the IPv6 Router Alert option. (RFC 9805, Appendix A)"
+          },
+          {
+            "id": "E3",
+            "text": "It is left for future work to develop new versions of MLDv2 and MRD that do not rely on the IPv6 Router Alert option. That task is out of scope for this document. (RFC 9805, Section 5)"
+          }
+        ],
+        "summary": [
+          "(E1) Presents the dual normative statements regarding RAO use for 'future versions' versus new protocols.",
+          "(E2) Lists the protocols in Appendix A without clarifying versioning criteria.",
+          "(E3) Acknowledges future work on protocol revisions without providing normative classification rules."
+        ]
+      },
+      "fix_direction": "Clarify in Section 4 the criteria that determine when a protocol revision is considered a 'future version' of an existing protocol versus when it qualifies as a 'new protocol', for example by linking the classification to protocol identity or continuity markers.",
+      "severity": "Medium",
+      "severity_basis": "The lack of clear criteria creates a normative ambiguity that may lead to inconsistent decisions in future standardization efforts, impacting security policy enforcement.",
+      "confidence": "High",
+      "experts": [
+        "Scope Expert: Issue-1",
+        "Deontic Expert: Issue-1",
+        "Terminology Expert: Issue-1",
+        "Boundary Expert: Finding-1"
+      ],
+      "report_id": "9805-4-1"
+    },
+    {
+      "label": "MPLS Ping entry inconsistent: Global permission versus deprecation note",
+      "bug_type": "Inconsistency",
+      "explanation": "The MPLS Ping entry in Appendix A includes a note that its use of the IPv6 Router Alert option is deprecated, which conflicts with the global statement that all protocols in Appendix A may continue to use the option.",
+      "justification": [
+        "Section 4 asserts that 'Appendix A contains an exhaustive list of protocols that MAY continue to use the IPv6 Router Alert option', suggesting a blanket permission.",
+        "The MPLS Ping row, however, specifically notes '(Use of the IPv6 Router Alert option is deprecated)', creating an internal textual conflict about its status."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Appendix A contains an exhaustive list of protocols that MAY continue to use the IPv6 Router Alert option. (Section 4)"
+          },
+          {
+            "id": "E2",
+            "text": "Table 1: Protocols That Use the IPv6 Router Alert Option (Appendix A table heading)"
+          },
+          {
+            "id": "E3",
+            "text": "MPLS Ping (Use of the IPv6 Router Alert option is deprecated) (Appendix A, Table 1, MPLS Ping row)"
+          }
+        ],
+        "summary": [
+          "(E1) Establishes the global permission for protocols in Appendix A to continue using the RAO.",
+          "(E2) Provides the context of the list as defined in Appendix A.",
+          "(E3) Shows the specific deprecation note for MPLS Ping, which contradicts the global statement."
+        ]
+      },
+      "fix_direction": "Revise either the global statement in Section 4 or the MPLS Ping entry in Appendix A to consistently reflect the intended status regarding RAO use.",
+      "severity": "Low",
+      "severity_basis": "Although the inconsistency is textual and may not affect current implementation, it can cause confusion among protocol designers regarding the intended deprecation status.",
+      "confidence": "High",
+      "experts": [
+        "Terminology Expert: Issue-2"
+      ],
+      "report_id": "9805-4-2"
+    },
+    {
+      "label": "Apparent policy shift between RFC 9805 and RFC 9673 deprecation discussions",
+      "bug_type": "None",
+      "explanation": "There is a perceived discrepancy between RFC 9673's non-normative discussion suggesting future flexibility in RAO use and RFC 9805's explicit prohibition for new protocols, though this is viewed as an evolution in policy rather than a normative error.",
+      "justification": [
+        "RFC 9673 includes a DISCUSSION section that considers the possibility of using RAO with new functions under controlled conditions.",
+        "RFC 9805, meanwhile, clearly states that new protocols MUST NOT use the RAO and closes the value registry, reflecting a stricter policy which is a later design decision."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "[DISCUSSION] … One approach would be to deprecate this, because current usage beyond the local network appears to be limited, and packets containing Hop-by-Hop options are frequently dropped. Deprecation would allow current implementations to continue, and its use could be phased out over time. … Keeping this as the single exception for processing in the Control Plane with the restrictions that follow is a reasonable compromise to allow future flexibility. (RFC 9673, 5.2.1)"
+          },
+          {
+            "id": "E2",
+            "text": "However, new protocols that are standardized in the future MUST NOT use the IPv6 Router Alert option. (RFC 9805, Section 4)"
+          },
+          {
+            "id": "E3",
+            "text": "IANA has also made a note in the ‘IPv6 Router Alert Option Values’ registry stating that the registry is closed for allocations. (RFC 9805, Section 7)"
+          }
+        ],
+        "summary": [
+          "(E1) Presents the non-normative flexibility discussed in RFC 9673.",
+          "(E2) States the strict prohibition for new protocols in RFC 9805.",
+          "(E3) Indicates the administrative change in the RAO registry per RFC 9805."
+        ]
+      },
+      "fix_direction": null,
+      "severity": "Low",
+      "severity_basis": "The issue reflects an evolution in policy rather than a technical inconsistency; the non-normative nature of RFC 9673’s discussion mitigates potential conflicts.",
+      "confidence": "High",
+      "experts": [
+        "Deontic Expert: Issue-2"
+      ],
+      "report_id": "9805-4-3"
+    }
+  ]
+}

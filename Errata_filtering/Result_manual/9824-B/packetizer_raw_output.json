@@ -1,0 +1,38 @@
+{
+  "reports": [
+    {
+      "label": "Misnamed Oracle Cloud Initiative Instead of Oracle Cloud Infrastructure in Historical Note",
+      "bug_type": "Inconsistency",
+      "explanation": "The RFC text refers to 'Oracle Cloud Initiative' rather than the widely recognized 'Oracle Cloud Infrastructure (OCI)', which could mislead readers correlating the RFC with real-world deployments.",
+      "justification": [
+        "The text includes the sentence: Oracle Cloud Initiative implemented Compact Denial of Existence using NSEC3 in October 2024.",
+        "Context notes highlight that no other part of the RFC uses 'Oracle Cloud Initiative', while all other service names are correctly spelled."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Oracle Cloud Initiative implemented Compact Denial of Existence using NSEC3 in October 2024."
+          },
+          {
+            "id": "E2",
+            "text": "No other mention of “Oracle Cloud Initiative” or Oracle’s platform elsewhere in the provided RFC 9824 text.\n        All other proper names in Section B (“Cloudflare”, “NS1”, “Amazon Route53”, “Knot DNS”) are recognizable DNS service or software names and appear to be spelled correctly."
+          }
+        ],
+        "summary": [
+          "(E1) Oracle Cloud Initiative implemented Compact Denial of Existence using NSEC3 in October 2024.",
+          "(E2) No other mention of “Oracle Cloud Initiative” or Oracle’s platform elsewhere in the provided RFC 9824 text. All other proper names in Section B (“Cloudflare”, “NS1”, “Amazon Route53”, “Knot DNS”) are recognizable DNS service or software names and appear to be spelled correctly."
+        ]
+      },
+      "fix_direction": "In Section B (Historical Implementation Notes), replace ‘Oracle Cloud Initiative implemented Compact Denial of Existence using NSEC3 in October 2024.’ with ‘Oracle Cloud Infrastructure (OCI) implemented Compact Denial of Existence using NSEC3 in October 2024.’",
+      "severity": "Low",
+      "severity_basis": "The error is editorial in nature and does not affect protocol behavior, though it may cause confusion when correlating RFC content with industry-standard naming.",
+      "confidence": "High",
+      "experts": [
+        "Terminology Expert: Issue-1",
+        "Router: CandidateIssue about Oracle Cloud Initiative"
+      ],
+      "report_id": "9824-B-1"
+    }
+  ]
+}

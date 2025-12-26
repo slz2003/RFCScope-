@@ -1,0 +1,68 @@
+{
+  "reports": [
+    {
+      "label": "ACME directory metadata field name mismatch: inBandOnionCAARequired vs onionCAARequired",
+      "bug_type": "Inconsistency",
+      "explanation": "The RFC’s normative text (Section 6.4.1) defines the directory metadata field as 'inBandOnionCAARequired', but the IANA registry (Section 7.3) registers it as 'onionCAARequired', which can lead to non‐interoperable implementations.",
+      "justification": [
+        "Section 6.4.1 provides a clear definition and example using 'inBandOnionCAARequired', whereas Section 7.3 registers the field under the name 'onionCAARequired' without any supporting prose.",
+        "Multiple expert analyses (Scope, Structural, CrossRFC, and Terminology) identify this mismatch and its potential to cause interoperability failures."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Section 6.4.1 defines a directory meta field as:\n“To support signaling the server's support for fetching CAA record sets over Tor, a new field is defined in the directory \"meta\" object to signal this.” followed by  inBandOnionCAARequired (optional, boolean): If true, the ACME server requires the client to provide the CAA record set in the finalize request. If false or absent, the ACME server does not require the client to provide the CAA record set in this manner."
+          },
+          {
+            "id": "E2",
+            "text": "Section 7.3 (Table 3) registers, in the ACME Directory Metadata Fields registry:\n | Field name       | Field type | Reference |\n | onionCAARequired | boolean    | RFC 9799  |\nNowhere in the body text is a directory \"meta\" field named \"onionCAARequired\" defined or given semantics."
+          }
+        ],
+        "summary": [
+          "(E1) Section 6.4.1 defines and exemplifies the field using 'inBandOnionCAARequired'.",
+          "(E2) Section 7.3 registers the field as 'onionCAARequired', creating a naming mismatch."
+        ]
+      },
+      "fix_direction": "Align the registry and the normative text: either update Section 7.3 to register 'inBandOnionCAARequired' or revise Section 6.4.1 and its examples to consistently use 'onionCAARequired'.",
+      "severity": "High",
+      "severity_basis": "The mismatch in the JSON field name is likely to result in divergent implementations, leading to interoperability issues between ACME clients and servers.",
+      "confidence": "High",
+      "experts": [
+        "ScopeExpert: Issue-1",
+        "StructuralExpert: Issue-1",
+        "CrossRFCExpert: Issue-1",
+        "TerminologyExpert: Issue-1"
+      ],
+      "report_id": "9799-7-1"
+    },
+    {
+      "label": "Ambiguous environmental scope of directory metadata flag (inBandOnionCAARequired)",
+      "bug_type": "Underspecification",
+      "explanation": "The introductory text suggests that the flag signals the server's support for fetching CAA record sets over Tor, but its formal definition dictates that a true value requires the client to supply CAA data in-band, causing ambiguity about its intended use.",
+      "justification": [
+        "Section 6.4.1 introduces the flag with wording that implies it signals Tor-based fetching capability, yet defines the field so that a true value means the server mandates in-band CAA data.",
+        "This conflict in description may lead to different interpretations by implementers, potentially resulting in misconfiguration."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E3",
+            "text": "Section 6.4.1 introduces the field with:\n“To support signaling the server's support for fetching CAA record sets over Tor, a new field is defined in the directory \"meta\" object to signal this.”\nBut the field itself is defined as:\n inBandOnionCAARequired (optional, boolean): If true, the ACME server requires the client to provide the CAA record set in the finalize request. If false or absent, the ACME server does not require the client to provide the CAA record set in this manner.\nEarlier in 6.4.1: “If an ACME server does not support fetching a service's CAA record set from its Hidden Service Descriptor, and the ACME client does not provide an \"onionCAA\" object in its finalize request, the ACME server MUST respond with an \"onionCAARequired\" error…”"
+          }
+        ],
+        "summary": [
+          "(E3) Section 6.4.1 uses contradictory language by first suggesting the flag supports Tor-based fetching and then defining it such that a true value requires in-band CAA, leading to ambiguity."
+        ]
+      },
+      "fix_direction": "Clarify the flag's intended scope by either revising the introductory text to indicate that a true value denotes an in-band requirement or by adjusting the definition to consistently indicate support for Tor-based fetching.",
+      "severity": "Medium",
+      "severity_basis": "The conflicting descriptions may cause confusion among implementers, potentially resulting in divergent behaviors, though the risk is less immediately severe than the naming mismatch.",
+      "confidence": "High",
+      "experts": [
+        "ScopeExpert: Issue-2"
+      ],
+      "report_id": "9799-7-2"
+    }
+  ]
+}

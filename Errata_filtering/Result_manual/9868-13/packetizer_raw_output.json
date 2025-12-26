@@ -1,0 +1,128 @@
+{
+  "reports": [
+    {
+      "label": "Ambiguous and conflicting rules for modifying UDP packet content by UNSAFE options in Section 13",
+      "bug_type": "Inconsistency",
+      "explanation": "Section 13 ambiguously prohibits modifying UDP packet content outside an option’s own field while simultaneously allowing UNSAFE options (e.g., UCMP/UENC) to modify UDP user data and later options, creating a potential conflict in interpretation.",
+      "justification": [
+        "Section 10 permits options to modify later options (e.g., for compression as expected for UCMP) while Section 13 lists UDP user data and surplus area as areas that must remain unmodified.",
+        "Sections 12.1/12.2 describe UNSAFE options as expected to operate on UDP user data and later options, which conflicts with the blanket prohibition in Section 13.",
+        "There is residual uncertainty on whether reserved options such as AUTH/UENC/UCMP are intended to be exempt from Section 13’s dependency/modification restrictions."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Section 10: “This does not prohibit options that modify later options (in order of appearance within a packet), such as would typically be the case for compression (UCMP).”"
+          },
+          {
+            "id": "E2",
+            "text": "Section 12.1: “The UNSAFE Compression (UCMP, Kind=192) Option is reserved for all UDP compression mechanisms. UCMP is expected to cover the UDP user data and some (e.g., later, in sequence) UDP Options.”"
+          },
+          {
+            "id": "E3",
+            "text": "Section 13: “At the sender, new options MUST NOT modify UDP packet content anywhere outside their option field, excepting only UNSAFE Options; areas that need to remain unmodified include the IP header, IP options, UDP user data, and surplus area (i.e., other options).”"
+          },
+          {
+            "id": "E4",
+            "text": "Section 13 (later): “UNSAFE Options MAY modify the UDP user data, e.g., by encryption, compression, or other transformations. All other (SAFE) options MUST NOT modify the UDP user data.”"
+          }
+        ],
+        "summary": [
+          "(E1) Section 10 allows modification of later options as with UCMP.",
+          "(E2) Section 12.1 describes UNSAFE options (e.g., UCMP) as expected to cover UDP user data and later options.",
+          "(E3) Section 13 prohibits modifying UDP packet content outside the option field except for UNSAFE options, listing UDP user data and surplus area as off‐limits.",
+          "(E4) Section 13 later explicitly permits UNSAFE options to modify UDP user data, which creates ambiguity."
+        ]
+      },
+      "fix_direction": "Revise Section 13 to explicitly differentiate between SAFE and UNSAFE options—for example, restrict the unmodifiable areas clause to SAFE options and clearly state that UNSAFE options may modify UDP user data and later options.",
+      "severity": "Medium",
+      "severity_basis": "The ambiguity may lead to misinterpretation by future option designers and could result in inconsistent implementations if UNSAFE options are improperly constrained.",
+      "confidence": "High",
+      "experts": [
+        "Scope Expert: Issue-1",
+        "Structural Expert: Issue-1",
+        "Deontic Expert: Issue-1"
+      ],
+      "report_id": "9868-13-1"
+    },
+    {
+      "label": "Mislabelled FRAG Option Figure Caption for Terminal Fragment",
+      "bug_type": "Editorial Inconsistency",
+      "explanation": "Figure 11 is incorrectly captioned as 'UDP Non-Terminal FRAG Option Format' even though the surrounding text explains that it represents the terminal FRAG Option format.",
+      "justification": [
+        "The text clearly states that non-terminal fragments use the shorter variant (Figure 10) and terminal fragments use the longer variant (Figure 11).",
+        "Figure 11’s caption repeats 'Non-Terminal' despite later commentary indicating it is the terminal format.",
+        "Although the different lengths (10 vs 12) help disambiguate, the caption error may still confuse readers who rely on the figure titles."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "The FRAG Option has two formats: non-terminal fragments use the shorter variant (Figure 10) and terminal fragments use the longer (Figure 11)."
+          },
+          {
+            "id": "E2",
+            "text": "Figure 10:\n\n“Figure 10: UDP Non-Terminal FRAG Option Format”"
+          },
+          {
+            "id": "E3",
+            "text": "Figure 11:\n\n“Figure 11: UDP Non-Terminal FRAG Option Format”\n\nImmediately after Figure 11: “The terminal FRAG Option format adds a Reassembled Datagram Option Start (RDOS) pointer…”"
+          }
+        ],
+        "summary": [
+          "(E1) The text distinguishes between non-terminal (Figure 10) and terminal (Figure 11) FRAG Option formats.",
+          "(E2) Figure 10 is correctly labelled as non-terminal.",
+          "(E3) Figure 11 is mislabeled as non-terminal despite the subsequent description indicating a terminal format."
+        ]
+      },
+      "fix_direction": "Change the caption under Figure 11 to 'UDP Terminal FRAG Option Format'.",
+      "severity": "Low",
+      "severity_basis": "The mislabel is an editorial error that may cause momentary confusion but is unlikely to impact interoperability owing to other disambiguating details (such as option length).",
+      "confidence": "High",
+      "experts": [
+        "Terminology Expert: Issue-1"
+      ],
+      "report_id": "9868-13-2"
+    },
+    {
+      "label": "Terminological Consistency: Dependency vs. Modification Rules for New Options",
+      "bug_type": "None",
+      "explanation": "The document consistently differentiates between the prohibition on having option header fields depend on other options and the permitted modification of later packet content by UNSAFE options, indicating that no change is necessary.",
+      "justification": [
+        "Section 10 prohibits future options from having header field values dependent on other options or surplus area contents, while still allowing modifications of later options like UCMP.",
+        "Section 13 reiterates that option fields must not depend on other options and explicitly permits UNSAFE options to modify UDP user data.",
+        "The distinct usage of 'depend on' versus 'modify' maintains a clear separation between specification constraints and allowed operational transformations."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Section 10: “Future options MUST NOT be defined as having an option field value dependent on the content or presence of other options or on the remaining contents of the surplus area… This does not prohibit options that modify later options (in order of appearance within a packet), such as would typically be the case for compression (UCMP).”"
+          },
+          {
+            "id": "E2",
+            "text": "Section 13: “The fields of new options MUST NOT depend on the content of other options.”"
+          },
+          {
+            "id": "E3",
+            "text": "Section 13: “UNSAFE Options MAY modify the UDP user data, e.g., by encryption, compression, or other transformations. All other (SAFE) options MUST NOT modify the UDP user data.”"
+          }
+        ],
+        "summary": [
+          "(E1) Section 10 sets out a prohibition on header field dependency while permitting modifications for UNSAFE options.",
+          "(E2) Section 13 enforces that option fields must remain independent of other options.",
+          "(E3) Section 13 allows UNSAFE options to modify UDP user data, maintaining consistency with the intended UCMP behavior."
+        ]
+      },
+      "fix_direction": null,
+      "severity": "Low",
+      "severity_basis": "This observation is editorial in nature and has no operational impact, as the specification already maintains a clear terminological distinction.",
+      "confidence": "High",
+      "experts": [
+        "Terminology Expert: Issue-2"
+      ],
+      "report_id": "9868-13-3"
+    }
+  ]
+}

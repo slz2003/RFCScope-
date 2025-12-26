@@ -1,0 +1,757 @@
+{
+  "total_rfcs": 23,
+  "total_reports": 360,
+  "rfcs": [
+    {
+      "rfc": "9710",
+      "total_reports": 6,
+      "section_count": 3,
+      "sections": [
+        {
+          "section": "4",
+          "report_count": 2,
+          "folder_name": "9710-4"
+        },
+        {
+          "section": "5",
+          "report_count": 2,
+          "folder_name": "9710-5"
+        },
+        {
+          "section": "6",
+          "report_count": 2,
+          "folder_name": "9710-6"
+        }
+      ]
+    },
+    {
+      "rfc": "9716",
+      "total_reports": 18,
+      "section_count": 4,
+      "sections": [
+        {
+          "section": "4",
+          "report_count": 4,
+          "folder_name": "9716-4"
+        },
+        {
+          "section": "5",
+          "report_count": 6,
+          "folder_name": "9716-5"
+        },
+        {
+          "section": "7",
+          "report_count": 2,
+          "folder_name": "9716-7"
+        },
+        {
+          "section": "A",
+          "report_count": 6,
+          "folder_name": "9716-A"
+        }
+      ]
+    },
+    {
+      "rfc": "9729",
+      "total_reports": 6,
+      "section_count": 3,
+      "sections": [
+        {
+          "section": "3",
+          "report_count": 1,
+          "folder_name": "9729-3"
+        },
+        {
+          "section": "4",
+          "report_count": 1,
+          "folder_name": "9729-4"
+        },
+        {
+          "section": "6",
+          "report_count": 4,
+          "folder_name": "9729-6"
+        }
+      ]
+    },
+    {
+      "rfc": "9736",
+      "total_reports": 4,
+      "section_count": 2,
+      "sections": [
+        {
+          "section": "2",
+          "report_count": 1,
+          "folder_name": "9736-2"
+        },
+        {
+          "section": "3",
+          "report_count": 3,
+          "folder_name": "9736-3"
+        }
+      ]
+    },
+    {
+      "rfc": "9740",
+      "total_reports": 3,
+      "section_count": 2,
+      "sections": [
+        {
+          "section": "2",
+          "report_count": 2,
+          "folder_name": "9740-2"
+        },
+        {
+          "section": "4",
+          "report_count": 1,
+          "folder_name": "9740-4"
+        }
+      ]
+    },
+    {
+      "rfc": "9745",
+      "total_reports": 11,
+      "section_count": 6,
+      "sections": [
+        {
+          "section": "2",
+          "report_count": 3,
+          "folder_name": "9745-2"
+        },
+        {
+          "section": "3",
+          "report_count": 1,
+          "folder_name": "9745-3"
+        },
+        {
+          "section": "4",
+          "report_count": 2,
+          "folder_name": "9745-4"
+        },
+        {
+          "section": "5",
+          "report_count": 2,
+          "folder_name": "9745-5"
+        },
+        {
+          "section": "6",
+          "report_count": 1,
+          "folder_name": "9745-6"
+        },
+        {
+          "section": "7",
+          "report_count": 2,
+          "folder_name": "9745-7"
+        }
+      ]
+    },
+    {
+      "rfc": "9755",
+      "total_reports": 23,
+      "section_count": 7,
+      "sections": [
+        {
+          "section": "3",
+          "report_count": 7,
+          "folder_name": "9755-3"
+        },
+        {
+          "section": "4",
+          "report_count": 2,
+          "folder_name": "9755-4"
+        },
+        {
+          "section": "6",
+          "report_count": 2,
+          "folder_name": "9755-6"
+        },
+        {
+          "section": "7",
+          "report_count": 6,
+          "folder_name": "9755-7"
+        },
+        {
+          "section": "8",
+          "report_count": 2,
+          "folder_name": "9755-8"
+        },
+        {
+          "section": "9",
+          "report_count": 2,
+          "folder_name": "9755-9"
+        },
+        {
+          "section": "B",
+          "report_count": 2,
+          "folder_name": "9755-B"
+        }
+      ]
+    },
+    {
+      "rfc": "9761",
+      "total_reports": 39,
+      "section_count": 11,
+      "sections": [
+        {
+          "section": "1",
+          "report_count": 1,
+          "folder_name": "9761-1"
+        },
+        {
+          "section": "2",
+          "report_count": 3,
+          "folder_name": "9761-2"
+        },
+        {
+          "section": "3",
+          "report_count": 2,
+          "folder_name": "9761-3"
+        },
+        {
+          "section": "4",
+          "report_count": 3,
+          "folder_name": "9761-4"
+        },
+        {
+          "section": "5",
+          "report_count": 7,
+          "folder_name": "9761-5"
+        },
+        {
+          "section": "6",
+          "report_count": 6,
+          "folder_name": "9761-6"
+        },
+        {
+          "section": "7",
+          "report_count": 6,
+          "folder_name": "9761-7"
+        },
+        {
+          "section": "8",
+          "report_count": 2,
+          "folder_name": "9761-8"
+        },
+        {
+          "section": "9",
+          "report_count": 1,
+          "folder_name": "9761-9"
+        },
+        {
+          "section": "10",
+          "report_count": 2,
+          "folder_name": "9761-10"
+        },
+        {
+          "section": "11",
+          "report_count": 6,
+          "folder_name": "9761-11"
+        }
+      ]
+    },
+    {
+      "rfc": "9762",
+      "total_reports": 20,
+      "section_count": 6,
+      "sections": [
+        {
+          "section": "1",
+          "report_count": 3,
+          "folder_name": "9762-1"
+        },
+        {
+          "section": "3",
+          "report_count": 2,
+          "folder_name": "9762-3"
+        },
+        {
+          "section": "7",
+          "report_count": 9,
+          "folder_name": "9762-7"
+        },
+        {
+          "section": "8",
+          "report_count": 2,
+          "folder_name": "9762-8"
+        },
+        {
+          "section": "9",
+          "report_count": 3,
+          "folder_name": "9762-9"
+        },
+        {
+          "section": "11",
+          "report_count": 1,
+          "folder_name": "9762-11"
+        }
+      ]
+    },
+    {
+      "rfc": "9773",
+      "total_reports": 10,
+      "section_count": 3,
+      "sections": [
+        {
+          "section": "4",
+          "report_count": 4,
+          "folder_name": "9773-4"
+        },
+        {
+          "section": "6",
+          "report_count": 1,
+          "folder_name": "9773-6"
+        },
+        {
+          "section": "A",
+          "report_count": 5,
+          "folder_name": "9773-A"
+        }
+      ]
+    },
+    {
+      "rfc": "9774",
+      "total_reports": 12,
+      "section_count": 7,
+      "sections": [
+        {
+          "section": "1",
+          "report_count": 1,
+          "folder_name": "9774-1"
+        },
+        {
+          "section": "3",
+          "report_count": 2,
+          "folder_name": "9774-3"
+        },
+        {
+          "section": "4",
+          "report_count": 1,
+          "folder_name": "9774-4"
+        },
+        {
+          "section": "5",
+          "report_count": 3,
+          "folder_name": "9774-5"
+        },
+        {
+          "section": "6",
+          "report_count": 1,
+          "folder_name": "9774-6"
+        },
+        {
+          "section": "7",
+          "report_count": 1,
+          "folder_name": "9774-7"
+        },
+        {
+          "section": "B",
+          "report_count": 3,
+          "folder_name": "9774-B"
+        }
+      ]
+    },
+    {
+      "rfc": "9799",
+      "total_reports": 21,
+      "section_count": 5,
+      "sections": [
+        {
+          "section": "3",
+          "report_count": 6,
+          "folder_name": "9799-3"
+        },
+        {
+          "section": "4",
+          "report_count": 5,
+          "folder_name": "9799-4"
+        },
+        {
+          "section": "6",
+          "report_count": 4,
+          "folder_name": "9799-6"
+        },
+        {
+          "section": "7",
+          "report_count": 2,
+          "folder_name": "9799-7"
+        },
+        {
+          "section": "A",
+          "report_count": 4,
+          "folder_name": "9799-A"
+        }
+      ]
+    },
+    {
+      "rfc": "9803",
+      "total_reports": 9,
+      "section_count": 3,
+      "sections": [
+        {
+          "section": "1",
+          "report_count": 4,
+          "folder_name": "9803-1"
+        },
+        {
+          "section": "2",
+          "report_count": 3,
+          "folder_name": "9803-2"
+        },
+        {
+          "section": "8",
+          "report_count": 2,
+          "folder_name": "9803-8"
+        }
+      ]
+    },
+    {
+      "rfc": "9805",
+      "total_reports": 10,
+      "section_count": 4,
+      "sections": [
+        {
+          "section": "4",
+          "report_count": 3,
+          "folder_name": "9805-4"
+        },
+        {
+          "section": "5",
+          "report_count": 3,
+          "folder_name": "9805-5"
+        },
+        {
+          "section": "6",
+          "report_count": 1,
+          "folder_name": "9805-6"
+        },
+        {
+          "section": "A",
+          "report_count": 3,
+          "folder_name": "9805-A"
+        }
+      ]
+    },
+    {
+      "rfc": "9811",
+      "total_reports": 11,
+      "section_count": 4,
+      "sections": [
+        {
+          "section": "1",
+          "report_count": 1,
+          "folder_name": "9811-1"
+        },
+        {
+          "section": "3",
+          "report_count": 3,
+          "folder_name": "9811-3"
+        },
+        {
+          "section": "5",
+          "report_count": 3,
+          "folder_name": "9811-5"
+        },
+        {
+          "section": "6",
+          "report_count": 4,
+          "folder_name": "9811-6"
+        }
+      ]
+    },
+    {
+      "rfc": "9815",
+      "total_reports": 28,
+      "section_count": 7,
+      "sections": [
+        {
+          "section": "1",
+          "report_count": 1,
+          "folder_name": "9815-1"
+        },
+        {
+          "section": "2",
+          "report_count": 2,
+          "folder_name": "9815-2"
+        },
+        {
+          "section": "4",
+          "report_count": 1,
+          "folder_name": "9815-4"
+        },
+        {
+          "section": "5",
+          "report_count": 6,
+          "folder_name": "9815-5"
+        },
+        {
+          "section": "6",
+          "report_count": 10,
+          "folder_name": "9815-6"
+        },
+        {
+          "section": "7",
+          "report_count": 3,
+          "folder_name": "9815-7"
+        },
+        {
+          "section": "10",
+          "report_count": 5,
+          "folder_name": "9815-10"
+        }
+      ]
+    },
+    {
+      "rfc": "9824",
+      "total_reports": 28,
+      "section_count": 7,
+      "sections": [
+        {
+          "section": "2",
+          "report_count": 5,
+          "folder_name": "9824-2"
+        },
+        {
+          "section": "3",
+          "report_count": 7,
+          "folder_name": "9824-3"
+        },
+        {
+          "section": "4",
+          "report_count": 4,
+          "folder_name": "9824-4"
+        },
+        {
+          "section": "5",
+          "report_count": 5,
+          "folder_name": "9824-5"
+        },
+        {
+          "section": "7",
+          "report_count": 4,
+          "folder_name": "9824-7"
+        },
+        {
+          "section": "9",
+          "report_count": 2,
+          "folder_name": "9824-9"
+        },
+        {
+          "section": "B",
+          "report_count": 1,
+          "folder_name": "9824-B"
+        }
+      ]
+    },
+    {
+      "rfc": "9825",
+      "total_reports": 17,
+      "section_count": 5,
+      "sections": [
+        {
+          "section": "2",
+          "report_count": 3,
+          "folder_name": "9825-2"
+        },
+        {
+          "section": "3",
+          "report_count": 3,
+          "folder_name": "9825-3"
+        },
+        {
+          "section": "4",
+          "report_count": 4,
+          "folder_name": "9825-4"
+        },
+        {
+          "section": "7",
+          "report_count": 6,
+          "folder_name": "9825-7"
+        },
+        {
+          "section": "8",
+          "report_count": 1,
+          "folder_name": "9825-8"
+        }
+      ]
+    },
+    {
+      "rfc": "9830",
+      "total_reports": 18,
+      "section_count": 5,
+      "sections": [
+        {
+          "section": "1",
+          "report_count": 3,
+          "folder_name": "9830-1"
+        },
+        {
+          "section": "2",
+          "report_count": 4,
+          "folder_name": "9830-2"
+        },
+        {
+          "section": "4",
+          "report_count": 3,
+          "folder_name": "9830-4"
+        },
+        {
+          "section": "5",
+          "report_count": 6,
+          "folder_name": "9830-5"
+        },
+        {
+          "section": "6",
+          "report_count": 2,
+          "folder_name": "9830-6"
+        }
+      ]
+    },
+    {
+      "rfc": "9857",
+      "total_reports": 19,
+      "section_count": 5,
+      "sections": [
+        {
+          "section": "3",
+          "report_count": 3,
+          "folder_name": "9857-3"
+        },
+        {
+          "section": "4",
+          "report_count": 2,
+          "folder_name": "9857-4"
+        },
+        {
+          "section": "5",
+          "report_count": 7,
+          "folder_name": "9857-5"
+        },
+        {
+          "section": "6",
+          "report_count": 3,
+          "folder_name": "9857-6"
+        },
+        {
+          "section": "8",
+          "report_count": 4,
+          "folder_name": "9857-8"
+        }
+      ]
+    },
+    {
+      "rfc": "9868",
+      "total_reports": 33,
+      "section_count": 12,
+      "sections": [
+        {
+          "section": "7",
+          "report_count": 3,
+          "folder_name": "9868-7"
+        },
+        {
+          "section": "9",
+          "report_count": 2,
+          "folder_name": "9868-9"
+        },
+        {
+          "section": "10",
+          "report_count": 4,
+          "folder_name": "9868-10"
+        },
+        {
+          "section": "11",
+          "report_count": 8,
+          "folder_name": "9868-11"
+        },
+        {
+          "section": "12",
+          "report_count": 2,
+          "folder_name": "9868-12"
+        },
+        {
+          "section": "13",
+          "report_count": 3,
+          "folder_name": "9868-13"
+        },
+        {
+          "section": "14",
+          "report_count": 3,
+          "folder_name": "9868-14"
+        },
+        {
+          "section": "17",
+          "report_count": 2,
+          "folder_name": "9868-17"
+        },
+        {
+          "section": "18",
+          "report_count": 2,
+          "folder_name": "9868-18"
+        },
+        {
+          "section": "19",
+          "report_count": 2,
+          "folder_name": "9868-19"
+        },
+        {
+          "section": "25",
+          "report_count": 1,
+          "folder_name": "9868-25"
+        },
+        {
+          "section": "A",
+          "report_count": 1,
+          "folder_name": "9868-A"
+        }
+      ]
+    },
+    {
+      "rfc": "9869",
+      "total_reports": 3,
+      "section_count": 2,
+      "sections": [
+        {
+          "section": "5",
+          "report_count": 2,
+          "folder_name": "9869-5"
+        },
+        {
+          "section": "8",
+          "report_count": 1,
+          "folder_name": "9869-8"
+        }
+      ]
+    },
+    {
+      "rfc": "9870",
+      "total_reports": 11,
+      "section_count": 5,
+      "sections": [
+        {
+          "section": "2",
+          "report_count": 2,
+          "folder_name": "9870-2"
+        },
+        {
+          "section": "3",
+          "report_count": 2,
+          "folder_name": "9870-3"
+        },
+        {
+          "section": "4",
+          "report_count": 5,
+          "folder_name": "9870-4"
+        },
+        {
+          "section": "5",
+          "report_count": 1,
+          "folder_name": "9870-5"
+        },
+        {
+          "section": "6",
+          "report_count": 1,
+          "folder_name": "9870-6"
+        }
+      ]
+    }
+  ]
+}

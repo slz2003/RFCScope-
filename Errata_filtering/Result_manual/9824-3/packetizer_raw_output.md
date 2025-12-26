@@ -1,0 +1,297 @@
+# Errata Reports
+
+Total reports: 7
+
+---
+
+## Report 1: 9824-3-1
+
+**Label:** NXNAME Allowed Location Inconsistency: NSEC vs. NSEC3 Type Bitmaps
+
+**Bug Type:** Inconsistency
+
+**Explanation:**
+
+The document restricts NXNAME to the NSEC type bitmap in Section 3.5, yet other sections mandate its use in both NSEC and NSEC3 responses, creating a normative inconsistency.
+
+**Justification:**
+
+- Section 3.5 states: NXNAME is a Meta-TYPE that SHOULD NOT appear anywhere in a DNS message apart from the NSEC type bitmap of a Compact Answer response for a nonexistent name.
+- Sections 2 and 4 specify that NXNAME is added to the Type Bit Maps field for responses to nonexistent names – and for NSEC3 the NXNAME is the sole entry – which conflicts with the narrow scope in Section 3.5.
+
+**Evidence Snippets:**
+
+- **E1:**
+
+  NXNAME is a Meta-TYPE that SHOULD NOT appear anywhere in a DNS message apart from the NSEC type bitmap of a Compact Answer response for a nonexistent name. (Section 3.5)
+
+- **E2:**
+
+  This RR type is added to the NSEC Type Bit Maps field for responses to nonexistent names, in addition to the mandated RRSIG and NSEC types. If NSEC3 is being used, this RR type is the sole entry in the Type Bit Maps field. (Section 2)
+
+**Evidence Summary:**
+
+- (E1) shows the narrow restriction in Section 3.5, while (E2) shows that NXNAME is also mandated in NSEC3 responses.
+
+**Fix Direction:**
+
+Amend Section 3.5 to clarify that the exception for NXNAME applies to the Type Bit Maps field of both NSEC and NSEC3 resource records in Compact Answer responses.
+
+**Severity:** Medium
+  *Basis:* This inconsistency may lead to divergent implementation interpretations, potentially affecting interoperability.
+
+**Confidence:** High
+
+**Experts mentioning this issue:**
+
+- Scope Expert: Issue-1
+- Deontic Expert: Issue-1
+- Structural Expert: Issue-1
+- Terminology Expert: Issue-1
+- CrossRFC Expert: Issue-3
+
+---
+
+## Report 2: 9824-3-2
+
+**Label:** NXNAME in NSEC3 Bitmaps Conflicts with RFC 5155's Meta-Type Restrictions
+
+**Bug Type:** Inconsistency
+
+**Explanation:**
+
+RFC 9824 mandates inclusion of NXNAME in NSEC3 Type Bit Maps, but RFC 5155 requires that bits representing Meta-TYPEs be set to 0, resulting in a direct cross-RFC conflict.
+
+**Justification:**
+
+- RFC 5155’s NSEC3 definition states that Bits representing Meta-TYPEs or QTYPEs MUST be set to 0 and ignored if encountered.
+- RFC 9824, however, instructs that for NSEC3 responses the Type Bit Maps field will contain only the NXNAME Meta-TYPE, creating a normative conflict.
+
+**Evidence Snippets:**
+
+- **E1:**
+
+  RFC 5155’s NSEC3 definition independently states that in NSEC3 type bit maps, “Bits representing Meta-TYPEs or QTYPEs … MUST be set to 0, since they do not appear in zone data. If encountered, they must be ignored upon reading.” (CrossRFC Expert Issue-1)
+
+**Evidence Summary:**
+
+- (E1) highlights the requirement from RFC 5155 that conflicts with the NXNAME inclusion mandated by RFC 9824.
+
+**Fix Direction:**
+
+Either update RFC 5155 to accommodate the NXNAME Meta-TYPE in NSEC3 bit maps or revise RFC 9824 to use an alternative encoding that does not conflict with RFC 5155.
+
+**Severity:** High
+  *Basis:* This is a direct normative conflict between RFCs that can lead to interoperability failures if implementations follow different interpretations.
+
+**Confidence:** High
+
+**Experts mentioning this issue:**
+
+- CrossRFC Expert: Issue-1
+
+---
+
+## Report 3: 9824-3-3
+
+**Label:** Incorrect 'Immediate Lexicographic Successor' Calculation for Next Domain Name
+
+**Bug Type:** Inconsistency/Underspecification
+
+**Explanation:**
+
+The procedure of adding a leading null label to generate the Next Domain Name is claimed to yield the immediate lexicographic successor, but it instead produces a lexicographically smaller name and omits guidance to ensure that no existing names are covered.
+
+**Justification:**
+
+- Section 3.1 claims that the Next Domain Name is obtained by adding a leading label with a single null octet, implying an immediate lexicographic successor, but canonical DNS ordering shows that the created name is a predecessor.
+- RFC 4470 requires that epsilon functions must not cover any existing names, yet the construction is presented without an accompanying coverage check.
+
+**Evidence Snippets:**
+
+- **E1:**
+
+  Section 3.1: “The Next Domain Name field SHOULD be set to the immediate lexicographic successor of the QNAME. This is accomplished by adding a leading label with a single null (zero-value) octet. … For example, a request for the nonexistent name 'a.example.com.' would result in … a.example.com. 300 IN NSEC \000.a.example.com. RRSIG NSEC NXNAME” (Quantitative Expert Issue-1)
+
+**Evidence Summary:**
+
+- (E1) illustrates the construction that produces \000.a.example.com., which is lexicographically less than a.example.com., contradicting its intended immediate successor role.
+
+**Fix Direction:**
+
+Revise the description to remove or qualify the 'immediate lexicographic successor' claim and include explicit instructions to check that the generated [owner, Next) interval does not cover any existing names.
+
+**Severity:** Medium
+  *Basis:* While the degenerate interval does not break DNSSEC validation, misleading instructions may result in non-minimally covering NSEC records.
+
+**Confidence:** High
+
+**Experts mentioning this issue:**
+
+- Scope Expert: Issue-2
+- Quantitative Expert: Issue-1
+- Causal Expert: Issue-1
+- CrossRFC Expert: Issue-2
+- Boundary Expert: Finding-1
+
+---
+
+## Report 4: 9824-3-4
+
+**Label:** Unsigned-Referral Epsilon Function Lacks 'No Coverage' Check
+
+**Bug Type:** Underspecification
+
+**Explanation:**
+
+The epsilon function for constructing the Next Domain Name in unsigned referrals, which appends a zero octet to the first label, does not mandate a check to ensure that the resulting NSEC record does not inadvertently cover existing names.
+
+**Justification:**
+
+- Section 3.4 describes forming the Next Domain Name by appending a zero octet to the first label, but omits any requirement to check against existing owner names.
+- RFC 4470’s minimally covering NSEC requirement mandates that the generated interval must not cover any existing names.
+
+**Evidence Snippets:**
+
+- **E1:**
+
+  With Compact Denial of Existence, the Next Domain Name field for this NSEC record is computed with a slightly different epsilon function than the immediate lexicographic successor of the owner name… Instead, the Next Domain Name field is formed by appending a zero octet to the first label of the owner name. For example, … sub.example.com. 300 IN NSEC sub\000.example.com. NS RRSIG NSEC (Structural Expert Issue-2)
+
+**Evidence Summary:**
+
+- (E1) demonstrates the unsigned-referral construction without a related check for existing names.
+
+**Fix Direction:**
+
+Amend Section 3.4 to explicitly require that authoritative servers verify no other owner name falls between the constructed Next Domain Name and the owner name.
+
+**Severity:** Medium
+  *Basis:* Omitting this check could cause an NSEC record to falsely assert nonexistence for valid names in the zone.
+
+**Confidence:** Medium
+
+**Experts mentioning this issue:**
+
+- Structural Expert: Issue-2
+
+---
+
+## Report 5: 9824-3-5
+
+**Label:** Lack of Guidance for Epsilon Functions at DNS Name/Label Length Limits
+
+**Bug Type:** Underspecification
+
+**Explanation:**
+
+The specification does not address how to handle cases where adding a leading null label or appending a null octet may exceed DNS name or label length limits.
+
+**Justification:**
+
+- Sections 3.1 and 3.4 provide constructions for generating Next Domain Names without regard for the maximum allowed lengths imposed by DNS standards.
+- RFC 4470 notes that its epsilon functions do not take into account constraints on the number of labels or total name length, leaving implementation behavior undefined for edge cases.
+
+**Evidence Snippets:**
+
+- **E1:**
+
+  RFC 9824 Section 3.1: Next Domain Name for nonexistent names is ‘accomplished by adding a leading label with a single null (zero-value) octet’ to the QNAME. … Section 3.4: for unsigned referrals, the Next Domain Name is formed by ‘appending a zero octet to the first label of the owner name’, e.g., sub.example.com. → sub\000.example.com. (Boundary Expert Finding-2)
+
+**Evidence Summary:**
+
+- (E1) shows the constructions used without any discussion of handling cases where the addition might exceed DNS name or label length limits.
+
+**Fix Direction:**
+
+Provide explicit fallback behavior or additional conditions for selecting an alternative epsilon function when the standard construction would result in an invalid DNS name.
+
+**Severity:** Medium
+  *Basis:* This gap may lead to divergent behavior in extreme cases, affecting robustness and interoperability.
+
+**Confidence:** High
+
+**Experts mentioning this issue:**
+
+- Boundary Expert: Finding-2
+
+---
+
+## Report 6: 9824-3-6
+
+**Label:** Incomplete Normative Guidance for Resolver Behavior on NXNAME Queries
+
+**Bug Type:** Underspecification
+
+**Explanation:**
+
+While the document mandates that receiving an explicit NXNAME query must result in a FORMERR response and that resolvers must not forward such queries, it does not fully specify the complete expected behavior.
+
+**Justification:**
+
+- Section 3.5 states that if an explicit query for the NXNAME RR type is received, the DNS server MUST return a Format Error (FORMERR) and that resolvers MUST NOT forward these queries.
+- The lack of detailed response instructions leaves room for divergent behaviors among resolver implementations.
+
+**Evidence Snippets:**
+
+- **E1:**
+
+  If an explicit query for the NXNAME RR type is received, the DNS server MUST return a Format Error (response code FORMERR). … A resolver MUST NOT forward these queries upstream or attempt iterative resolution. (Deontic Expert Issue-2)
+
+**Evidence Summary:**
+
+- (E1) highlights that while a FORMERR response is required, the precise response behavior is not fully normed.
+
+**Fix Direction:**
+
+Clarify the complete expected response behavior for resolvers handling NXNAME queries, including any use of Extended DNS Error codes, to ensure consistency.
+
+**Severity:** Low
+  *Basis:* Although this gap does not impact fundamental DNSSEC validation, inconsistent error signaling may hinder troubleshooting and client expectations.
+
+**Confidence:** High
+
+**Experts mentioning this issue:**
+
+- Deontic Expert: Issue-2
+
+---
+
+## Report 7: 9824-3-7
+
+**Label:** Mismatch in EDNS CO Flag Bit Position Description
+
+**Bug Type:** Inconsistency
+
+**Explanation:**
+
+There is a discrepancy between the textual description claiming the CO flag occupies the second most significant bit and the IANA table assigning it as ‘Bit 1’, which is the second least significant bit.
+
+**Justification:**
+
+- Section 5.1 describes the CO flag as defined in the second most significant bit of the 16‑bit EDNS flags field.
+- Section 9, Table 2 allocates the CO flag as ‘Bit 1’, leading to confusion about its actual numeric bit position.
+
+**Evidence Snippets:**
+
+- **E1:**
+
+  Section 5.1: “A new EDNS0 [RFC6891] header flag is defined in the second most significant bit of the flags field in the EDNS0 OPT header. This flag is referred to as the Compact Answers OK (CO) flag.” … Section 9, Table 2: “| Bit 1 | CO   | Compact Answers OK | RFC 9824  |” (Quantitative Expert Issue-2)
+
+**Evidence Summary:**
+
+- (E1) evidences the conflict between the descriptive text and the IANA registry assignment for the CO flag.
+
+**Fix Direction:**
+
+Revise the documentation and IANA table to use consistent EDNS flag numbering (with the CO flag in the second most significant bit, e.g. Bit 14 in standard RFC6891 terms) or update both to a consistent alternate numbering.
+
+**Severity:** Medium
+  *Basis:* This inconsistency may lead to incorrect interpretation and handling of the CO flag by different implementations.
+
+**Confidence:** High
+
+**Experts mentioning this issue:**
+
+- Quantitative Expert: Issue-2
+
+---

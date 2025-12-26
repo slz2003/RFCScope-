@@ -1,0 +1,163 @@
+{
+  "reports": [
+    {
+      "label": "Ambiguous Timing for Descriptor Propagation and Challenge Expiration",
+      "bug_type": "Underspecification",
+      "explanation": "The specification lacks clear, concrete timing bounds for the client’s waiting period and the challenge expiration deadline during descriptor propagation, which may lead to mismatches between ACME servers and Hidden Services.",
+      "justification": [
+        "The text states: It MUST wait some (indeterminate) amount of time for the new descriptor to propagate, with guidance that it should take no more than a few minutes, while also stating that ACME servers MUST NOT expire challenges before a 'reasonable time'—recommended at least 30 minutes but left to operator preference.",
+        "This vagueness can result in disparate implementations that choose significantly different timeouts, causing validation failures."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "It MUST wait some (indeterminate) amount of time for the new descriptor to propagate the Tor Hidden Service directory servers before proceeding with responding to the challenge. This should take no more than a few minutes. This specification does not set a fixed time as changes in the operation of the Tor network can affect this propagation time in the future."
+          },
+          {
+            "id": "E2",
+            "text": "ACME servers MUST NOT expire challenges before a reasonable time to allow publication of the new descriptor. It is RECOMMENDED the server allow at least 30 minutes; however, it is entirely up to operator preference."
+          }
+        ],
+        "summary": [
+          "(E1) indicates an indeterminate waiting period for descriptor propagation.",
+          "(E2) provides a vague, operator-dependent requirement for challenge expiration."
+        ]
+      },
+      "fix_direction": "Define explicit quantitative timing requirements or clearly bound the conditions under which these timeouts apply specifically to .onion challenges.",
+      "severity": "Medium",
+      "severity_basis": "Ambiguous timing can cause the server and client to operate with incompatible assumptions, leading to systematic validation failures.",
+      "confidence": "High",
+      "experts": [
+        "Temporal Expert: T1",
+        "Scope Expert: Issue-3",
+        "Deontic Expert: Issue-2",
+        "Boundary Expert: Finding-1"
+      ],
+      "report_id": "9799-4-1"
+    },
+    {
+      "label": "Directory Metadata Field Name Mismatch: inBandOnionCAARequired vs onionCAARequired",
+      "bug_type": "Inconsistency",
+      "explanation": "The specification uses different names for the same directory metadata field in its body and IANA registration, which can cause interoperability issues between ACME servers and clients.",
+      "justification": [
+        "The document body and example define the field as inBandOnionCAARequired, while the IANA registration table lists the field as onionCAARequired.",
+        "This naming discrepancy may lead to misinterpretation of whether in-band CAA is required."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "To support signaling the server's support for fetching CAA record sets over Tor, a new field is defined in the directory ‘meta’ object to signal this. inBandOnionCAARequired (optional, boolean): If true, the ACME server requires the client to provide the CAA record set in the finalize request."
+          },
+          {
+            "id": "E2",
+            "text": "IANA registration: | Field name       | Field type | Reference | ... | onionCAARequired | boolean    | RFC 9799  |"
+          }
+        ],
+        "summary": [
+          "(E1) shows the field defined as inBandOnionCAARequired in the document text.",
+          "(E2) shows the IANA registration defines the field as onionCAARequired."
+        ]
+      },
+      "fix_direction": "Align the field name across the document and the IANA registration—either update IANA to use inBandOnionCAARequired or clarify the intended mapping between the two names.",
+      "severity": "High",
+      "severity_basis": "A mismatch in the JSON field names can directly lead to incompatibility between implementations, causing miscommunication of CAA requirements.",
+      "confidence": "High",
+      "experts": [
+        "ActorDirectionality Expert: NewIssue-1",
+        "Deontic Expert: Issue-1",
+        "CrossRFC Expert: Issue-2",
+        "Terminology Expert: Issue-1"
+      ],
+      "report_id": "9799-4-2"
+    },
+    {
+      "label": "Ambiguous Scope of authKey Across ACME Challenge Types",
+      "bug_type": "Underspecification",
+      "explanation": "The document does not clearly specify which ACME challenge types should include the optional authKey field, leading to potential differences in implementation.",
+      "justification": [
+        "The onion-csr-01 challenge object explicitly includes the authKey field, but for http-01 and tls-alpn-01 challenges the connection is only mentioned in prose referencing modifications in Sections 4 and 6.",
+        "This lack of explicit guidance may result in divergent interpretations among implementers."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Section 3.1.2: http-01 “MAY be used to validate a \".onion\" Special-Use Domain Name with the modifications defined in this document, namely those described in Sections 4 and 6.”\nSection 3.2: onion-csr-01 challenge object explicitly includes authKey (optional, object): The ACME server's Ed25519 public key encoded as per [RFC8037]. This is further defined in Section 4.\nSection 4: “an additional field in the challenge object is defined … authKey (optional, object): The ACME server's Ed25519 public key encoded as per [RFC8037].”"
+          }
+        ],
+        "summary": [
+          "(E1) shows that while authKey is clearly defined for onion-csr-01, its application to http-01 and tls-alpn-01 challenges remains ambiguous."
+        ]
+      },
+      "fix_direction": "Explicitly state in the specification which challenge types (e.g., http-01 and tls-alpn-01) must or may include the authKey field when validating .onion domains.",
+      "severity": "Medium",
+      "severity_basis": "Ambiguity in which challenge objects include authKey could lead to non-interoperable implementations.",
+      "confidence": "High",
+      "experts": [
+        "Scope Expert: Issue-1"
+      ],
+      "report_id": "9799-4-3"
+    },
+    {
+      "label": "Mis-scoped Test for Hidden Service Client Authentication Requirement",
+      "bug_type": "Both",
+      "explanation": "The specification relies on a per-CA CLIENT-ID match against auth-client lines to infer whether a Hidden Service requires client authentication, which may misrepresent the service-wide requirement.",
+      "justification": [
+        "Section 4 directs the ACME server to assume that if no auth-client line matches its computed CLIENT-ID then the Hidden Service does not require client authentication.",
+        "However, later sections indicate that even if the ACME server is not authorized, the service may still require client authentication to access its descriptors."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Section 4: “There is no method to communicate to the CA that client authentication is necessary; instead, the ACME server MUST attempt to calculate its CLIENT-ID as per the ‘Client behavior’ section of [tor-spec]. If no auth-client line in the First Layer Hidden Service Descriptor matches the computed client-id, then the server MUST assume that the Hidden Service does not require client authentication and proceed accordingly.”\nSection 6.2: “If the Hidden Service has client authentication enabled, then it will be impossible for the ACME server to decrypt the Second Layer Hidden Service Descriptor to read the CAA records until the ACME server's public key has been added to the First Layer Hidden Service Descriptor.”"
+          }
+        ],
+        "summary": [
+          "(E1) combines the directive to use CLIENT-ID matching with an assumption that may ignore the overall client authentication requirement of the Hidden Service."
+        ]
+      },
+      "fix_direction": "Revise the test so that a non-matching CLIENT-ID indicates that the ACME server is not yet authorized, rather than that the service does not require client authentication at all.",
+      "severity": "Medium",
+      "severity_basis": "This mis-scoping may lead to premature assumptions about service configuration, resulting in failed descriptor decryption and validation.",
+      "confidence": "High",
+      "experts": [
+        "Scope Expert: Issue-2"
+      ],
+      "report_id": "9799-4-4"
+    },
+    {
+      "label": "Misleading Tor-spec Reference for authKey Mechanism",
+      "bug_type": "Inconsistency",
+      "explanation": "The specification incorrectly cites the 'Authentication during the introduction phase' section of tor-spec to justify the use of authKey for descriptor retrieval, causing potential misinterpretation of the underlying Tor mechanisms.",
+      "justification": [
+        "Section 4 instructs that the ACME server advertise an Ed25519 public key as per the 'Authentication during the introduction phase' section of tor-spec for the purpose of retrieving the Hidden Service Descriptor.",
+        "The provided tor-spec summary, however, describes an INTRODUCE1-based authentication mechanism intended for the introduction phase and not for descriptor retrieval, leading to ambiguity in CLIENT-ID computation and authorization."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Section 4: “To this end, an additional field in the challenge object is defined to allow the ACME server to advertise the Ed25519 public key it will use (as per the 'Authentication during the introduction phase' section of [tor-spec]) to authenticate itself when retrieving the Hidden Service Descriptor.”\n\nAccording to the provided tor-spec summary, 'Authentication during the introduction phase' is a mechanism for the INTRODUCE1 message and does not govern descriptor retrieval."
+          }
+        ],
+        "summary": [
+          "(E1) contrasts the intended use of authKey for descriptor retrieval with the tor-spec mechanism, which is meant for introduction-phase authentication."
+        ]
+      },
+      "fix_direction": "Revise the reference to point to the correct tor-spec sections governing descriptor-level client authorization and CLIENT-ID computation, or clarify how the current reference maps to descriptor retrieval.",
+      "severity": "High",
+      "severity_basis": "An incorrect tor-spec reference may lead implementers to adopt the wrong authentication mechanism, resulting in failures to retrieve or decrypt Hidden Service Descriptors.",
+      "confidence": "Medium",
+      "experts": [
+        "ActorDirectionality Expert: Issue-1",
+        "Causal Expert",
+        "CrossRFC Expert: Issue-1",
+        "Terminology Expert: Issue-2"
+      ],
+      "report_id": "9799-4-5"
+    }
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "reports": [
+    {
+      "label": "Mis-scoped spki-pin-set and certificate-authority parameters between iana-tls-profile and ietf-acl-tls",
+      "bug_type": "Inconsistency",
+      "explanation": "Section 5.3 incorrectly attributes spki-pin-set and certificate-authority parameters to the iana-tls-profile module, while these parameters are defined (or intended to be device‐specific) in the ietf-acl-tls module.",
+      "justification": [
+        "Section 5.3 states: The values for all the parameters in the 'iana-tls-profile' YANG module are defined in the TLS and DTLS IANA registries excluding the tls-version, dtls-version, spki-pin-set, and certificate-authority parameters. The values of spki-pin-set and certificate-authority parameters will be specific to the IoT device.",
+        "The iana-tls-profile YANG module as given defines typedefs only for extension-type, supported-group, signature-algorithm, psk-key-exchange-mode, application-protocol, cert-compression-algorithm, cipher-algorithm, tls-version, and dtls-version; no spki-pin-set or certificate-authority typedefs appear in it.",
+        "In contrast, the ietf-acl-tls module defines: typedef spki-pin-set { type binary; ... } and typedef certificate-authority { type string; ... } and uses certificate-authority as the type of the certificate-authorities leaf-list."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Section 5.3: “The values for all the parameters in the `iana-tls-profile` YANG module are defined in the TLS and DTLS IANA registries excluding the tls-version, dtls-version, spki-pin-set, and certificate-authority parameters. The values of spki-pin-set and certificate-authority parameters will be specific to the IoT device.”"
+          },
+          {
+            "id": "E2",
+            "text": "The `iana-tls-profile` YANG module as given defines typedefs only for `extension-type`, `supported-group`, `signature-algorithm`, `psk-key-exchange-mode`, `application-protocol`, `cert-compression-algorithm`, `cipher-algorithm`, `tls-version`, and `dtls-version`; no `spki-pin-set` or `certificate-authority` typedefs appear in it."
+          },
+          {
+            "id": "E3",
+            "text": "The `ietf-acl-tls` module defines: typedef spki-pin-set { type binary; ... } typedef certificate-authority { type string; ... } and uses `certificate-authority` as the type of the `certificate-authorities` leaf-list (gated by `{tls13 or dtls13}`?)."
+          }
+        ],
+        "summary": [
+          "(E1) Section 5.3 describes excluded parameters for the iana-tls-profile module.",
+          "(E2) The iana-tls-profile module lacks any spki-pin-set or certificate-authority typedefs.",
+          "(E3) The ietf-acl-tls module defines these typedefs, indicating a mis-scoping."
+        ]
+      },
+      "fix_direction": "Clarify in Section 5.3 that spki-pin-set and certificate-authority are not part of the iana-tls-profile module; update the text and associated IANA registry descriptions to reflect that these parameters are device-specific and defined in the ietf-acl-tls module, or remove unused references.",
+      "severity": "High",
+      "severity_basis": "This mis-scoping can lead to serious interoperability issues and confusion for both implementers and IANA maintainers regarding parameter ownership.",
+      "confidence": "High",
+      "experts": [
+        "ScopeExpert: Issue-1",
+        "StructuralExpert: Issue-2",
+        "CrossRFCExpert: Issue-1",
+        "TerminologyExpert: Issue-2",
+        "BoundaryExpert: Finding-3"
+      ],
+      "report_id": "9761-5-1"
+    },
+    {
+      "label": "Ambiguous attribution of match-on-tls-dtls feature support between device/MUD and ACL server",
+      "bug_type": "Underspecification",
+      "explanation": "The specification ambiguously attributes the implementation of the match-on-tls-dtls feature to the IoT device or its MUD file instead of clearly limiting it to the ACL server as defined in the YANG model.",
+      "justification": [
+        "YANG in Section 5.2 defines the feature match-on-tls-dtls as an ACL server capability with an augment that applies to the ACL model.",
+        "Section 5.4 text states that if the ietf-mud-tls extension is supported by the device, the MUD file is assumed to implement the match-on-tls-dtls feature, conflating roles and creating ambiguity."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "YANG in Section 5.2: feature match-on-tls-dtls { description \"The networking device can support matching on (D)TLS parameters.\"; } and an augment: ... "
+          },
+          {
+            "id": "E2",
+            "text": "Section 5.4 text: “If the `ietf-mud-tls` extension is supported by the device, MUD file is assumed to implement the `match-on-tls-dtls` ACL model feature defined in this specification.”"
+          }
+        ],
+        "summary": [
+          "(E1) The YANG model defines match-on-tls-dtls as an ACL server capability.",
+          "(E2) Section 5.4 ambiguously assigns this feature to the device/MUD file."
+        ]
+      },
+      "fix_direction": "Revise Section 5.4 to clarify that match-on-tls-dtls is solely an ACL server capability, and that the presence of the ietf-mud-tls extension indicates that the network security service must support this feature.",
+      "severity": "Medium",
+      "severity_basis": "Incorrect feature attribution may lead to configuration mismatches, though it is less likely to completely break interoperability.",
+      "confidence": "High",
+      "experts": [
+        "ScopeExpert: Issue-2"
+      ],
+      "report_id": "9761-5-2"
+    },
+    {
+      "label": "Inconsistent certificate-authority encoding: DER-encoded requirement vs free-form string in YANG",
+      "bug_type": "Both",
+      "explanation": "The specification mandates that certificate authority distinguished names be provided in a DER-encoded format, yet the YANG model defines the certificate-authority type as a free-form string without constraints, leading to potential mismatches between implementations.",
+      "justification": [
+        "Section 5 specifies the certificate authorities as 'represented in DER-encoded format [X690] (defined in Section 4.2.4 of RFC8446)', aligning with TLS 1.3 requirements.",
+        "The ietf-acl-tls module, however, defines a typedef for certificate-authority as 'type string' without specifying how DER encoding is to be represented.",
+        "This inconsistency may lead to different interpretations (e.g., base64, hex, or textual formats) and incompatibility in matching certificate authorities during TLS handshakes."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Section 5 describes CA names as DER‑encoded distinguished names (defined in Section 4.2.4 of RFC8446)."
+          },
+          {
+            "id": "E2",
+            "text": "In `ietf-acl-tls`: typedef certificate-authority { type string; description \"Distinguished Name of Certificate authority as discussed in Section 4.2.4 of RFC 8446.\"; }"
+          },
+          {
+            "id": "E3",
+            "text": "TLS 1.3 defines DistinguishedName as an opaque field carrying DER‑encoded X.501 Name according to Section 4.2.4."
+          }
+        ],
+        "summary": [
+          "(E1) The prose mandates DER-encoded CA values.",
+          "(E2) The YANG model uses a free-form string for certificate-authority.",
+          "(E3) TLS 1.3 requires that DistinguishedName be DER-encoded."
+        ]
+      },
+      "fix_direction": "Either change the certificate-authority typedef to 'type binary' to carry DER-encoded data (with appropriate RFC 7951 encoding rules) or update the prose to specify a canonical textual representation such as RFC 4514, ensuring both prose and model are aligned.",
+      "severity": "High",
+      "severity_basis": "This inconsistency can critically affect security policy enforcement by causing mismatches in certificate authority comparisons across different implementations.",
+      "confidence": "High",
+      "experts": [
+        "CausalExpert: Issue 1",
+        "DeonticExpert: Issue-2",
+        "StructuralExpert: Issue-3",
+        "CrossRFCExpert: Issue-2",
+        "TerminologyExpert: Issue-3",
+        "BoundaryExpert: Finding-1"
+      ],
+      "report_id": "9761-5-3"
+    },
+    {
+      "label": "Profile name restrictions not enforced between description and YANG schema",
+      "bug_type": "Inconsistency",
+      "explanation": "The profile name is described as prohibiting spaces and special characters, yet the YANG schema only enforces a length constraint, allowing any characters.",
+      "justification": [
+        "In the ietf-acl-tls list definition, the leaf 'name' is defined with a type string that restricts length to 1..64 but does not include a pattern to forbid spaces and special characters.",
+        "The description explicitly states 'space and special characters are not allowed,' creating a divergence between the normative text and the enforced schema."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "leaf name { type string { length \"1..64\"; } description \"The name of (D)TLS profile; space and special characters are not allowed.\"; }"
+          }
+        ],
+        "summary": [
+          "(E1) The YANG leaf 'name' only constrains length while its description prohibits spaces and special characters."
+        ]
+      },
+      "fix_direction": "Either add a pattern restriction to the YANG type to enforce the prohibition on spaces and special characters or update the description to reflect that only the length is constrained.",
+      "severity": "Low",
+      "severity_basis": "This issue affects configuration consistency and interoperability of profile identifiers, but its impact is limited to management-plane validation.",
+      "confidence": "High",
+      "experts": [
+        "DeonticExpert: Issue-1",
+        "StructuralExpert: Issue-4",
+        "TerminologyExpert: Issue-4",
+        "BoundaryExpert: Finding-2"
+      ],
+      "report_id": "9761-5-4"
+    },
+    {
+      "label": "Naming mismatches between tree diagram, JSON example, and normative YANG modules",
+      "bug_type": "Inconsistency",
+      "explanation": "There are multiple discrepancies in node naming across the tree diagram, JSON example, and the YANG modules (e.g., use of 'supported-groups' versus 'supported-group', and 'client-profile' versus 'client-profiles'), which can lead to confusion and validation errors.",
+      "justification": [
+        "The tree diagram in Section 5.1 shows '+--rw supported-groups*' while the YANG module defines the leaf-list as 'supported-group'.",
+        "The JSON example uses node names such as 'ietf-acl-tls:client-profile' and 'tls-dtls-profiles', which do not match the normative YANG identifiers ('client-profiles' and 'tls-dtls-profile')."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Tree in 5.1: '+--rw supported-groups* |       ianatp:supported-group'"
+          },
+          {
+            "id": "E2",
+            "text": "YANG in 5.2: 'leaf-list supported-group { type ianatp:supported-group; ... }'"
+          },
+          {
+            "id": "E3",
+            "text": "JSON example in Section 7 uses 'ietf-acl-tls:client-profile' and 'tls-dtls-profiles' instead of the YANG-defined names."
+          }
+        ],
+        "summary": [
+          "(E1) The tree diagram uses 'supported-groups*'.",
+          "(E2) The YANG module defines it as 'supported-group'.",
+          "(E3) The JSON example employs inconsistent naming such as 'client-profile' instead of 'client-profiles'."
+        ]
+      },
+      "fix_direction": "Update the tree diagram and JSON examples to precisely match the YANG node names (e.g., using 'supported-group' and 'client-profiles') as dictated by the normative model.",
+      "severity": "Medium",
+      "severity_basis": "While these naming mismatches mainly affect documentation and example correctness, they can lead to implementation errors if developers rely on the provided examples.",
+      "confidence": "High",
+      "experts": [
+        "StructuralExpert: Issue-1",
+        "TerminologyExpert: Issue-1"
+      ],
+      "report_id": "9761-5-5"
+    },
+    {
+      "label": "JSON MUD example does not conform to the defined YANG models",
+      "bug_type": "Inconsistency",
+      "explanation": "The JSON example provided in Section 7 contains several errors—such as boolean values encoded as strings, misnamed nodes, and incorrect nesting—that cause it not to conform to the YANG model definitions.",
+      "justification": [
+        "The JSON example encodes the boolean 'ietf-mud-tls:is-tls-dtls-profile-supported' as \"true\" (a string) instead of as a boolean literal.",
+        "It also misnames nodes, using 'ietf-acl-tls:client-profile' and 'tls-dtls-profiles' rather than the correct 'client-profiles' and 'tls-dtls-profile', and nests 'actions' improperly under 'matches'."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "\"ietf-mud-tls:is-tls-dtls-profile-supported\": \"true\","
+          },
+          {
+            "id": "E2",
+            "text": "JSON example uses 'ietf-acl-tls:client-profile' and 'tls-dtls-profiles' instead of the correct names as defined in YANG."
+          }
+        ],
+        "summary": [
+          "(E1) Boolean value is encoded as a string rather than a boolean.",
+          "(E2) Node names in the JSON example do not match the normative YANG definitions."
+        ]
+      },
+      "fix_direction": "Revise the JSON example to use proper boolean literals and to exactly match the YANG structure and node names per RFC 7951, ensuring that nodes such as 'client-profiles' and 'tls-dtls-profile' are correctly named and placed.",
+      "severity": "High",
+      "severity_basis": "Non-conformance in the example can mislead implementers and result in parsing or validation errors, directly impacting interoperability.",
+      "confidence": "High",
+      "experts": [
+        "StructuralExpert: Issue-5",
+        "TerminologyExpert: Issue-1"
+      ],
+      "report_id": "9761-5-6"
+    },
+    {
+      "label": "NACM default-deny-write claimed in security considerations but not present in YANG modules",
+      "bug_type": "Inconsistency",
+      "explanation": "The security considerations claim that the NACM default-deny-write extension has been applied to all data nodes, yet the YANG modules for ietf-acl-tls and ietf-mud-tls do not import or include any NACM-related annotations.",
+      "justification": [
+        "Sections 9.3 and 9.4 assert that 'the NACM extension \"default-deny-write\" has been set for all data nodes defined in this module.'",
+        "However, the ietf-acl-tls and ietf-mud-tls YANG modules do not import ietf-netconf-acm and contain no nacm:default-deny-write statements, contradicting the security claims."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "Section 9.3: “For this reason, the NACM extension \"default-deny-write\" has been set for all data nodes defined in this module.”"
+          },
+          {
+            "id": "E2",
+            "text": "The ietf-acl-tls and ietf-mud-tls YANG modules, as shown, import no ietf-netconf-acm and contain no nacm:default-deny-write statements."
+          }
+        ],
+        "summary": [
+          "(E1) Security considerations claim NACM default-deny-write for all nodes.",
+          "(E2) The YANG modules do not include any NACM annotations."
+        ]
+      },
+      "fix_direction": "Either add the NACM annotations (import ietf-netconf-acm and add nacm:default-deny-write statements) to the YANG modules or update the security considerations to accurately describe the current schema behavior.",
+      "severity": "Medium",
+      "severity_basis": "The lack of NACM extensions could lead implementers to a false sense of access-control security, potentially impacting secure deployments.",
+      "confidence": "High",
+      "experts": [
+        "DeonticExpert: Issue-3",
+        "StructuralExpert: Issue-6"
+      ],
+      "report_id": "9761-5-7"
+    }
+  ]
+}

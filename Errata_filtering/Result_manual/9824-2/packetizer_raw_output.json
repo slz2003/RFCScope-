@@ -1,0 +1,184 @@
+{
+  "reports": [
+    {
+      "label": "NXNAME in NSEC3 Bit Maps Conflicts with RFC 5155 Meta-TYPE Rule",
+      "bug_type": "Inconsistency",
+      "explanation": "RFC 9824 mandates that the NXNAME Meta-TYPE bit be set in NSEC3 responses for nonexistent names, while RFC 5155 requires that all Meta-TYPE bits be 0 and ignored, creating a normative conflict.",
+      "justification": [
+        "RFC 9824 explicitly states that when NSEC3 is used, the NXNAME bit must be the sole entry in the Type Bit Maps field for nonexistent names.",
+        "RFC 5155 Section 3.2.1 mandates that bits representing Meta-TYPEs must be set to 0 and ignored upon reading."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "RFC 9824 Section 2: This specification defines the use of NXNAME (128), a synthetic RR type to signal the presence of a nonexistent name. … This RR type is added to the NSEC Type Bit Maps field for responses to nonexistent names, … If NSEC3 is being used, this RR type is the sole entry in the Type Bit Maps field. It is a ‘Meta-TYPE’, as defined in [RFC6895]…"
+          },
+          {
+            "id": "E2",
+            "text": "RFC 5155 Section 3.2.1: Bits representing Meta-TYPEs or QTYPEs as specified in Section 3.1 of [RFC2929] or within the range reserved for assignment only to QTYPEs and Meta-TYPEs MUST be set to 0, since they do not appear in zone data. If encountered, they must be ignored upon reading."
+          },
+          {
+            "id": "E3",
+            "text": "RFC 9824 Section 4: In responses for nonexistent names, the Type Bit Maps field will contain only the NXNAME Meta-TYPE. In responses to ENT names, the Type Bit Maps field will be empty."
+          }
+        ],
+        "summary": [
+          "(E1) Indicates that NXNAME is to be set in the NSEC3 Type Bit Maps for nonexistent names.",
+          "(E2) Mandates that Meta-TYPE bits (including NXNAME) must be 0 and ignored.",
+          "(E3) Confirms NXNAME is intended as the sole bit in NSEC3 responses."
+        ]
+      },
+      "fix_direction": "Update RFC 5155 to include an exception for NXNAME similar to the update made for RFC 4034, allowing the NXNAME bit to be set and interpreted in NSEC3 responses.",
+      "severity": "High",
+      "severity_basis": "This conflict creates mutually exclusive normative requirements that can force implementations to choose between two standards, potentially undermining the intended NXNAME signaling mechanism.",
+      "confidence": "High",
+      "experts": [
+        "ActorDirectionality: NewIssue-1",
+        "Scope Expert: Issue-1",
+        "Causal Expert: Issue 1",
+        "Deontic Expert: Issue-1",
+        "Structural Expert: Issue-1",
+        "CrossRFC Expert: Issue-1",
+        "Terminology Expert: Issue-1"
+      ],
+      "report_id": "9824-2-1"
+    },
+    {
+      "label": "Ambiguous Resolver Handling for NXNAME",
+      "bug_type": "Underspecification",
+      "explanation": "The document ambiguously states that resolvers require no special handling for NXNAME, yet later mandates specific behavior for queries and optional response code restoration, causing unclear resolver responsibilities.",
+      "justification": [
+        "Section 2 implies that resolvers can use standard processing with no special handling for NXNAME.",
+        "Subsequent sections (e.g., Section 3.5 and Section 5.1) introduce mandatory actions for explicit NXNAME queries and optional behavior for signaling, creating contradictory guidance."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E4",
+            "text": "Section 2: 'No special handling of this RR type is required on the part of DNS resolvers. However, resolvers may optionally implement the behavior described in Section 5.1 ('Signaled Response Code Restoration')...'"
+          },
+          {
+            "id": "E5",
+            "text": "Section 3.5: 'If an explicit query for the NXNAME RR type is received, the DNS server MUST return a Format Error (response code FORMERR). A resolver MUST NOT forward these queries upstream or attempt iterative resolution.'"
+          }
+        ],
+        "summary": [
+          "(E4) Suggests that resolvers are not required to perform any special processing for NXNAME.",
+          "(E5) Mandates specific processing for explicit NXNAME queries, leading to ambiguity."
+        ]
+      },
+      "fix_direction": "Clarify the intended resolver behavior by explicitly distinguishing between standard processing for ordinary responses and mandatory handling for explicit NXNAME queries.",
+      "severity": "Medium",
+      "severity_basis": "Ambiguous resolver instructions may result in divergent implementations, though core DNS functionality is maintained.",
+      "confidence": "High",
+      "experts": [
+        "ActorDirectionality: NewIssue-2"
+      ],
+      "report_id": "9824-2-2"
+    },
+    {
+      "label": "Ambiguity in Section 2: Descriptive Pre-NXNAME vs. Normative NXNAME Behavior",
+      "bug_type": "Underspecification",
+      "explanation": "The initial part of Section 2 describes a pre-NXNAME behavior for Compact Answers that conflicts with later normative requirements incorporating NXNAME, potentially confusing implementers about the intended operational mode.",
+      "justification": [
+        "The first paragraph of Section 2 describes nonexistent name responses as containing only NSEC and RRSIG, with empty bitmaps for NSEC3 and identical patterns for ENTs.",
+        "Immediately following this, NXNAME is introduced and required to appear in responses, creating an unclear transition between historical description and new normative requirements."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E6",
+            "text": "RFC 9824 Section 2: 'This method generates NODATA responses for nonexistent names that don't match a DNS wildcard. Since there are clearly no record types for such names, the NSEC Type Bit Maps field in the response will only contain the NSEC and RRSIG types (and in the case of NSEC3, the Type Bit Maps field will be empty). Tools that need to accurately identify nonexistent names in responses cannot rely on this specific type bitmap because Empty Non-Terminal (ENT) names … will return exactly the same Type Bit Maps field.'"
+          },
+          {
+            "id": "E7",
+            "text": "Immediately following: 'This specification defines the use of NXNAME (128), a synthetic RR type to signal the presence of a nonexistent name. … This RR type is added to the NSEC Type Bit Maps field for responses to nonexistent names… If NSEC3 is being used, this RR type is the sole entry in the Type Bit Maps field.'"
+          }
+        ],
+        "summary": [
+          "(E6) Describes the pre-NXNAME behavior for responses, implying identical treatment for ENTs and nonexistent names.",
+          "(E7) Introduces NXNAME to differentiate responses, conflicting with the earlier description."
+        ]
+      },
+      "fix_direction": "Revise Section 2 to clearly separate historical behavior (pre-NXNAME) from the updated normative requirements that include NXNAME.",
+      "severity": "Low",
+      "severity_basis": "This ambiguity is primarily editorial and may mislead a reader who skims the section, though full normative details are provided later.",
+      "confidence": "High",
+      "experts": [
+        "Scope Expert: Issue-3",
+        "Causal Expert: Issue 2",
+        "Deontic Expert: Issue-3",
+        "Terminology Expert: Issue-2"
+      ],
+      "report_id": "9824-2-3"
+    },
+    {
+      "label": "Inconsistent Scope: NXNAME Restricted to NSEC Type Bitmap vs. Use in NSEC3",
+      "bug_type": "Both",
+      "explanation": "Section 3.5 restricts NXNAME to the NSEC type bitmap, while Section 4 explicitly requires its use in NSEC3 type bitmaps, resulting in conflicting guidance on where NXNAME is permitted to appear.",
+      "justification": [
+        "Section 3.5 states that NXNAME SHOULD NOT appear anywhere except in the NSEC type bitmap of a Compact Answer.",
+        "Section 4 mandates that in NSEC3 responses for nonexistent names, the Type Bit Maps field will contain only the NXNAME Meta-TYPE."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E8",
+            "text": "Section 3.5: 'NXNAME is a Meta-TYPE that SHOULD NOT appear anywhere in a DNS message apart from the NSEC type bitmap of a Compact Answer response for a nonexistent name.'"
+          },
+          {
+            "id": "E9",
+            "text": "Section 4: 'In responses for nonexistent names, the Type Bit Maps field will contain only the NXNAME Meta-TYPE. In responses to ENT names, the Type Bit Maps field will be empty.'"
+          }
+        ],
+        "summary": [
+          "(E8) Limits the appearance of NXNAME to NSEC bitmaps.",
+          "(E9) Specifies the required use of NXNAME in NSEC3 bitmaps, creating a scope discrepancy."
+        ]
+      },
+      "fix_direction": "Modify Section 3.5 to refer to the 'Type Bit Maps field of an NSEC or NSEC3 record' rather than exclusively the NSEC type bitmap.",
+      "severity": "Medium",
+      "severity_basis": "The terminology discrepancy may lead to inconsistent implementations regarding where NXNAME should appear.",
+      "confidence": "High",
+      "experts": [
+        "Scope Expert: Issue-2",
+        "Terminology Expert: Issue-3"
+      ],
+      "report_id": "9824-2-4"
+    },
+    {
+      "label": "Incomplete Update to RFC 4034: Pseudo-type Bits Still Mandated to be Ignored",
+      "bug_type": "Inconsistency",
+      "explanation": "RFC 9824 updates RFC 4034 to allow NXNAME to appear in responses for nonexistent names, but the updated text still includes language requiring that pseudo-type bits be ignored, which undermines the intended NXNAME semantics.",
+      "justification": [
+        "The updated RFC 4034 text in RFC 9824 provides an exception for NXNAME to appear, yet retains the mandate that pseudo-type bits must be cleared and ignored.",
+        "This creates a normative tension where validators might still ignore the NXNAME signal, contrary to the purpose of its introduction."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E10",
+            "text": "RFC 9824 Update (Section 7.1): '... Bits representing pseudo-types MUST be clear... There is one exception to this rule for Compact Denial of Existence (RFC 9824), where the NXNAME pseudo-type is allowed to appear in responses to nonexistent names.'"
+          },
+          {
+            "id": "E11",
+            "text": "RFC 4034 Original: 'Bits representing pseudo-types MUST be clear, as they do not appear in zone data. If encountered, they MUST be ignored upon being read.'"
+          }
+        ],
+        "summary": [
+          "(E10) Shows the intended exception for NXNAME in RFC 9824.",
+          "(E11) Confirms that the original text mandates that pseudo-type bits be ignored, a requirement not sufficiently overridden for NXNAME."
+        ]
+      },
+      "fix_direction": "Explicitly exempt NXNAME from the 'must be ignored' requirement in the updated RFC 4034 text to ensure validators can interpret the NXNAME signal.",
+      "severity": "Medium",
+      "severity_basis": "The incomplete update may lead to validators disregarding the NXNAME signal, thereby nullifying its distinguishing purpose in responses.",
+      "confidence": "High",
+      "experts": [
+        "Deontic Expert: Issue-2"
+      ],
+      "report_id": "9824-2-5"
+    }
+  ]
+}

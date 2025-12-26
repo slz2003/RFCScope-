@@ -1,0 +1,38 @@
+{
+  "reports": [
+    {
+      "label": "Deprecation Link Relation Registry Description Inconsistency (Section 3 vs. Section 6.2)",
+      "bug_type": "Inconsistency",
+      "explanation": "The IANA registration for the deprecation link relation in Section 6.2 restricts the target to documentation intended for human consumption, which contradicts Section 3 that explicitly allows both human-readable and machine-readable representations.",
+      "justification": [
+        "Section 3 explicitly states that there are no restrictions on the representation of the linked deprecation policy, allowing both human-readable and machine-readable descriptions (Deontic Expert).",
+        "Section 6.2’s registry entry describes the deprecation relation using the phrase 'intended for human consumption', thereby narrowing its permitted targets (Terminology Expert)."
+      ],
+      "evidence": {
+        "snippets": [
+          {
+            "id": "E1",
+            "text": "This specification places no restrictions on the representation of the linked deprecation policy. In particular, the deprecation policy may be available as human-readable documentation or as a machine-readable description. (Section 3)"
+          },
+          {
+            "id": "E2",
+            "text": "The deprecation link relation type has been added to the ‘Link Relation Types’ registry … as follows: … Description:  Refers to documentation (intended for human consumption) about the deprecation of the link's context.  Reference:  RFC 9745, Section 3 (Section 6.2)"
+          }
+        ],
+        "summary": [
+          "(E1) Section 3 declares no restrictions on deprecation policy representation, allowing both human-readable and machine-readable forms.",
+          "(E2) Section 6.2’s IANA registry entry restricts the representation by stating it is 'intended for human consumption'."
+        ]
+      },
+      "fix_direction": "Adjust the IANA template in Section 6.2 by removing the restrictive phrase '(intended for human consumption)' so that it aligns with Section 3’s allowance for machine-readable representations.",
+      "severity": "Medium",
+      "severity_basis": "Both expert analyses indicate that the conflicting descriptions could lead to implementation confusion and interoperability issues.",
+      "confidence": "High",
+      "experts": [
+        "Deontic Expert: Issue-1",
+        "Terminology Expert: Issue-1"
+      ],
+      "report_id": "9745-6-1"
+    }
+  ]
+}
