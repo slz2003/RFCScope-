@@ -4,154 +4,150 @@ Total reports: 3
 
 ---
 
-## Report 1: 9810-1-1
+## Report 1: 9810-E-1
 
-**Label:** Misattribution of Security Considerations Sections in RFC 9810 Section 1.3
+**Label:** Ambiguity in transactionID handling in Appendix E KEM flows
 
-**Bug Type:** Inconsistency
+**Bug Type:** Editorial/Underspecification
 
 **Explanation:**
 
-RFC 9810’s change log incorrectly claims that Sections 8.1, 8.5, 8.8, and 8.11 are newly added, even though Sections 8.1 and 8.5 were already present in RFC 4210, leading to a misleading historical record.
+Appendix E’s diagrams do not explicitly indicate that messages carrying KemCiphertextInfo must include a transactionID as required in Sections 5.1.1 and 5.1.3.4, which may confuse implementers.
 
 **Justification:**
 
-- Section 1.3 states that the document 'added Sections 8.1, 8.5, 8.8, and 8.11' while evidence shows that Section 8.1 (and 8.5) appeared in RFC 4210 (E1, E2).
-- The terminology analysis further clarifies that only Sections 8.8 and 8.11 are new, whereas 8.1 and 8.5 are updated, not newly introduced.
+- Multiple experts noted that while the normative sections mandate that any message carrying KemCiphertextInfo be populated with a transactionID, Appendix E omits an explicit mention of this requirement (Deontic Expert Issue-1, Causal Expert Issue 1, Boundary Expert Finding-1).
 
 **Evidence Snippets:**
 
 - **E1:**
 
-  Section 1.3 of RFC 9810 states that “this document” added Sections 8.1, 8.5, 8.8, and 8.11 to the security considerations. However, RFC 4210 already contains a Section 8.1 (“On the Necessity of POP”), and RFC 9480’s updates add new sections 8.4–8.7 without removing or renumbering 8.1 in that document. RFC 9810’s Section 8.1 covers the same conceptual ground and clearly derives from the long‑standing POP security discussion in RFC 4210, so it is misleading to present 8.1 as newly “added” by RFC 9810. An implementer tracing the provenance of Section 8.1 may incorrectly conclude that the POP discussion did not exist prior to RFC 9810, which is historically and cross‑document inaccurate and can confuse readers trying to map older deployments or profiles (that cite RFC 4210’s Section 8.1) to the new specification.
+  A client MUST populate the transactionID field if the message contains an infoValue of type KemCiphertextInfo… If a server receives such request with a missing transactionID field, then it MUST populate the transactionID field if the message contains a KemCiphertextInfo field.
 
 - **E2:**
 
-  Section 1.3 bullet:  
-          *  Added Sections 8.1, 8.5, 8.8, and 8.11 to the security considerations.
-Security Considerations in RFC 9810 include:  
-          8.1 On the Necessity of POP  
-          8.2 POP with a Decryption Key  
-          8.3 POP by Exposing the Private Key  
-          8.4 Attack Against DH Key Exchange  
-          8.5 Perfect Forward Secrecy  
-          8.6 Private Keys for Certificate Signing and CMP Message Protection  
-          8.7 Entropy of Random Numbers, Key Pairs, and Shared Secret Information  
-          8.8 Recurring Usage of KEM Keys for Message Protection  
-          8.9 Trust Anchor Provisioning Using CMP Messages  
-          8.10 Authorizing Requests for Certificates with Specific EKUs  
-          8.11 Usage of CT Logs
+  transactionID MUST be the value from the message containing the ciphertext (ct) in KemCiphertextInfo.
+
+- **E3:**
+
+  Appendix E Figure 3: format unprotected genm … of type KemCiphertextInfo without value… format unprotected genp of type KemCiphertextInfo providing KEM ciphertext
 
 **Evidence Summary:**
 
-- (E1) RFC 9810 Section 1.3 misattributes Section 8.1 as newly added despite its earlier existence in RFC 4210.
-- (E2) The change log bullet lists Sections 8.1, 8.5, 8.8, and 8.11 without distinguishing between pre‑existing and newly introduced content.
+- (E1) States the normative requirement to populate the transactionID when a KemCiphertextInfo is present.
+- (E2) Binds KemOtherInfo.transactionID to the ciphertext‐bearing message.
+- (E3) Illustrates that Appendix E’s flow descriptions do not explicitly mention transactionID.
 
 **Fix Direction:**
 
-In Section 1.3, replace the phrase 'Added Sections 8.1, 8.5, 8.8, and 8.11 to the security considerations.' with 'Updated Sections 8.1 and 8.5 and added new Sections 8.8 and 8.11 to the security considerations.'
+Clarify Appendix E to explicitly state that messages carrying KemCiphertextInfo, including the genp message that provides the ciphertext, MUST include a transactionID as specified in Sections 5.1.1 and 5.1.3.4.
 
 **Severity:** Low
-  *Basis:* The issue is editorial and creates historical confusion but does not impact the protocol functionality.
+  *Basis:* Although the normative text ensures correctness, the lack of explicit reference in Appendix E could lead to implementation confusion.
 
 **Confidence:** High
 
 **Experts mentioning this issue:**
 
-- CrossRFC Expert: Issue-1
-- Terminology Expert: Issue-1
+- Causal Expert: Issue 1
+- Deontic Expert: Issue-1
+- Boundary Expert: Finding-1
 
 ---
 
-## Report 2: 9810-1-2
+## Report 2: 9810-E-2
 
-**Label:** Ambiguous Introduction of CMP Version 3 (cmp2021) in RFC 9810
+**Label:** Inconsistent portrayal of Alice's role in Appendix E
 
 **Bug Type:** Inconsistency
 
 **Explanation:**
 
-RFC 9810 contains phrasing that ambiguously suggests it newly introduces CMP version 3, even though that version (pvno cmp2021(3)) was already defined in RFC 9480, which may mislead readers about its provenance.
+Appendix E inconsistently describes the role of Alice, sometimes as the PKI entity holding a KEM key pair and sometimes as the PKI management entity, which may lead to confusion regarding which party is expected to possess the KEM key pair.
 
 **Justification:**
 
-- Section 1.2 correctly attributes the introduction of CMP version 3 to RFC 9480, yet Section 1.3 reiterates that 'CMP version 3 is introduced', leading to ambiguity (E1, E2).
-- This redundancy in language causes confusion over whether RFC 9810 is presenting a new version or extending the existing one.
+- ActorDirectionality Expert NewIssue-1 points out that the introductory text in Appendix E labels Alice as the PKI entity using a KEM key pair, while the captions for Figures 3 and 4 assign differing roles (alternating between PKI entity and PKI management entity), which may mislead implementers.
 
 **Evidence Snippets:**
 
 - **E1:**
 
-  Section 1.2 of RFC 9810 correctly describes RFC 9480 as introducing CMP version 3 (pvno value cmp2021(3)) “in case a transaction is supposed to use EnvelopedData,” which aligns with RFC 9480’s update to PKIHeader and version negotiation: cmp2021 is used when EnvelopedData or hashAlg is needed. Later, Section 1.3, describing changes made “by this document,” states that “CMP version 3 is introduced for changes to the ASN.1 syntax, which support EnvelopedData, certConf with hashAlg, POPOPrivKey with agreeMAC, and RootCaKeyUpdateContent in ckuann messages.” Taken literally, this reads as though RFC 9810 is newly introducing version 3, even though Section 1.2 (and RFC 9480 §2.3 and §2.20) already attribute that introduction to RFC 9480. The intent seems to be that RFC 9810 *extends the use* of cmp2021 to additional syntax (agreeMAC and RootCaKeyUpdateContent) while keeping the same version number, but the “is introduced” wording contradicts the earlier description and may mislead readers about where CMP v3 first appeared. This is mostly historical/documentation confusion rather than a wire‑level interoperability problem.
+  In the following message flows, Alice indicates the PKI entity that uses a KEM key pair for message authentication and Bob provides the KEM ciphertext using Alice's public KEM key, as described in Section 5.1.3.4.
 
 - **E2:**
 
-  Section 1.2 (describing RFC 9480):  
-          “To properly differentiate the support of EnvelopedData instead of EncryptedValue, CMP version 3 is introduced in case a transaction is supposed to use EnvelopedData.”
-Section 1.3 (describing RFC 9810 itself):  
-          “CMP version 3 is introduced for changes to the ASN.1 syntax, which support EnvelopedData, certConf with hashAlg, POPOPrivKey with agreeMAC, and RootCaKeyUpdateContent in ckuann messages.”
-Protocol version definition in PKIHeader:  
-          “pvno INTEGER { cmp1999(1), cmp2000(2), cmp2021(3) }”  
-Version negotiation rules:  
-          “Version cmp2021 SHOULD only be used if cmp2021 syntax is needed for the request being sent or for the expected response.”
+  Figure 3 caption: “Message Flow When the PKI Entity Has a KEM Key Pair and Certificate” with “PKI entity (Alice)” / “PKI management entity (Bob)” and Figure 4 caption: “Message Flow When the PKI Entity Knows That the PKI Management Entity Uses a KEM Key Pair and Has the Authentic Public Key” with “PKI entity (Bob)” / “PKI management entity (Alice)”.
 
 **Evidence Summary:**
 
-- (E1) Section 1.3’s wording implies RFC 9810 is introducing CMP version 3, contradicting Section 1.2 and earlier RFC 9480 attributions.
-- (E2) Multiple excerpts reveal conflicting statements about the introduction of CMP version 3, creating ambiguity.
+- (E1) Introduces Alice as the PKI entity that uses the KEM key pair.
+- (E2) Demonstrates conflicting role assignments in the figure captions, thereby introducing ambiguity.
 
 **Fix Direction:**
 
-In Section 1.3, adjust the wording to acknowledge that CMP version 3 (pvno cmp2021(3)) was originally introduced in RFC 9480 and is merely extended in RFC 9810 for additional syntax support.
+Revise Appendix E to use consistent role designations and clearly indicate which party holds the KEM key pair in each illustrated flow.
 
-**Severity:** Low
-  *Basis:* This is a documentation ambiguity that may confuse historical understanding but does not affect protocol interoperability.
-
-**Confidence:** Medium
-
-**Experts mentioning this issue:**
-
-- CrossRFC Expert: Issue-3
-- Terminology Expert: Issue-2
-
----
-
-## Report 3: 9810-1-3
-
-**Label:** Incorrect Historical Appendix Reference for Algorithm Profile in RFC 9810 Section 1.2
-
-**Bug Type:** Inconsistency
-
-**Explanation:**
-
-RFC 9810 erroneously refers to Appendix C.2 as the location of the deleted mandatory algorithm profile from RFC 4210, whereas the profile is actually found in Appendix D.2, potentially misleading readers.
-
-**Justification:**
-
-- RFC 9810 Section 1.2 states that RFC 9480 'Deleted the mandatory algorithm profile in Appendix C.2', but RFC 4210’s algorithm profile is located in Appendix D.2 (E1).
-- RFC 9480’s explicit reference in §2.29 confirms that Appendix D.2 of RFC 4210 provided the algorithm list, making the reference in RFC 9810 historically inaccurate.
-
-**Evidence Snippets:**
-
-- **E1:**
-
-  In Section 1.2, RFC 9810 says that RFC 9480 “Deleted the mandatory algorithm profile in Appendix C.2 and instead referred to Section 7 of [RFC9481].” However, RFC 4210’s mandatory algorithm profile is actually in Appendix D.2, and RFC 9480 explicitly refers to and replaces Appendix D.2, not C.2, when it redirects implementations to the CMP Algorithms specification. RFC 9480 §2.29 states that “Appendix D.2 of [RFC4210] provides a list of algorithms…” and that this is replaced by a pointer to Section 7.1 of RFC 9481. RFC 9810 later reorganizes appendices so that its own algorithm profile is in Appendix C.2, but Section 1.2 is specifically describing what RFC 9480 did to RFC 4210, so the correct historical reference should be “Appendix D.2”, not “Appendix C.2”. This mismatch can cause confusion for readers who go back to RFC 4210 looking for Appendix C.2 and do not find the algorithm profile there.
-
-**Evidence Summary:**
-
-- (E1) RFC 9810 incorrectly references Appendix C.2 instead of Appendix D.2 for RFC 4210’s mandatory algorithm profile, conflicting with the explicit guidance in RFC 9480 §2.29.
-
-**Fix Direction:**
-
-In Section 1.2, update the reference from 'Appendix C.2' to 'Appendix D.2' to correctly reflect the historical location of the algorithm profile in RFC 4210.
-
-**Severity:** Low
-  *Basis:* This error is an editorial inconsistency that might mislead readers checking historical documents but does not impact protocol behavior.
+**Severity:** Medium
+  *Basis:* Ambiguities in role assignment can lead to misinterpretation during implementation, affecting which party is responsible for certain cryptographic operations.
 
 **Confidence:** High
 
 **Experts mentioning this issue:**
 
-- CrossRFC Expert: Issue-2
+- ActorDirectionality Expert: NewIssue-1
+
+---
+
+## Report 3: 9810-E-3
+
+**Label:** Inconsistent and ambiguous use of wrongIntegrity in KEM discovery/upgrade flow
+
+**Bug Type:** Inconsistency
+
+**Explanation:**
+
+The discovery/upgrade flow in Appendix E instructs the sending of an unprotected ErrorMsg with failInfo 'wrongIntegrity', which conflicts with the normative requirement that a CA always sign error messages, and the semantics of wrongIntegrity as a KEM upgrade signal remain under-specified.
+
+**Justification:**
+
+- ActorDirectionality Expert NewIssue-2 identifies the conflict between an unprotected error and the CA's obligation to sign per Section 5.3.21.
+- Causal Expert Issue 2 and Deontic Expert Issue-2 further note that using wrongIntegrity in conjunction with a KEM certificate as an upgrade signal is ambiguous, potentially leading to inconsistent client behavior.
+
+**Evidence Snippets:**
+
+- **E1:**
+
+  Section 5.3.21 (ErrorMsgContent): “If protection is desired on the message, the client MUST protect it using the same technique… The CA MUST always sign it with a signature key.”
+
+- **E2:**
+
+  Appendix E, Figure 5, step 3: “format unprotected error with status 'rejection' and failInfo 'wrongIntegrity' and KEM certificate in extraCerts”
+
+- **E3:**
+
+  PKIFailureInfo.wrongIntegrity: “KEM ciphertext missing for MAC-based protection of response, or not valid integrity of message received (password based instead of signature or vice versa).”
+
+**Evidence Summary:**
+
+- (E1) Establishes the normative requirement that error messages from a CA MUST be signed.
+- (E2) Shows that Appendix E directs the use of an unprotected error message with wrongIntegrity.
+- (E3) Defines wrongIntegrity with dual meanings, which contributes to ambiguity regarding its intended use in KEM upgrade flows.
+
+**Fix Direction:**
+
+Amend Section 5.3.21 or Appendix E to clarify that, even in KEM discovery/upgrade flows, error messages from a CA must be signed, and provide explicit guidance on how clients should interpret an ErrorMsg carrying wrongIntegrity along with a KEM certificate.
+
+**Severity:** Medium
+  *Basis:* The normative conflict and ambiguity in interpreting wrongIntegrity may lead to inconsistent implementations and uncertain client behavior in KEM upgrade scenarios.
+
+**Confidence:** High
+
+**Experts mentioning this issue:**
+
+- ActorDirectionality Expert: NewIssue-2
+- Causal Expert: Issue 2
+- Deontic Expert: Issue-2
+- Boundary Expert: Finding-2
 
 ---
