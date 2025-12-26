@@ -8,7 +8,7 @@ Total reports: 2
 
 **Label:** Ambiguity in UDP Length Permissibility Wording (Section 18 vs ROHC Requirements)
 
-**Bug Type:** Ambiguity
+**Bug Type:** Underspecification
 
 **Explanation:**
 
@@ -39,41 +39,7 @@ Section 18’s statement that it has 'always been permissible' for the UDP Lengt
 Revise the wording in Section 18 to clarify that the permissibility of a UDP Length and IP payload length mismatch is context-specific and does not override specific requirements such as those in ROHC profiles.
 
 
----
 
-## Report 2: 9868-18-2
-
-**Label:** Ambiguity in Embedded Device Comment Regarding Full IP Datagram Delivery
-
-**Bug Type:** Ambiguity
-
-**Explanation:**
-
-The document comments that an embedded device passing the entire IP datagram to the UDP application layer is inconsistent with the UDP application interface, but this is ambiguous since RFC 1122 does not explicitly forbid exposing an additional raw datagram API.
-
-**Justification:**
-
-- Section 18 describes a device that “passes the entire IP datagram to the UDP application layer” and notes this as inconsistent with the UDP application interface. (E1)
-- The analysis clarifies that there is no explicit prohibition in RFC 1122 against a host OS offering both a standard UDP receive API and an additional raw datagram API. (E2)
-
-**Evidence Snippets:**
-
-- **E1:**
-
-  Section 18 describes a device that “passes the entire IP datagram to the UDP application layer” and says this “feature is also inconsistent with the UDP application interface [RFC0768] [RFC1122].”
-
-- **E2:**
-
-  There is no explicit prohibition in RFC 1122 against a host OS offering an additional, raw “receive the entire IP datagram” API alongside the normal UDP receive interface.
-
-**Evidence Summary:**
-
-- (E1) Section 18's description of an embedded device delivering the full IP datagram to the application layer.
-- (E2) Analysis noting that RFC 1122 does not expressly forbid an alternative raw datagram API.
-
-**Fix Direction:**
-
-Clarify the embedded device comment in Section 18 to distinguish normative UDP API requirements from optional raw datagram delivery features, ensuring consistency with RFC 1122.
 
 
 ---
