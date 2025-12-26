@@ -56,7 +56,7 @@ Revise Section 13 to explicitly differentiate between SAFE and UNSAFE options—
 
 **Label:** Mislabelled FRAG Option Figure Caption for Terminal Fragment
 
-**Bug Type:** Editorial Inconsistency
+**Bug Type:** Inconsistency
 
 **Explanation:**
 
@@ -99,43 +99,3 @@ Immediately after Figure 11: “The terminal FRAG Option format adds a Reassembl
 Change the caption under Figure 11 to 'UDP Terminal FRAG Option Format'.
 
 
----
-
-## Report 3: 9868-13-3
-
-**Label:** Terminological Consistency: Dependency vs. Modification Rules for New Options
-
-**Bug Type:** None
-
-**Explanation:**
-
-The document consistently differentiates between the prohibition on having option header fields depend on other options and the permitted modification of later packet content by UNSAFE options, indicating that no change is necessary.
-
-**Justification:**
-
-- Section 10 prohibits future options from having header field values dependent on other options or surplus area contents, while still allowing modifications of later options like UCMP.
-- Section 13 reiterates that option fields must not depend on other options and explicitly permits UNSAFE options to modify UDP user data.
-- The distinct usage of 'depend on' versus 'modify' maintains a clear separation between specification constraints and allowed operational transformations.
-
-**Evidence Snippets:**
-
-- **E1:**
-
-  Section 10: “Future options MUST NOT be defined as having an option field value dependent on the content or presence of other options or on the remaining contents of the surplus area… This does not prohibit options that modify later options (in order of appearance within a packet), such as would typically be the case for compression (UCMP).”
-
-- **E2:**
-
-  Section 13: “The fields of new options MUST NOT depend on the content of other options.”
-
-- **E3:**
-
-  Section 13: “UNSAFE Options MAY modify the UDP user data, e.g., by encryption, compression, or other transformations. All other (SAFE) options MUST NOT modify the UDP user data.”
-
-**Evidence Summary:**
-
-- (E1) Section 10 sets out a prohibition on header field dependency while permitting modifications for UNSAFE options.
-- (E2) Section 13 enforces that option fields must remain independent of other options.
-- (E3) Section 13 allows UNSAFE options to modify UDP user data, maintaining consistency with the intended UCMP behavior.
-
-
----
