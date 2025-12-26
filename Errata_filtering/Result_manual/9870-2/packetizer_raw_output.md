@@ -50,7 +50,7 @@ Revise RFC9870 Section 2 to reference the precise terms 'IP datagram' and/or 'Us
 
 **Label:** Inconsistent IE Naming: 'udpExID' Deviates from RFC7012 Lowercase Acronym Guidance
 
-**Bug Type:** Editorial
+**Bug Type:** Inconsistency
 
 **Explanation:**
 
