@@ -1,33 +1,6 @@
 # Errata Reports
 
-Total reports: 2
-
----
-
-## Report 1: 9710-5-1
-
-**Label:** No Structural or Syntactic Issues in Section 5 IE–Registry Mappings
-
-**Bug Type:** None
-
-**Explanation:**
-
-The mapping table in Section 5 accurately associates IE IDs and names with their corresponding IANA registry references and URLs without any structural or syntactic conflicts.
-
-**Justification:**
-
-- Structural Expert detailed that the table in Section 5 (including IE IDs 32, 33, 139, 176, 177, 178, 179, and 346) consistently maps these elements to the appropriate IANA registries and URLs, with no internal contradictions.
-
-**Evidence Snippets:**
-
-- **E1:**
-
-  The table in Section 5 associates specific IE IDs and names (e.g., 32/icmpTypeCodeIPv4, 33/igmpType, 139/icmpTypeCodeIPv6, 176/icmpTypeIPv4, 177/icmpCodeIPv4, 178/icmpTypeIPv6, 179/icmpCodeIPv6, and 346/privateEnterpriseNumber) with IANA registry references and URLs. The IE ID/name pairs are consistent with the IPFIX Information Elements known from the IPFIX registries and RFC 5610 (which explicitly assigns 346 to privateEnterpriseNumber), and there is no internal contradiction between the IDs, names, and their described semantics.
-
-**Evidence Summary:**
-
-- (E1) Structural Expert confirms that the Section 5 table correctly maps IE IDs and names to the appropriate IANA registry entries with full consistency.
-
+Total reports: 1
 
 ---
 
@@ -35,7 +8,7 @@ The mapping table in Section 5 accurately associates IE IDs and names with their
 
 **Label:** Informal Registry Naming in Section 5 Additional Information Table
 
-**Bug Type:** Editorial
+**Bug Type:** Inconsistency
 
 **Explanation:**
 
