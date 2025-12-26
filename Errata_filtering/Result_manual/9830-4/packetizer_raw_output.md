@@ -87,41 +87,4 @@ The document provides conflicting instructions on handling unsupported or unreco
 Clarify the specification by explicitly separating the treatment of sub‑TLVs: sub‑TLVs with no defined applicability to the SR Policy SAFI MUST be ignored (without affecting usability), while only sub‑TLVs defined as applicable but unsupported should trigger the non-usability of the update unless an override is configured.
 
 
----
 
-## Report 3: 9830-4-3
-
-**Label:** Ambiguous Application of Tunnel Encapsulation Attribute (TEA) Requirement to Withdrawals
-
-**Bug Type:** Editorial/Clarification
-
-**Explanation:**
-
-The current text in Section 4.2.1 may lead to a misinterpretation that the Tunnel Encapsulation Attribute (TEA) requirement applies to withdrawal messages, whereas it is intended solely for announcement messages.
-
-**Justification:**
-
-- Section 4.2.1 mandates the presence of the TEA without clearly distinguishing between MP_REACH_NLRI (announcements) and MP_UNREACH_NLRI (withdrawals).
-- CausalAnalysis clarifies that TEA is relevant only for validating SR Policy NLRI announcements and should not be applied to withdrawals.
-
-**Evidence Snippets:**
-
-- **E1:**
-
-  Section 4.2.1: “The Tunnel Encapsulation Attribute MUST be attached to the BGP UPDATE message and MUST have a Tunnel Type TLV set to SR Policy (code point is 15).”
-
-- **E2:**
-
-  CausalAnalysis: “Read naïvely, this sounds like it could also apply to withdrawals (MP_UNREACH_NLRI), which normally do not carry TEA. In practice, Section 4.2.1 is clearly about validating an SR Policy NLRI to decide if it’s a usable route; TEA is only relevant for MP_REACH (announcements), not MP_UNREACH.”
-
-**Evidence Summary:**
-
-- (E1) Section 4.2.1 mandates the TEA without context, potentially implying it applies universally.
-- (E2) CausalAnalysis explains that the TEA requirement is only intended for MP_REACH_NLRI messages, not MP_UNREACH_NLRI withdrawals.
-
-**Fix Direction:**
-
-Amend Section 4.2.1 to explicitly state that the TEA requirement applies only to announcements (MP_REACH_NLRI) and not to withdrawal messages (MP_UNREACH_NLRI).
-
-
----
