@@ -1,6 +1,6 @@
 # Errata Reports
 
-Total reports: 3
+Total reports: 2
 
 ---
 
@@ -84,34 +84,4 @@ Insert an explicit normative statement that an omitted policy attribute must be 
 
 ---
 
-## Report 3: 9803-2-3
 
-**Label:** Ambiguity in server support for domains versus hosts
-
-**Bug Type:** Ambiguity
-
-**Explanation:**
-
-The specification does not clearly define whether a server must support the TTL extension for both domains and hosts or if supporting only one is acceptable, leading to uncertainty in handling <info> commands for unsupported object types.
-
-**Justification:**
-
-- The text leaves it unclear whether a server advertising this extension can legitimately support it for domains only (or hosts only), and does not specify how to behave if an <info> command is received for an unsupported object type.
-- This ambiguity could result in divergent implementations and interoperability issues.
-
-**Evidence Snippets:**
-
-- **E1:**
-
-  Host-object-only vs domain-only support: It is not fully explicit whether a server advertising this extension can legitimately support it for domains only (or hosts only) and how that interacts with the ‘MUST contain <ttl:ttl> records’ requirements and the schema minOccurs=1 in <ttl:infData> for both domain and host <info> responses.
-
-**Evidence Summary:**
-
-- (E1) highlights the lack of explicit guidance on whether the extension must support both object types or if supporting one is sufficient.
-
-**Fix Direction:**
-
-Clarify in the specification whether the TTL extension must be supported for both domains and hosts, and define the required behavior when an <info> command is received for an object type that is not supported.
-
-
----
