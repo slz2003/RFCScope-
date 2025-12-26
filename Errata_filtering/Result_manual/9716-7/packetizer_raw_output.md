@@ -55,7 +55,7 @@ Clarify the IANA and processing text in RFC 9716 to explicitly state that sub‐
 
 **Label:** Inconsistent naming of the Reply Path Return Code field
 
-**Bug Type:** Editorial
+**Bug Type:** Inconsistency
 
 **Explanation:**
 
