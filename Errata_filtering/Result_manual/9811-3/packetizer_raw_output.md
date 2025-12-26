@@ -40,7 +40,7 @@ Clarify the announcement retry semantics by explicitly defining the start event 
 
 **Label:** Ambiguous Scope for Forwarding CMP Messages on HTTP Error Responses
 
-**Bug Type:** Both
+**Bug Type:** Inconsistency
 
 **Explanation:**
 
