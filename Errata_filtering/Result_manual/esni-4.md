@@ -65,13 +65,7 @@ Revise Section 6.1 so that all field references match the defined structure, e.g
 
 **Confidence:** High
 
-**Experts mentioning this issue:**
 
-- Scope Expert: Issue-1
-- Causal Expert: Issue 1
-- Structural Expert: Issue-1
-- Deontic Expert: Issue-1
-- Terminology Expert: Issue-1
 
 ---
 
@@ -116,11 +110,6 @@ Add explicit normative text specifying that if deserialization of the HPKE publi
 
 **Confidence:** High
 
-**Experts mentioning this issue:**
 
-- Causal Expert: Issue 2
-- Deontic Expert: Issue-2
-- CrossRFC Expert: Issue-1
-- Boundary Expert: Finding-1
 
 ---
