@@ -1,6 +1,6 @@
 # Errata Reports
 
-Total reports: 4
+Total reports: 3
 
 ---
 
@@ -86,46 +86,6 @@ When both the A-Flag (which enables SR Algorithm label derivation) and an option
 Specify explicit precedence rules—for example, state that when an optional SID is present, it unequivocally overrides any algorithm-derived label, or alternatively mandate a specific error response if a mismatch occurs.
 
 
----
-
-## Report 3: 9716-4-3
-
-**Label:** Weak guidance on Type-A TC/TTL default and override semantics
-
-**Bug Type:** Editorial/Clarity
-
-**Explanation:**
-
-The specification’s guidance for the TC/TTL fields in Type-A is ambiguous, as it allows receivers to override provided values even when non-default values are sent by the originator.
-
-**Justification:**
-
-- The text mandates that the originator set TC to zero and TTL to 255 if it wants the receiver to choose the values, yet also permits receiver overrides without clear constraints.
-- This could result in inconsistent QoS/TTL handling across implementations and complicate interoperability, despite not affecting core functionality.
-
-**Evidence Snippets:**
-
-- **E1:**
-
-  If the originator wants the receiver to choose the TC value, it MUST set the TC field to zero.
-
-- **E2:**
-
-  If the originator wants the receiver to choose the TTL value, it MUST set the TTL field to 255.
-
-- **E3:**
-
-  The receiver MAY override the originator's values for these fields. This would be determined by local policy at the receiver.
-
-**Evidence Summary:**
-
-- (E1) Specifies that a zero TC indicates a request for the receiver to choose a value.
-- (E2) Specifies that a TTL of 255 signals the same for TTL.
-- (E3) Allows the receiver to override the provided values without further qualification.
-
-**Fix Direction:**
-
-Clarify the override policy by indicating that receiver overrides should occur only for default values (TC=0 and TTL=255), or mandate that non-default values provided by the originator must be honored.
 
 
 ---
